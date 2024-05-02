@@ -1,0 +1,1 @@
+[{"type":"text","source":"測試訊息"},{"type":"image","source":"https:\/\/findit.linebot.tw\/uploads\/others\/dc2c9b20-8ed5-44d3-b9fe-911b5a92a4f0.jpg"}]

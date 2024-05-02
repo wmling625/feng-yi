@@ -1,0 +1,1 @@
+{"result":{"text":"open square brackets 80 close square brackets double integral 100 intersection union open parentheses 50 open curly brackets table attributes columnalign left columnspacing 1.4ex end attributes row 80 90 row 40 50 end table close close parentheses"},"status":"ok"}

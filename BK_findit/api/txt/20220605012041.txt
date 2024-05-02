@@ -1,0 +1,1 @@
+{"destination":"Uda9540c392e028841fa14d78d928b27b","events":[{"type":"follow","webhookEventId":"01G4QVQF999MGBKS54C50XT74Y","deliveryContext":{"isRedelivery":false},"timestamp":1654363241266,"source":{"type":"user","userId":"U7cecd0bd4a99e3aa22124be9793d1d99"},"replyToken":"0446a9bf01ff4fc69f4230091c9e9b54","mode":"active"}]}

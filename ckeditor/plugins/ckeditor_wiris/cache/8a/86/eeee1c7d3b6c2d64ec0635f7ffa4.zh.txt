@@ -1,0 +1,1 @@
+{"result":{"text":"30\n全開"},"status":"ok"}

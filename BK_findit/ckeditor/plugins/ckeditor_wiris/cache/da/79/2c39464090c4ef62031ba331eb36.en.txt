@@ -1,0 +1,1 @@
+{"result":{"text":"double integral 60"},"status":"ok"}

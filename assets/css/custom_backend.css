@@ -1,0 +1,29 @@
+* {
+    touch-action: pan-y;
+}
+
+.confirm_authcode input {
+    border-right: 0;
+}
+
+.confirm_authcode button {
+    border-left: 0;
+    border-color: rgba(0, 0, 0, 0.09);
+    border-radius: 0 0.3rem 0.3rem 0
+}
+
+.bg-gradient-liquid {
+    background-image: url('../../assets/img/bg/blue_bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50%;
+}
+
+html .scroll-to-top {
+    display: none;
+}
+
+.hide {
+    display: none !important;
+}

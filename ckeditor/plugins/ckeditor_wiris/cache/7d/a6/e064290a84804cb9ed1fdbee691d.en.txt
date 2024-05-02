@@ -1,0 +1,1 @@
+{"result":{"text":"open square brackets 80 close square brackets double integral 100"},"status":"ok"}
