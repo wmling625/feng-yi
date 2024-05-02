@@ -40,10 +40,10 @@ if (isset($_SESSION['admin'])) {
                         <label for="password" class="form-label">密碼</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="d-flex justify-content-center g-recaptcha"
                              data-sitekey="6Lf3xzkhAAAAAHUhXd8cwBWwLBdcIjj33YerBgfG"></div>
-                    </div>
+                    </div> -->
                     <!--                    <div class="form-group">-->
                     <!--                        <div class="custom-control custom-checkbox small">-->
                     <!--                            <input type="checkbox" class="custom-control-input" id="rememberMeCheck">-->
