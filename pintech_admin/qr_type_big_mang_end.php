@@ -32,7 +32,7 @@ if (count($err_msg)) {
         }
         $query .= "where qr_type_big_id = '" . $qr_type_big_id . "';";
     }
-
+    
     if ($mysqli->query($query)) {
         echo "<script>alert('儲存成功')</script>";
         echo "<script>history.go(-2)</script>";

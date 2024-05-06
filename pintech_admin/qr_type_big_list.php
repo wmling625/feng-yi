@@ -289,9 +289,8 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                         if (is_file("../uploads/big/" . $photo_small1)) {
                                             $qrcode = "../uploads/big/" . $photo_small1;
                                         } else {
-                                            $qrcode = "https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=" . urlencode($link) . "&choe=UTF-8";
+                                            $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" . urlencode($link) . "&choe=UTF-8";
                                         }
-
                                         echo '<tr>';
 
                                         echo '<td>';
