@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL);
 session_name("pintech_findit");
 @session_regenerate_id();
 set_time_limit(0);
@@ -12,7 +13,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$mysqli = new mysqli("localhost", "root", '', "pintech_findit");
+$mysqli = new mysqli("localhost", "feng_root", 'L^dOt0n5Dt8mJJL8', "feng_master");
 
 $mysqli->set_charset("utf8mb4");
 //$mysqli->set_charset("utf8");

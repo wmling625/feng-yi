@@ -1,5 +1,4 @@
 <?php
-
 include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
 if (isset($_SESSION['admin'])) {
     echo "<script> document.location.href = 'init.php' </script>";

@@ -10,7 +10,7 @@ $captcha_secret = "6LfloBgTAAAAAN1sO-a-opN1keTcFFzyfb0UfzPk";
 if (!empty($account) && !empty($password)) {
 
    // $isok = json_decode(download_page("https://www.google.com/recaptcha/api/siteverify?secret=" . $captcha_secret . "&response=" . $captcha));
-        $query = "SELECT * FROM admin WHERE account = '" . $account . "' AND passwd = '" . md5($password) . "' AND orders >-1";
+        $query = "SELECT * FROM `admin` WHERE `account` = '" . $account . "' AND passwd = '" . md5($password) . "' AND orders > -1";
         if ($result = $mysqli->query($query)) {
             $rows = $result->fetch_assoc();
             $counts = mysqli_num_rows($result);

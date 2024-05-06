@@ -8,7 +8,7 @@ include_once(dirname(__FILE__) . "/./page.class.php");
 include_once(dirname(__FILE__) . "/./backend_left_array.php");
 include_once(dirname(__FILE__) . "/./backend_custom.php");
 include_once(dirname(__FILE__) . '/./phpqrcode/vendor/autoload.php');
-error_reporting(0);
+error_reporting(E_ALL);
 
 
 $filename = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']); //取得目前檔名
