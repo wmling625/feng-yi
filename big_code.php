@@ -136,7 +136,7 @@ if ($mysqli->multi_query($query1)) {
                                 $photo_small1 = ($result_arr[0]['file0'] == "") ? "" : $result_arr[0]['file0'];
                             }
                             $link = "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("big_redirect.php?qr_type_big_id=" . aes_encrypt($result_arr[0]['qr_type_big_id']));
-                            $qrcode = "https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=" . urlencode($link) . "&choe=UTF-8&openExternalBrowser=1";
+                            $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" . urlencode($link);
 
                             echo '<img src="' . $qrcode . '" alt="">';
                             ?>

@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"U9d3b5d233e66f4c213ecf6fe1c07bb25,U7cf93f26e24674351976203c30257bbd","contents1":"TEST3的測試訊息","file0":""}

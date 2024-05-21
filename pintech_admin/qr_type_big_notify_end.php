@@ -103,10 +103,10 @@ if (count($err_msg)) {
             "file0" => $file0
         );
 //        $url = "https://findit.linebot.tw/api/notify_line.php?model=toAll&user_id=" . $userIds . "&contents1=" . urlencode($message) . "&file0=" . urlencode($file0);
-        $url = "https://findit.linebot.tw/api/notify_line.php";
+        $url = "https://feng-yi.tw/api/notify_line.php";
         file_put_contents(dirname(__FILE__) . "/../api/log/" . date("Ymdhis") . "big_end_ids.txt", json_encode($data_arr, JSON_UNESCAPED_UNICODE));
-
         download_page($url, $data_arr);
+        
         echo "<script>alert('推播成功')</script>";
     } else {
         file_put_contents(dirname(__FILE__) . "/../api/log/" . date("Ymdhis") . "big_end_query.txt", $query1);

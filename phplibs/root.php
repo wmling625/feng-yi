@@ -19,9 +19,9 @@ $mysqli->set_charset("utf8mb4");
 //$mysqli->set_charset("utf8");
 $mysqli->query("SET time_zone='" . set_mysql_timezone() . "';");
 
-$liff_full = "1657192181-Wn1RV2db";
-$liff_close = "1657192181-OgEgXVG0";
-$oa = "https://lin.ee/4mGaHre";
+$liff_full = "2004852493-KE6xyzLE";
+$liff_close = "2004852493-bA6DO8JW";
+$oa = "https://lin.ee/yrIpNyR";
 
 //MYSQL時區同步PHP時區
 function set_mysql_timezone()

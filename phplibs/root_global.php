@@ -3380,7 +3380,6 @@ function download_page($path, $post_str = "none", $HTTPHEADER = array())
 	if(count($HTTPHEADER) > 0){
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $HTTPHEADER); //构造IP
 	}
-	
 	//curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 	curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
 	curl_setopt($ch, CURLOPT_REFERER, $path); //构造?路

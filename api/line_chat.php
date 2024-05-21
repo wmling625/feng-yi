@@ -15,14 +15,13 @@ https://manager.line.biz/beacon/register
 https://developers.line.biz/en/
 */
 
-$channelAccessToken = 'LquHnxgBs6+ChUvSfQdsZ0BER/dN1BK9/jDet/WGg3lb4ujVoObBXOKDQoG3cV+gBf5YAhqBrDj8g9T/NnCQwUwN88soy3m112nPI92I44h+02+y61H7JsxrsIWSD5FCQuSX9cN6Abc5sBDNLYIuEAdB04t89/1O/w1cDnyilFU=';
-$channelSecret = '3d69302c7055ec4972038f7c3fc1bf40';
+$channelAccessToken = 'h6ahio08G9uKZLx88QOlD1L178L20VWfjDGcB148AXyQNgT6/ChBLy6Zsi40NcNESlWpGKcyTSmSSt7PWaO2ukjZ3/T07dFPxogIgfmDDJderTnyohX/7m4rx5+4nRyVsPYv0/svxKbz97hETLqWagdB04t89/1O/w1cDnyilFU=';
+$channelSecret = '3033a666280e72cce9490edaf8e16799';
 
 $line_string = file_get_contents('php://input');
 $line_obj = json_decode($line_string); //為物件
-
-//file_put_contents(dirname(__FILE__) . "/./log/" . date("Ymdhis") . ".txt", $line_string);
-
+// file_put_contents(dirname(__FILE__) . "/./log/" . date("Ymdhis") . ".txt", $line_string);
+// var_dump($line_string);
 /*============================================== *\
 當user用手機傳送資料給linebot時，為了要查看linebot回傳的數據，
 會需要用到 file_get_contents讀取input的文件
@@ -862,7 +861,7 @@ $header = array('Content-Type:application/json', 'Authorization: Bearer ' . $cha
 
 $post_data = ["replyToken" => $reply_token, "messages" => $reply_message];
 
-//file_put_contents(dirname(__FILE__) . "/./log/" . date("Ymdhis") . ".txt", json_encode($reply_message, JSON_UNESCAPED_UNICODE));
+file_put_contents(dirname(__FILE__) . "/./log/" . date("Ymdhis") . ".txt", json_encode($reply_message, JSON_UNESCAPED_UNICODE));
 download_page("https://api.line.me/v2/bot/message/reply", json_encode($post_data), $header);
 
 function getPointMessage($title)
