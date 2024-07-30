@@ -6,6 +6,7 @@ include_once(dirname(__FILE__) . "/phplibs/front_head.php");
 
 @$model = aes_decrypt(params_security($_POST["model"])); // add 第一次留言 、 edit 重複留言
 @$qrcode_id = aes_decrypt(params_security($_POST["qrcode_id"]));
+@$qrcode_big_id = aes_decrypt(params_security($_POST["qrcode_big_id"]));
 @$qr_type_id = aes_decrypt(params_security($_POST["qr_type_id"])); // 廣告標籤 > 為了推播廣告在flex
 @$history_id = aes_decrypt(params_security($_POST["history_id"]));
 
@@ -38,11 +39,19 @@ if (count($err_msg) > 0) {
     /* 留言聯繫家屬  */
     if ($model == "add") {
         $uuid = gen_uuid();
-        $query = "INSERT INTO `history`(`history_id`, `qrcode_id`, `lat`, `lng`, `user_id0`, `user_id1`, `display_name`, `contents0`, `pub_date`, `orders`) VALUES ('" . $uuid . "','" . $qrcode_id . "','" . $lat . "','" . $lng . "','" . $user_id0 . "','" . $user_id1 . "','" . $display_name . "','" . $contents0 . "',NOW(),-1)";
+        if($qrcode_big_id) {
+            $query = "INSERT INTO `history`(`history_id`, `qrcode_big_id`, `lat`, `lng`, `user_id0`, `user_id1`, `display_name`, `contents0`, `pub_date`, `orders`) VALUES ('" . $uuid . "','" . $qrcode_big_id . "','" . $lat . "','" . $lng . "','" . $user_id0 . "','" . $user_id1 . "','" . $display_name . "','" . $contents0 . "',NOW(),-1)";
+        } else {
+            $query = "INSERT INTO `history`(`history_id`, `qrcode_id`, `lat`, `lng`, `user_id0`, `user_id1`, `display_name`, `contents0`, `pub_date`, `orders`) VALUES ('" . $uuid . "','" . $qrcode_id . "','" . $lat . "','" . $lng . "','" . $user_id0 . "','" . $user_id1 . "','" . $display_name . "','" . $contents0 . "',NOW(),-1)";
+        }
 
     } elseif ($model == "edit") {
         $uuid = $history_id;
-        $query = "UPDATE `history` SET `lat` = '" . $lat . "', `lng` = '" . $lng . "', `contents0` = '" . $contents0 . "', `pub_date` = NOW() WHERE `qrcode_id` = '" . $qrcode_id . "' AND history_id = '" . $history_id . "'; ";
+        if($qrqcode_big_id) {
+            $query = "UPDATE `history` SET `lat` = '" . $lat . "', `lng` = '" . $lng . "', `contents0` = '" . $contents0 . "', `pub_date` = NOW() WHERE `qrcode_big_id` = '" . $qrcode_big_id . "' AND history_id = '" . $history_id . "'; ";
+        } else {
+            $query = "UPDATE `history` SET `lat` = '" . $lat . "', `lng` = '" . $lng . "', `contents0` = '" . $contents0 . "', `pub_date` = NOW() WHERE `qrcode_id` = '" . $qrcode_id . "' AND history_id = '" . $history_id . "'; ";
+        }
     }
 
     if ($mysqli->query($query)) {
@@ -56,8 +65,8 @@ if (count($err_msg) > 0) {
             "lng" => $lng,
             "license" => $license
         );
-//        $url = "https://findit.linebot.tw/api/notify_line.php?model=toOwner&user_id=" . $user_id1 . "&qr_type_id=" . $qr_type_id . "&history_id=" . $uuid . "&lat=" . $lat . "&lng=" . $lng . "&license=" . $license;
-        $url = "https://findit.linebot.tw/api/notify_line.php";
+//        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toOwner&user_id=" . $user_id1 . "&qr_type_id=" . $qr_type_id . "&history_id=" . $uuid . "&lat=" . $lat . "&lng=" . $lng . "&license=" . $license;
+        $url = "https://feng-yi.tw/api/notify_line.php";
         download_page($url, $data_arr);
         echo "<script>alert('推播成功')</script>";
     }else{

@@ -3,6 +3,7 @@ include_once(dirname(__FILE__) . "/./phplibs/front_head.php");
 
 @$profile = params_security($_GET["profile"]);
 @$qrcode_id = aes_decrypt(params_security($_GET['qrcode_id']));
+@$qrcode_big_id = aes_decrypt(params_security($_GET['qrcode_big_id']));
 
 if (!empty($profile)) {
     $profile_json = json_decode(aes_decrypt($profile), true);
@@ -19,7 +20,7 @@ $text_arr = array(); // 圖文連結廣告
 
 $query = "";
 $query .= "SELECT *, 1 AS 'member' FROM member WHERE user_id = '" . $profile_json['userId'] . "' ; ";
-$query .= "SELECT *, 1 AS 'qrcode' FROM `qrcode` WHERE `qrcode_id` = '" . $qrcode_id . "' AND `member_id` IN (SELECT `member_id` FROM member WHERE user_id = '" . $profile_json['userId'] . "'); "; // AND orders >= 0
+$query .= "SELECT *, 1 AS 'qrcode_big' FROM `qrcode_big` WHERE `qrcode_big_id` = '" . $qrcode_big_id . "' AND `member_id` IN (SELECT `member_id` FROM member WHERE user_id = '" . $profile_json['userId'] . "'); "; // AND orders >= 0
 if ($mysqli->multi_query($query)) {
     do {
         if ($result = $mysqli->store_result()) {
@@ -27,7 +28,7 @@ if ($mysqli->multi_query($query)) {
                 if (isset($row['member'])) {
                     $member_arr[] = $row;
                 }
-                if (isset($row['qrcode'])) {
+                if (isset($row['qrcode_big'])) {
                     $result_arr[] = $row;
                 }
             }
@@ -38,7 +39,7 @@ if ($mysqli->multi_query($query)) {
         }
     } while ($mysqli->more_results() && $mysqli->next_result());
 }
-
+var_dump($result_arr);
 if (count($result_arr) == 0) {
     echo "<script>alert('查無QRCode')</script>";
     echo "<script>document.location.href='code_list.php?profile=" . $profile . "'</script>";
@@ -189,7 +190,7 @@ if ($mysqli->multi_query($query1)) {
                             <div class="col-6">
                                 <div class="item">
                                     <div class="label">暱稱</div>
-                                    <div class="content"><?php echo isset($result_arr[0]['introd']) ? $result_arr[0]['introd'] : ""; ?></div>
+                                    <div class="content"><?php echo isset($result_arr[0]['intro']) ? $result_arr[0]['intro'] : ""; ?></div>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -204,7 +205,7 @@ if ($mysqli->multi_query($query1)) {
                         </div> -->
                         <div class="btn-group w-100">
                             <a href="<?php echo $oa; ?>" class="btn btn-line btn-primary w-50"><i
-                                        class="lab la-line"></i> 返回官方帳號</a>
+                                        class="lab la-line"></i>返回官方帳號</a>
                         </div>
                     </div>
                     <div class="row justify-content-center mb-5">
@@ -214,12 +215,15 @@ if ($mysqli->multi_query($query1)) {
                             if (isset($result_arr[0]["file0"])) {
                                 $photo_small1 = ($result_arr[0]['file0'] == "") ? "" : $result_arr[0]['file0'];
                             }
-                            $link = "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("code_redirect.php?qrcode_id=" . aes_encrypt($result_arr[0]['qrcode_id']));
-                            if (is_file("uploads/qrcode/" . $photo_small1)) {
-                                $qrcode = "uploads/qrcode/" . $photo_small1;
-                            } else {
-                                $qrcode = "https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=" . urlencode($link) . "&choe=UTF-8";
-                            }
+                            // $link = "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("code_redirect.php?qrcode_id=" . aes_encrypt($result_arr[0]['qrcode_id']));
+                            $link = "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("big_info.php?qrcode_big_id=" . aes_encrypt($qrcode_big_id)) . "&qrcode_id=" . $qrcode_id;
+                            // if (is_file("uploads/qrcode/" . $photo_small1)) {
+                            //     $qrcode = "uploads/qrcode/" . $photo_small1;
+                            // } else {
+                            //     $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" . urlencode($link) . "&choe=UTF-8";
+                            // }
+                            $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" . urlencode($link) . "&choe=UTF-8";
+
 
                             echo '<img src="' . $qrcode . '" alt="">';
                             ?>

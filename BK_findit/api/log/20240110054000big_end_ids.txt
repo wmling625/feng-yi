@@ -1,1 +1,0 @@
-{"model":"toAll","user_id":"Ue4d7d09d107b465f7bf1a3fb33e2564e","contents1":"測試訊息","file0":""}

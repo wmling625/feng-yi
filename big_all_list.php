@@ -61,7 +61,7 @@ if ($result = $mysqli->query($query)) {
             <div class="container container-shrink">
                 <div class="row justify-content-center no-gutters">
                     <div class="col-lg-12">
-                        <h4 class="title font-weight-6"><?php echo $title; ?> 會員清單
+                        <h4 class="title font-weight-6"><?php echo $title; ?> 會員清單 <?php echo count($result_arr); ?>
                             <!--<button type="button" name="clearSession" class="btn btn-outline-dark float-right">登出</button>-->
                         </h4>
                     </div>
@@ -78,6 +78,7 @@ if ($result = $mysqli->query($query)) {
                                 $link = "big_info.php?qrcode_big_id=" . aes_encrypt($value['qrcode_big_id']);
 
                                 echo '<div class="item">';
+                                echo '<span class="p-3 title-1">' . ($key + 1) . '</span>';
                                 echo '<a href="' . $link . '" class="textbox">';
                                 echo '<p class="mb-0 title-1"><i class="fas fa-qrcode"></i>' . $value['nickname'] . '</p>';
                                 echo '</a>';

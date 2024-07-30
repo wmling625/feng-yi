@@ -3,7 +3,9 @@ include_once(dirname(__FILE__) . "/./phplibs/front_head.php");
 
 @$profile = params_security($_GET["profile"]);
 @$qr_type_big_id = aes_decrypt(params_security($_GET["qr_type_big_id"]));
-
+@$title = params_security($_GET["title"]);
+@$intro = params_security($_GET["intro"]);
+@$contents = params_security($_POST["contents"]);
 //if (!empty($profile)) {
 //    $profile_json = json_decode(aes_decrypt($profile), true);
 //} else {
@@ -42,7 +44,6 @@ if ($mysqli->multi_query($query)) {
             $result->close();
         }
         if ($mysqli->more_results()) {
-
         }
     } while ($mysqli->more_results() && $mysqli->next_result());
 }
@@ -84,9 +85,13 @@ if (count($bind_arr) > 0) {
 }
 
 $uuid = gen_uuid();
-$query = "INSERT INTO `qrcode_big`(`qrcode_big_id`, `qr_type_big_id`, `member_id`, `pub_date`, `last_date`) VALUES ('" . $uuid . "','" . $qr_type_big_id . "','" . $member_arr[0]["member_id"] . "',NOW(),NOW())";
+$query = "INSERT INTO `qrcode_big`(`qrcode_big_id`, `qr_type_big_id`, `member_id`, `title`, `intro`, `content`, `pub_date`, `last_date`, `orders`) VALUES ('" . $uuid . "','" . $qr_type_big_id . "','" . $member_arr[0]["member_id"] . "','" . $title . "','" . $intro . "','" . $contents . "', NOW(), NOW(), 1)";
+
+// var_dump($mysqli->query($query));exit;
+
 if ($mysqli->query($query)) {
     echo "<script>alert('綁定成功!')</script>";
-    echo "<script>document.location.href='big_my_info.php?qrcode_big_id=" . aes_encrypt($uuid) . "&profile=" . $profile . "'</script>";
+    // echo "<script>document.location.href='big_my_info.php?qrcode_big_id=" . aes_encrypt($uuid) . "&profile=" . $profile . "'</script>";
+    echo '<script>document.location.href = "' . $oa . '"</script>';
     exit;
 }

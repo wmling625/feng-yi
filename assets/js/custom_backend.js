@@ -298,8 +298,7 @@ $(function () {
             ajax_pub_adv("api/session_clean.php", {}, event_arr, {"async": true})
         })
     }
-
-    if ((location.pathname).indexOf("/info.php") >= 0) {
+    if ((location.pathname).indexOf("/info.php") >= 0 || (location.pathname).indexOf("/big_info.php") >= 0) {
         var geo_options = {
             enableHighAccuracy: false, //值為 true時，表示使用高精度定位 (預設為false)
             maximumAge: 30000, //設定上一次取得之位置資訊的有效期限 (單位毫秒, 預設為 0)

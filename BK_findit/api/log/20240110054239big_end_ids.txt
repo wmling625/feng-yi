@@ -1,1 +1,0 @@
-{"model":"toAll","user_id":null,"contents1":"這是一封測試訊息","file0":""}

@@ -15,8 +15,8 @@ https://manager.line.biz/beacon/register
 https://developers.line.biz/en/
 */
 
-$channelAccessToken = 'h6ahio08G9uKZLx88QOlD1L178L20VWfjDGcB148AXyQNgT6/ChBLy6Zsi40NcNESlWpGKcyTSmSSt7PWaO2ukjZ3/T07dFPxogIgfmDDJderTnyohX/7m4rx5+4nRyVsPYv0/svxKbz97hETLqWagdB04t89/1O/w1cDnyilFU=';
-$channelSecret = '3033a666280e72cce9490edaf8e16799';
+$channelAccessToken = 'LquHnxgBs6+ChUvSfQdsZ0BER/dN1BK9/jDet/WGg3lb4ujVoObBXOKDQoG3cV+gBf5YAhqBrDj8g9T/NnCQwUwN88soy3m112nPI92I44h+02+y61H7JsxrsIWSD5FCQuSX9cN6Abc5sBDNLYIuEAdB04t89/1O/w1cDnyilFU=';
+$channelSecret = '3d69302c7055ec4972038f7c3fc1bf40';
 
 $line_string = file_get_contents('php://input');
 $line_obj = json_decode($line_string); //為物件
@@ -65,7 +65,7 @@ if ($type == "follow") {
             }
 
 //            $arr[] = ["type" => "action", "action" => ["type" => "uri", "label" => "掃描QRcode", "uri" => "https://line.me/R/nv/QRCodeReader"]];
-            $arr[] = ["type" => "action", "action" => ["type" => "uri", "label" => "個人通知條碼", "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("code_list.php")]];
+            $arr[] = ["type" => "action", "action" => ["type" => "uri", "label" => "個人通知條碼", "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("big_code_personal_list.php")]];
             $arr[] = ["type" => "action", "action" => ["type" => "uri", "label" => "所屬單位條碼", "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("big_code_list.php")]];
             if ($is_admin) {
                 $arr[] = ["type" => "action", "action" => ["type" => "uri", "label" => "管理單位會員", "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("big_all_list.php")]];

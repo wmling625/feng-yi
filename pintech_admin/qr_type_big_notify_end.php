@@ -102,7 +102,7 @@ if (count($err_msg)) {
             "contents1" => $message,
             "file0" => $file0
         );
-//        $url = "https://findit.linebot.tw/api/notify_line.php?model=toAll&user_id=" . $userIds . "&contents1=" . urlencode($message) . "&file0=" . urlencode($file0);
+//        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toAll&user_id=" . $userIds . "&contents1=" . urlencode($message) . "&file0=" . urlencode($file0);
         $url = "https://feng-yi.tw/api/notify_line.php";
         file_put_contents(dirname(__FILE__) . "/../api/log/" . date("Ymdhis") . "big_end_ids.txt", json_encode($data_arr, JSON_UNESCAPED_UNICODE));
         download_page($url, $data_arr);

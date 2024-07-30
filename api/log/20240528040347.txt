@@ -1,0 +1,1 @@
+[{"type":"text","text":"請點選您要的功能","quickReply":{"items":[{"type":"action","action":{"type":"uri","label":"個人通知條碼","uri":"https:\/\/liff.line.me\/2005448486-AvDJ48nW?end_point=8Up5_CVRWnN1jDkvMb9Sow"}},{"type":"action","action":{"type":"uri","label":"所屬單位條碼","uri":"https:\/\/liff.line.me\/2005448486-AvDJ48nW?end_point=mVbPaknRaFwk8Y2KuDXSOkHvaxo3dWbVB_fpZBkW8fo"}}]}}]

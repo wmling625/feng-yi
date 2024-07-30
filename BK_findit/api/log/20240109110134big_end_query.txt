@@ -1,1 +1,0 @@
-INSERT INTO `history`(`history_id`, `qrcode_id`, `user_id1`, `display_name`, `contents0`, `file0`, `pub_date`, `orders`) VALUES ('1f316273-ab89-47b3-a6d5-8507f08b89c9','9a12b074-85d8-48cd-9bf5-2e2884e04c8e','Ue4d7d09d107b465f7bf1a3fb33e2564e','系統推播','測試訊息','',NOW(),2); 

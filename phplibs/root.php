@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+// error_reporting(E_ALL);
 session_name("pintech_findit");
 @session_regenerate_id();
 set_time_limit(0);
@@ -13,15 +13,15 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$mysqli = new mysqli("localhost", "feng_root", 'L^dOt0n5Dt8mJJL8', "feng_master");
+$mysqli = new mysqli("localhost", "root", 'root1234', "pintech_findit");
 
 $mysqli->set_charset("utf8mb4");
 //$mysqli->set_charset("utf8");
 $mysqli->query("SET time_zone='" . set_mysql_timezone() . "';");
 
-$liff_full = "2004852493-KE6xyzLE";
-$liff_close = "2004852493-bA6DO8JW";
-$oa = "https://lin.ee/yrIpNyR";
+$liff_full = "1657192181-Wn1RV2db";
+$liff_close = "1657192181-OgEgXVG0";
+$oa = "https://lin.ee/4mGaHre";
 
 //MYSQL時區同步PHP時區
 function set_mysql_timezone()

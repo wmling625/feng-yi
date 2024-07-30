@@ -1,1 +1,0 @@
-{"result":{"text":"Error converting from MathML to accessible text."},"status":"ok"}

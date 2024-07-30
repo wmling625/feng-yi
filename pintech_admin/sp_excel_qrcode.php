@@ -34,7 +34,7 @@ if (!empty($cmd) && !empty($value) && !empty($token)) {
 //                $link = "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("code_redirect.php?qrcode_id=" . aes_encrypt($row['qrcode_id']));
 //                $qrcode = "https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=" . urlencode($link) . "&choe=UTF-8";
 //                $link = "";
-//                $base = "https://findit.linebot.tw/uploads/qrcode/";
+//                $base = "https://oneqrcode.feng-yi.tw/uploads/qrcode/";
 //                $photo_small1 = ($row['file0'] == "") ? "" : $row['file0'];
 //                if (is_file("../uploads/qrcode/" . $photo_small1)) {
 //                    $link = $base . $photo_small1;

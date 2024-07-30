@@ -3,7 +3,7 @@ include_once(dirname(__FILE__) . "/./phplibs/front_head.php");
 
 @$profile = params_security($_GET["profile"]);
 @$qrcode_big_id = aes_decrypt(params_security($_GET['qrcode_big_id']));
-
+@$qrcode_id = params_security($_GET['qrcode_id']);
 //if (!empty($profile)) {
 //    $profile_json = json_decode(aes_decrypt($profile), true);
 //} else {
@@ -235,13 +235,15 @@ if ($mysqli->multi_query($query1)) {
                                     $photo_small1 = ($result_arr[0]['file0'] == "") ? "" : $result_arr[0]['file0'];
                                 }
                                 // $link = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . "/big_info.php?qrcode_big_id=" . aes_encrypt($qrcode_big_id);
-                                $link = "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("big_info.php?qrcode_big_id=" . aes_encrypt($qrcode_big_id));
+                                $link = "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("big_info.php?qrcode_big_id=" . aes_encrypt($qrcode_big_id)) . "&qrcode_id=" . $qrcode_id;
 
-                                if (is_file("uploads/big/" . $photo_small1)) {
-                                    $qrcode = "uploads/big/" . $photo_small1;
-                                } else {
-                                    $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" . urlencode($link) . "&choe=UTF-8";
-                                }
+                                // if (is_file("uploads/big/" . $photo_small1)) {
+                                //     $qrcode = "uploads/big/" . $photo_small1;
+                                // } else {
+                                //     $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" . urlencode($link) . "&choe=UTF-8";
+                                // }
+                                $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" . urlencode($link) . "&choe=UTF-8";
+
 
                                 echo '<img src="' . $qrcode . '" alt="">';
                                 // echo '<a href="' . $link . '" target="_blank">連結</a>';

@@ -67,7 +67,7 @@ if (isset($_GET["liff_state"])) {
                             if (parseInt(data.state) < 0) {
                                 /* 會員不存在 > 導向註冊頁 */
                                 if (end_point.startsWith("big_")) {
-                                    document.location.href = "../big_login.php" + "?t=" + guid() + "&profile=" + profile
+                                    document.location.href = "../big_login.php" + "?t=" + guid() + "&profile=" + profile + "&redirect=big_fill_in"
                                 } else {
                                     document.location.href = "../login.php" + "?t=" + guid() + "&profile=" + profile
                                 }

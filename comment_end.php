@@ -49,8 +49,8 @@ if (count($err_msg) > 0) {
         "contents1" => $contents1,
         "license" => $license
     );
-//        $url = "https://findit.linebot.tw/api/notify_line.php?model=toPeople&user_id=" . $user_id0 . "&qr_type_id=" . $qr_type_id . "&history_id=" . $history_id . "&contents1=" . urlencode($contents1) . "&license=" . $license;
-    $url = "https://findit.linebot.tw/api/notify_line.php";
+//        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toPeople&user_id=" . $user_id0 . "&qr_type_id=" . $qr_type_id . "&history_id=" . $history_id . "&contents1=" . urlencode($contents1) . "&license=" . $license;
+    $url = "https://feng-yi.tw/api/notify_line.php";
     download_page($url, $data_arr);
 
     echo "<script>alert('推播成功')</script>";

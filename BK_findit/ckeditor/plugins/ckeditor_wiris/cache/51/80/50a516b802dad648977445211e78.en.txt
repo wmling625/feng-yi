@@ -1,1 +1,0 @@
-{"result":{"text":"ring operator times divided by divided by"},"status":"ok"}

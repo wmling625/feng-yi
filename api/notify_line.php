@@ -67,7 +67,7 @@ if ($model == "toAll") {
 
         $file_loc = $upload_dir . $file0;
         if (file_exists($file_loc)) {
-            $msg[1] = array("type" => "image", "source" => "https://findit.linebot.tw/uploads/others/" . $file0);
+            $msg[1] = array("type" => "image", "source" => "https://feng-yi.tw/uploads/others/" . $file0);
         }
     }
 }
@@ -122,11 +122,11 @@ if ($model !== "toAll") {
         $result_arr = array_unique($result_arr);
         $rows = array();
         foreach ($result_arr as $value) {
-            $photo = "https://findit.linebot.tw/uploads/others/" . $value['file0'];
+            $photo = "https://oneqrcode.feng-yi.tw/uploads/others/" . $value['file0'];
             $title = $value['title'];
             $sub = $value['contents'];
             $btn1 = "連結";
-            $url1 = "https://findit.linebot.tw/ad_redirect.php?advertisement_id=" . $value['advertisement_id'] . "&link=" . urlencode($value['introd']);
+            $url1 = "https://oneqrcode.feng-yi.tw/ad_redirect.php?advertisement_id=" . $value['advertisement_id'] . "&link=" . urlencode($value['introd']);
 
             $rows[] = [
                 "type" => "bubble",

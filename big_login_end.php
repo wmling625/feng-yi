@@ -42,23 +42,23 @@ if (!$isLogin) {
     } else {
         array_push($err_msg, "驗證碼請輸入88888");
     }
-//    $query = "SELECT `code` FROM `smscode` WHERE mobile = '" . $mobile . "' AND orders <= 1 AND TIMESTAMPDIFF(SECOND,pub_date,NOW()) < 305 and is_ok = -1 ORDER BY pub_date DESC LIMIT 0,1; "; // 是否在300秒內驗證
-//    if ($result = $mysqli->query($query)) {
-//        $total = mysqli_num_rows($result);
-//        $rows = $result->fetch_assoc();
-//        if ($total <= 0) {
-//            array_push($err_msg, "手機驗證碼已失效");
-//        } else {
-//            if ($code != $rows['code']) {
-//                array_push($err_msg, "手機驗證碼輸入錯誤，請確認");
-//            } else {
-//                $query = "UPDATE smscode SET is_ok = 1 WHERE mobile = '" . $mobile . "' AND `code` = '" . $code . "' AND orders <= 1; ";
-//                $mysqli->query($query);
-//                $isValid = true;
-//            }
-//        }
-//        mysqli_free_result($result);
-//    }
+    //    $query = "SELECT `code` FROM `smscode` WHERE mobile = '" . $mobile . "' AND orders <= 1 AND TIMESTAMPDIFF(SECOND,pub_date,NOW()) < 305 and is_ok = -1 ORDER BY pub_date DESC LIMIT 0,1; "; // 是否在300秒內驗證
+    //    if ($result = $mysqli->query($query)) {
+    //        $total = mysqli_num_rows($result);
+    //        $rows = $result->fetch_assoc();
+    //        if ($total <= 0) {
+    //            array_push($err_msg, "手機驗證碼已失效");
+    //        } else {
+    //            if ($code != $rows['code']) {
+    //                array_push($err_msg, "手機驗證碼輸入錯誤，請確認");
+    //            } else {
+    //                $query = "UPDATE smscode SET is_ok = 1 WHERE mobile = '" . $mobile . "' AND `code` = '" . $code . "' AND orders <= 1; ";
+    //                $mysqli->query($query);
+    //                $isValid = true;
+    //            }
+    //        }
+    //        mysqli_free_result($result);
+    //    }
 } else {
     /* 已註冊 > 登入流程 */
     $isValid = true;
@@ -80,7 +80,7 @@ if (count($err_msg) > 0) {
     }
 
     /* 註冊動作、更新userId */
-    $query = "INSERT INTO `member`(`member_id`, `account`, `user_id`, `title`, `nickname`, `types_option`, `city`, `region`, `pub_date`, `last_date`, `orders`) VALUES (uuid(),'" . $mobile . "','" . $userId . "','" . $title . "','" . $nickname . "','" . $types_option . "','" . $city . "','" . $region . "', NOW(), NOW(), 1) ON DUPLICATE KEY UPDATE `user_id` = '" . $userId . "', `title` = '" . $title . "', `nickname` = '" . $nickname . "', `types_option` = '" . $types_option . "', `city` = '" . $city . "', `region` = '" . $region . "', `last_date` = NOW()";
+    $query = "INSERT INTO `member`(`member_id`, `account`, `user_id`, `title`, `nickname`, `types_option`, `city`, `region`, `pub_date`, `last_date`, `orders`) VALUES (uuid(),'" . $mobile . "','" . $userId . "','" . $title . "','" . $nickname . "','" . $types_option . "','" . $city . "','" . $region . "', NOW(), NOW(), 1) ON DUPLICATE KEY UPDATE `user_id` = '" . $userId . "', `title` = '" . $title . "', `nickname` = '" . $nickname . "', `types_option` = '" . $types_option . "', `city` = '" . $city . "', `region` = '" . $region . "', `last_date` = NOW(), `orders` = 1";
     if ($mysqli->query($query)) {
         if (!$isLogin) {
             echo "<script>alert('註冊成功，將直接為您登入，請稍後...')</script>";
@@ -98,7 +98,7 @@ if (count($err_msg) > 0) {
         } else {
             echo "<script>alert('登入成功')</script>";
             if ($redirect !== "") {
-                echo "<script>document.location.href = '" . $redirect . "&profile=" . $profile . "'</script>";
+                echo "<script>document.location.href = '" . $redirect . "&profile=" . urlencode($profile) . "&title=" . urlencode($mobile) . "&intro=" . urlencode($nickname) . "&contents=" . urlencode($contents) . "'</script>";
             } else {
                 echo "<script>document.location.href = 'big_code_list.php?profile=" . $profile . "'</script>";
             }

@@ -327,7 +327,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                         echo '<td>';
                                         echo '<a href="qr_type_big_mang.php?model=update&qr_type_big_id=' . $value["qr_type_big_id"] . '" class="mx-1 btn btn-sm btn-outline-primary">查看</a>';
                                         if ($value['orders'] !== "-1") {
-                                            echo '<a href="qrcode_big_list.php?types=' . $value["qr_type_big_id"] . '" class="mx-1 btn btn-sm btn-outline-dark">綁定紀錄</a>';
+                                            echo '<a href="/pintech_admin/qrcode_big_list.php?types=' . $value["qr_type_big_id"] . '" class="mx-1 btn btn-sm btn-outline-dark">綁定紀錄</a>';
                                         }
                                         echo '</td>';
 

@@ -336,7 +336,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                                 }
                                             }
 
-                                            $link = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . "/big_info.php?qrcode_big_id=" . aes_encrypt($value['qrcode_big_id']);
+                                            $link = $_SERVER['REQUEST_SCHEME'] . "/big_info.php?qrcode_big_id=" . aes_encrypt($value['qrcode_big_id']);
 //                                            $link = "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("big_info.php?qrcode_big_id=" . aes_encrypt($value['qrcode_big_id']));
 
                                             echo '<tr>';
@@ -373,7 +373,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
 //                                            echo '</td>';
 
                                             echo '<td>';
-                                            echo '<a href="' . $link . '" class="mx-1 btn btn-sm btn-outline-dark">前台連結</a>';
+                                            echo '<a href="' . $link . '" target="_blank" class="mx-1 btn btn-sm btn-outline-dark">前台連結</a>';
                                             echo '</td>';
 
                                             echo '</tr>';
