@@ -11,6 +11,7 @@ $err_msg = array();
 @$account = params_security($_POST["account"]);
 @$passwd = params_security($_POST["password"]);
 @$passwd2 = params_security($_POST["password2"]);
+@$qr_type_big_id  = params_security($_POST['qr_type_big_id']);
 @$permission = params_security($_POST["permission"], "none"); // 因為是json 符號可能會被過濾掉
 @$note = params_security($_POST["note"], "text");
 
@@ -30,13 +31,13 @@ if (count($err_msg)) {
 
     $query = "";
     if ($model == "add") {
-        $query = "insert into admin (`admin_id`, `nickname`, `account`, `passwd`, `permission`, `note`, `pub_date`, `last_date`, `orders`) values (uuid(),'" . $nickname . "','" . $account . "','" . md5($passwd) . "','" . $permission . "','" . $note . "',now(),now(),1)";
+        $query = "insert into admin (`admin_id`, `nickname`, `account`, `passwd`, `permission`, `qr_type_big_id`, `note`, `pub_date`, `last_date`, `orders`) values (uuid(),'" . $nickname . "','" . $account . "','" . md5($passwd) . "','" . $permission . "','" . $qr_type_big_id . "','" . $note . "',now(),now(),1)";
     } else if ($model == "update") {
         // 可以對照insert欄位, 略過pub_update..等
         if ($passwd == "") {
-            $query = "update admin set nickname = '" . $nickname . "', account = '" . $account . "', permission = '" . $permission . "', note = '" . $note . "' ";
+            $query = "update admin set nickname = '" . $nickname . "', account = '" . $account . "', permission = '" . $permission . "', qr_type_big_id = '" . $qr_type_big_id . "', note = '" . $note . "' ";
         } else {
-            $query = "update admin set nickname = '" . $nickname . "', account = '" . $account . "', passwd = '" . md5($passwd) . "', permission = '" . $permission . "', note = '" . $note . "' ";
+            $query = "update admin set nickname = '" . $nickname . "', account = '" . $account . "', passwd = '" . md5($passwd) . "', permission = '" . $permission . "', qr_type_big_id = '" . $qr_type_big_id . "', note = '" . $note . "' ";
         }
 
         $query .= "where admin_id = '" . $admin_id . "';";

@@ -27,6 +27,7 @@ if (!empty($account) && !empty($password)) {
                 $_SESSION['admin']['account'] = $rows['account'];
                 $_SESSION['admin']['nickname'] = $rows['nickname'];
                 $_SESSION['admin']['permission'] = $rows['permission'];
+                $_SESSION['admin']['qr_type_big_id'] = $rows['qr_type_big_id'];
 
                 $query = "UPDATE admin SET last_date = now() WHERE admin_id = '" . $rows['admin_id'] . "';";
                 $mysqli->query($query);

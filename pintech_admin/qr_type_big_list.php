@@ -9,6 +9,7 @@ include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
 @$limit = params_security($_GET["limit"]);
 @$date_type = params_security($_GET["date_type"]);
 
+
 if (empty($min_date)) {
     $min_date = getNewDate(date("Y-m-d"), -365);
 }
@@ -66,7 +67,13 @@ if (count($filter_sql_arr) > 0) {
 }
 
 $result_arr = array();
-$query = "SELECT * FROM qr_type_big WHERE " . $filter_sql_str . " ORDER BY orders ASC, " . $date_type . " DESC";
+ 
+
+if(isset($_SESSION['admin']['qr_type_big_id'])) {
+    $query = "SELECT * FROM `qr_type_big` WHERE `qr_type_big_id` = '" . $_SESSION['admin']['qr_type_big_id'] . "'";
+} else {
+    $query = "SELECT * FROM qr_type_big WHERE " . $filter_sql_str . " ORDER BY orders ASC, " . $date_type . " DESC";
+}
 
 if ($result = $mysqli->query($query)) {
     $total = mysqli_num_rows($result);

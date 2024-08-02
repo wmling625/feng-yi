@@ -9,7 +9,7 @@ include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
 @$limit = params_security($_GET["limit"]);
 
 if (empty($min_date)) {
-    $min_date = getNewDate(date("Y-m-d"), -180);
+    $min_date = getNewDate(date("Y-m-d"), -3600);
 }
 if (empty($max_date)) {
     $max_date = date("Y-m-d");
@@ -69,6 +69,7 @@ if (count($filter_sql_arr) > 0) {
 
 $result_arr = array();
 $query = "SELECT * FROM admin WHERE " . $filter_sql_str . " ORDER BY orders ASC, pub_date DESC";
+
 
 if ($result = $mysqli->query($query)) {
     $total = mysqli_num_rows($result);

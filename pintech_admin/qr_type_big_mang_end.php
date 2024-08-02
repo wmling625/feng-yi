@@ -8,6 +8,7 @@ $err_msg = array();
 @$model = params_security($_POST["model"]);
 
 @$title = params_security($_POST["title"]);
+@$line = params_security($_POST["line"]);
 //@$contents = params_security($_POST["contents"], "html");
 
 if (empty($title)) {
@@ -23,10 +24,10 @@ if (count($err_msg)) {
     $file_sql_arr = [];
 
     if ($model == "add") {
-        $query = "insert into qr_type_big (`qr_type_big_id`, `title`, `pub_date`, `last_date`, `orders`) values (uuid(),'" . $title . "',now(),now(),1)";
+        $query = "insert into qr_type_big (`qr_type_big_id`, `title`, `line`, `pub_date`, `last_date`, `orders`) values (uuid(),'" . $title . "', '" . $line . "',now(),now(),1)";
     } else if ($model == "update") {
         // 可以對照insert欄位, 略過pub_update..等
-        $query = "update qr_type_big set title = '" . $title . "', last_date = now()  ";
+        $query = "update qr_type_big set title = '" . $title . "', line = '" . $line . "', last_date = now()  ";
         if (count($file_sql_arr) > 0) {
             $query .= "," . implode(",", $file_sql_arr);
         }

@@ -2,7 +2,6 @@
 $login_type = isset($_SESSION['admin']['types']) ? $_SESSION['admin']['types'] : "admin";
 $permission_arr = isset($_SESSION['admin']['permission']) ? json_decode($_SESSION['admin']['permission'], true) : array();
 $special_permission_arr = isset($_SESSION['admin']['special_permission']) ? json_decode($_SESSION['admin']['special_permission'], true) : array();
-
 $basic_array = array();
 if (count($permission_arr) == 0) {
     $basic_array = $menu_array; //如果權限長度是0，那就看最大權限
