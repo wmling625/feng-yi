@@ -79,7 +79,17 @@ if (count($filter_sql_arr) > 0) {
 }
 
 $result_arr = array();
-$query = "SELECT A.*, B.title AS 'big_title' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
+
+if (isset($_SESSION['admin']['qr_type_big_id'])) {
+    $query = "SELECT A.*, B.title AS 'big_title' 
+    FROM member A 
+    LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id 
+    WHERE B.qr_type_big_id = '" . $mysqli->real_escape_string($_SESSION['admin']['qr_type_big_id']) . "' 
+    ORDER BY A.orders ASC";
+} else {
+    $query = "SELECT A.*, B.title AS 'big_title' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
+}
+
 
 if ($result = $mysqli->query($query)) {
     $total = mysqli_num_rows($result);

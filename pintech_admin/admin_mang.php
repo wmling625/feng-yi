@@ -14,6 +14,9 @@ if ($result = $mysqli->query($query)) {
     mysqli_free_result($result);
 }
 
+
+
+
 $query_big = "SELECT *, 1 AS 'qr_type_big_data' FROM qr_type_big WHERE orders>=1 ORDER BY orders, pub_date DESC; ";
 $result_big_arr = array();
 
@@ -23,8 +26,50 @@ if ($result = $mysqli->query($query_big)) {
     }
 
     mysqli_free_result($result);
+    get_member($mysqli, $result_big_arr[0]['qr_type_big_id']);
 }
 
+function get_member($mysqli, $qr_type_big_id)
+{
+    $query_member = "SELECT A.*, B.title AS 'big_title' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id WHERE B.qr_type_big_id = '" . $qr_type_big_id . "' ORDER BY A.orders ASC";
+    
+    $result_member_arr = array();
+
+    if ($result = $mysqli->query($query_member)) {
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $result_member_arr[] = $row;
+        }
+
+        mysqli_free_result($result);
+    }
+    $output = "";
+    foreach ($result_member_arr as $member) {
+        $output .= "<option value='{$member['title']}' data-member-id='{$member['member_id']}'>{$member['title']}</option>";
+    }
+    return $output;
+}
+
+// Function to get qrcode_big_id
+function get_qrcode_big_id($mysqli, $qr_type_big_id, $member_id)
+{
+    $query_qrcode = "SELECT qrcode_big_id FROM qrcode_big WHERE qr_type_big_id = '" . $mysqli->real_escape_string($qr_type_big_id) . "' AND member_id = '" . $mysqli->real_escape_string($member_id) . "'";
+    $result_qrcode = $mysqli->query($query_qrcode);
+
+    if ($row = $result_qrcode->fetch_array(MYSQLI_ASSOC)) {
+        return $row['qrcode_big_id'];
+    } else {
+        return null;
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['qr_type_big_id']) && !isset($_POST['member_id'])) {
+        echo get_member($mysqli, $_POST['qr_type_big_id']);
+    } elseif (isset($_POST['qr_type_big_id']) && isset($_POST['member_id'])) {
+        echo get_qrcode_big_id($mysqli, $_POST['qr_type_big_id'], $_POST['member_id']);
+    }
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -142,9 +187,31 @@ if ($result = $mysqli->query($query_big)) {
                                                 }
                                                 ?>
                                                 <tr>
+                                                    <th width="20%">選擇分會</th>
+                                                    <td>
+                                                        <select data-title="單位管理權限" name="qr_type_big_id" id="qr_type_big_id" class="form-control col-md-6" defaults="<?php echo isset($result_arr[0]["qr_type_big_id"]) ? $result_arr[0]["qr_type_big_id"] : ""; ?>">
+                                                            <option value="">請選擇可管理的單位</option>
+                                                            <?php
+                                                            foreach ($result_big_arr as $value) {
+                                                                if ($result_arr[0]["qr_type_big_id"] == $value["qr_type_big_id"]) {
+                                                                    echo "<option value='" . $value["qr_type_big_id"] . "' selected>" . $value["title"] . "</option>";
+                                                                } else {
+                                                                    echo "<option value='" . $value["qr_type_big_id"] . "'>" . $value["title"] . "</option>";
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <th width="20%">名稱<span class="required">*</span></th>
                                                     <td>
-                                                        <input req data-title="名稱" class="form-control" name="nickname" placeholder="請輸入管理員名稱" value="<?php echo isset($result_arr[0]["nickname"]) ? $result_arr[0]["nickname"] : "" ?>">
+                                                        <?php if (isset($result_arr[0]["nickname"])) { ?>
+                                                            <input req data-title="名稱" class="form-control" name="nickname" placeholder="請輸入管理員名稱" value="<?php echo isset($result_arr[0]["nickname"]) ? $result_arr[0]["nickname"] : "" ?>">
+                                                        <?php } else { ?>
+                                                            <select data-title="單位管理權限" name="nickname" id="nickname_dropdown" class="form-control col-md-6" defaults="<?php echo isset($result_arr[0]["nickname"]) ? $result_arr[0]["nickname"] : ""; ?>">
+                                                            </select>
+                                                        <?php } ?>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -167,23 +234,7 @@ if ($result = $mysqli->query($query_big)) {
                                                         <input <?php echo ($model == "add") ? "req" : "" ?> data-title="密碼確認" placeholder="請再輸入一次密碼" type="password" class="form-control" name="password2">
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th width="20%">選擇分會</th>
-                                                    <td>
-                                                        <select data-title="單位管理權限" name="qr_type_big_id" class="form-control col-md-6" defaults="<?php echo isset($result_arr[0]["qr_type_big_id"]) ? $result_arr[0]["qr_type_big_id"] : ""; ?>">
-                                                            <option value="">請選擇可管理的單位</option>
-                                                            <?php
-                                                            foreach ($result_big_arr as $value) {
-                                                                if ($result_arr[0]["qr_type_big_id"] == $value["qr_type_big_id"]) {
-                                                                    echo "<option value='" . $value["qr_type_big_id"] . "' selected>" . $value["title"] . "</option>";
-                                                                } else {
-                                                                    echo "<option value='" . $value["qr_type_big_id"] . "'>" . $value["title"] . "</option>";
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </td>
-                                                </tr>
+
                                                 <tr>
                                                     <th width="20%">權限<br /><span class="text-xs text-danger font-weight-normal">不勾選代表權限最大</span>
                                                     </th>
@@ -231,6 +282,9 @@ if ($result = $mysqli->query($query_big)) {
                                         <button type="submit" class="btn btn-success" name="post">儲存</button>
                                         <input type="hidden" name="admin_id" value="<?php echo $admin_id; ?>">
                                         <input type="hidden" name="model" value="<?php echo $model; ?>">
+                                        <!-- Hidden input for qrcode_big_id -->
+                                        <input type="hidden" id="qrcode_big_id" name="qrcode_big_id" value="<?php echo $qrcode_big_id; ?>">
+
                                     </div>
                                 </div>
                                 <!-- /.card -->
@@ -247,6 +301,50 @@ if ($result = $mysqli->query($query_big)) {
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer text-sm">
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#qr_type_big_id').change(function() {
+                        var qr_type_big_id = $(this).val();
+
+                        $.ajax({
+                            url: '',
+                            type: 'POST',
+                            data: {
+                                qr_type_big_id: qr_type_big_id
+                            },
+                            success: function(response) {
+                                $('#nickname_dropdown').html(response);
+                                $('#qrcode_big_id').val('');
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('AJAX Error:', status, error);
+                            }
+                        });
+                    });
+
+                    $('#nickname_dropdown').change(function() {
+                        var qr_type_big_id = $('#qr_type_big_id').val();
+                        var member_id = $('#nickname_dropdown').find(':selected').data('member-id');
+
+                        $.ajax({
+                            url: '', // Send the request to the same PHP file
+                            type: 'POST',
+                            data: {
+                                qr_type_big_id: qr_type_big_id,
+                                member_id: member_id
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                $('#qrcode_big_id').val(response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('AJAX Error:', status, error);
+                            }
+                        });
+                    });
+                });
+            </script>
             <strong>Copyright &copy; <a href="https://www.pintech.com.tw" target="_blank">PinTech</a>.</strong>
             All rights reserved.
         </footer>
