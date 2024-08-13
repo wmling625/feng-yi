@@ -180,7 +180,11 @@ if ($mysqli->multi_query($query)) {
                                                 <tr>
                                                     <th width="20%">Line 訊息數量<span class="required"></span></th>
                                                     <td>
-                                                        <input req data-title="Line 訊息數量" class="form-control" name="line" value="<?php echo isset($result_arr[0]["line"]) ? $result_arr[0]["line"] : "" ?>">
+                                                        <?php if (isset($_SESSION['admin']['qr_type_big_id'])) { ?>
+                                                            <input req data-title="Line 訊息數量" class="form-control" name="line" value="<?php echo isset($result_arr[0]["line"]) ? $result_arr[0]["line"] : "" ?>" readonly>
+                                                        <?php } else { ?>
+                                                            <input req data-title="Line 訊息數量" class="form-control" name="line" value="<?php echo isset($result_arr[0]["line"]) ? $result_arr[0]["line"] : "" ?>">
+                                                        <?php }  ?>
                                                     </td>
                                                 </tr>
                                             </tbody>

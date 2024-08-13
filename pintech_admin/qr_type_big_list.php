@@ -102,6 +102,16 @@ if ($result = $mysqli->query($qrcode_big)) {
     mysqli_free_result($result);
 }
 
+$member_arr = array();
+$member_query = "SELECT * FROM  `member`";
+if ($result = $mysqli->query($member_query)) {
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        $member_arr[] = $row;
+    }
+
+    mysqli_free_result($result);
+}
+
 
 // $query_type_big = "SELECT * FROM `history` WHERE `qr_type_big_id` = '" . $_SESSION['admin']['qr_type_big_id'] . "' LIMIT 0, 25;";
 // $result_big_arr = array();
@@ -227,8 +237,10 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-bs-toggle="tooltip" title="推播給擁有該單位條碼的所有會員" id="lineNotify">
                                             推播訊息
                                         </button>
-                                        <a href="qr_type_big_mang.php?model=add" type="button" class="btn btn-sm btn-success">新增</a>
-                                        <button type="button" class="btn btn-sm btn-danger" name="box_del">批次刪除</button>
+                                        <?php if (!isset($qr_type_big_id)) { ?>
+                                            <a href="qr_type_big_mang.php?model=add" type="button" class="btn btn-sm btn-success">新增</a>
+                                            <button type="button" class="btn btn-sm btn-danger" name="box_del">批次刪除</button>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -282,6 +294,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                                 <!--                                        <th width="10%">封面</th>-->
                                                 <th width="10%">綁定QRcode</th>
                                                 <th width="10%">單位名稱</th>
+                                                <th width="10%">單位管理員</th>
                                                 <th width="10%">推播數量</th>
                                                 <th width="15%">
                                                     啟用<br />
@@ -328,6 +341,13 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                                 echo '</td>';
 
                                                 echo '<td class="text-center">' . $value["title"] . '</td>';
+                                                echo '<td class="text-center">';
+                                                foreach ($member_arr as $key => $member) {
+                                                    if ($member['qr_type_big_id'] == $value['qr_type_big_id']) {
+                                                         echo $member["title"] .' , ';
+                                                    }
+                                                }
+                                                echo '</td>';
                                                 echo '<td class="text-center">0 / ' . $value["line"] . '</td>';
 
                                                 echo '<td>';

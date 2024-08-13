@@ -57,7 +57,7 @@ if (!empty($types)) {
 }
 
 if (!empty($keyword)) {
-    array_push($filter_sql_arr, "((A.nickname LIKE '%" . $keyword . "%') OR (A.account LIKE '%" . $keyword . "%'))");
+    array_push($filter_sql_arr, "((A.nickname LIKE '%" . $keyword . "%') OR (A.account LIKE '%" . $keyword . "%') OR (A.title LIKE '%" . $keyword . "%'))");
 }
 
 if (!empty($orders)) {
@@ -259,7 +259,7 @@ if ($result = $mysqli->query($query_big)) {
                                             </select>
                                         </div>
                                         <div class="col-md-3 col-sm-6 mt-2">
-                                            <select data-title="單位管理權限" name="qr_type_big_id" class="form-control col-md-6" defaults="<?php echo isset($result_big_arr[0]["qr_type_big_id"]) ? $result_big_arr[0]["qr_type_big_id"] : ""; ?>">
+                                            <select data-title="單位管理權限" name="qr_type_big_id" class="form-control" defaults="<?php echo isset($result_big_arr[0]["qr_type_big_id"]) ? $result_big_arr[0]["qr_type_big_id"] : ""; ?>">
                                                 <option value="">請選擇可管理的單位</option>
                                                 <?php
                                                 foreach ($result_big_arr as $value) {
@@ -273,7 +273,7 @@ if ($result = $mysqli->query($query_big)) {
                                             </select>
                                         </div>
                                         <div class="col-md-3 col-sm-6 mt-2">
-                                            <input type="text" class="form-control" name="keyword" data-bs-toggle="tooltip" title="會員姓名、手機" placeholder="請輸入會員姓名 手機" value="<?php echo $keyword; ?>" search_ref>
+                                            <input type="text" class="form-control" name="keyword" data-bs-toggle="tooltip" title="會員姓名、Line暱稱、手機" placeholder="會員姓名、Line暱稱、手機" value="<?php echo $keyword; ?>" search_ref>
                                         </div>
                                         <div class="col-md-12 mt-2 row">
                                             <div class="col-md-6 col-sm-12 float-left"><?php echo $page->myde_showTotal(); ?>
