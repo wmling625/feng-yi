@@ -76,11 +76,11 @@ if (strpos($_SERVER['PHP_SELF'], "index") !== false or strpos($_SERVER['PHP_SELF
                     }
                 }
 
-                if (!checkAdminPermission($filename, $passed_array, $permission_arr) && !checkAdminPermission($filename, $passed_array, $special_permission_arr)) {
-                    echo "<script>alert('您無權限觀看此頁');</script>";
-                    echo "<script> history.go(-1) </script>";
-                    exit;
-                }
+                // if (!checkAdminPermission($filename, $passed_array, $permission_arr) && !checkAdminPermission($filename, $passed_array, $special_permission_arr)) {
+                //     echo "<script>alert('您無權限觀看此頁');</script>";
+                //     echo "<script> history.go(-1) </script>";
+                //     exit;
+                // }
             }
 
         } else {

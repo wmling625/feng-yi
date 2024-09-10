@@ -13,6 +13,7 @@ $err_msg = array();
 @$city = params_security($_POST["city"]);
 @$region = params_security($_POST["region"]);
 @$qr_type_big_id = params_security($_POST["qr_type_big_id"]);
+@$types = params_security($_GET["types"]);
 
 
 if (empty($nickname) || empty($types_option) || empty($city) || empty($region)) {
