@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                                 if ($result_arr[0]["qr_type_big_id"] == $value["qr_type_big_id"]) {
                                                                     echo "<option value='" . $value["qr_type_big_id"] . "' selected>" . $value["title"] . "</option>";
                                                                 } else {
-                                                                    echo "<option value='" . $value["qr_type_big_id"] . "' disabled>" . $value["title"] . "</option>";
+                                                                    echo "<option value='" . $value["qr_type_big_id"] . "'>" . $value["title"] . "</option>";
                                                                 }
                                                             }
                                                             ?>
