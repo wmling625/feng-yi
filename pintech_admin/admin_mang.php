@@ -5,6 +5,7 @@ include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
 @$admin_id = params_security($_GET["admin_id"]);
 
 $result_arr = array();
+$qrcode_big_id = '';
 $box_arr = array("個人資料" => "me_mang.php", "最新消息" => "news_list.php", "合作店家" => "place_list.php");
 $query = "SELECT * FROM admin WHERE admin_id = '" . $admin_id . "';";
 
@@ -14,12 +15,8 @@ if ($result = $mysqli->query($query)) {
     mysqli_free_result($result);
 }
 
-
-
-
 $query_big = "SELECT *, 1 AS 'qr_type_big_data' FROM qr_type_big WHERE orders>=1 ORDER BY orders, pub_date DESC; ";
 $result_big_arr = array();
-
 if ($result = $mysqli->query($query_big)) {
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $result_big_arr[] = $row;
@@ -29,10 +26,11 @@ if ($result = $mysqli->query($query_big)) {
     get_member($mysqli, $result_big_arr[0]['qr_type_big_id']);
 }
 
+
 function get_member($mysqli, $qr_type_big_id)
 {
     $query_member = "SELECT A.*, B.title AS 'big_title' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id WHERE B.qr_type_big_id = '" . $qr_type_big_id . "' ORDER BY A.orders ASC";
-    
+
     $result_member_arr = array();
 
     if ($result = $mysqli->query($query_member)) {
@@ -56,7 +54,9 @@ function get_qrcode_big_id($mysqli, $qr_type_big_id, $member_id)
     $result_qrcode = $mysqli->query($query_qrcode);
 
     if ($row = $result_qrcode->fetch_array(MYSQLI_ASSOC)) {
-        return $row['qrcode_big_id'];
+        $qrcode_big_id = $row['qrcode_big_id'];
+
+        return $qrcode_big_id;
     } else {
         return null;
     }
@@ -190,13 +190,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                     <th width="20%">選擇分會</th>
                                                     <td>
                                                         <select data-title="單位管理權限" name="qr_type_big_id" id="qr_type_big_id" class="form-control col-md-6" defaults="<?php echo isset($result_arr[0]["qr_type_big_id"]) ? $result_arr[0]["qr_type_big_id"] : ""; ?>">
-                                                            <option value="">請選擇可管理的單位</option>
+                                                            <option value="">請選擇可管理的單位 (全部分會)</option>
                                                             <?php
                                                             foreach ($result_big_arr as $value) {
                                                                 if ($result_arr[0]["qr_type_big_id"] == $value["qr_type_big_id"]) {
                                                                     echo "<option value='" . $value["qr_type_big_id"] . "' selected>" . $value["title"] . "</option>";
                                                                 } else {
-                                                                    echo "<option value='" . $value["qr_type_big_id"] . "'>" . $value["title"] . "</option>";
+                                                                    echo "<option value='" . $value["qr_type_big_id"] . "' disabled>" . $value["title"] . "</option>";
                                                                 }
                                                             }
                                                             ?>
@@ -206,8 +206,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 <tr>
                                                     <th width="20%">名稱<span class="required">*</span></th>
                                                     <td>
-                                                        <?php if (!isset($result_arr[0]["nickname"])) { ?>
-                                                            <input req data-title="名稱" class="form-control" name="nickname" placeholder="請輸入管理員名稱" value="<?php echo isset($result_arr[0]["nickname"]) ? $result_arr[0]["nickname"] : "" ?>">
+                                                        <?php if (isset($result_arr[0]["nickname"])) { ?>
+
+                                                            <input req readonly data-title="名稱" class="form-control" name="nickname" placeholder="請輸入管理員名稱" value="<?php echo isset($result_arr[0]["nickname"]) ? $result_arr[0]["nickname"] : "" ?>">
                                                         <?php } else { ?>
                                                             <select data-title="單位管理權限" name="nickname" id="nickname_dropdown" class="form-control col-md-6" defaults="<?php echo isset($result_arr[0]["nickname"]) ? $result_arr[0]["nickname"] : ""; ?>">
                                                             </select>

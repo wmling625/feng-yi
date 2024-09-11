@@ -16,6 +16,7 @@ $err_msg = array();
 @$permission = params_security($_POST["permission"], "none"); // 因為是json 符號可能會被過濾掉
 @$note = params_security($_POST["note"], "text");
 
+
 if (empty($nickname) || empty($account)) {
     array_push($err_msg, "必填欄位未填寫，請檢查");
 } else {
@@ -36,7 +37,7 @@ if (count($err_msg)) {
     } else if ($model == "update") {
         // 可以對照insert欄位, 略過pub_update..等
         if ($passwd == "") {
-            $query = "update admin set nickname = '" . $nickname . "', account = '" . $account . "', permission = '" . $permission . "', qr_type_big_id = '" . $qr_type_big_id . "', qrcode_big_id = '" . $qrcode_big_id . "' note = '" . $note . "' ";
+            $query = "update admin set nickname = '" . $nickname . "', account = '" . $account . "', permission = '" . $permission . "', qr_type_big_id = '" . $qr_type_big_id . "', qrcode_big_id = '" . $qrcode_big_id . "', note = '" . $note . "' ";
         } else {
             $query = "update admin set nickname = '" . $nickname . "', account = '" . $account . "', passwd = '" . md5($passwd) . "', permission = '" . $permission . "', qr_type_big_id = '" . $qr_type_big_id . "', qrcode_big_id = '" . $qrcode_big_id . "', note = '" . $note . "' ";
         }
