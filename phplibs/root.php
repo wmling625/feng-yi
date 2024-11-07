@@ -18,10 +18,19 @@ $mysqli = new mysqli("localhost", "root", 'root1234', "feng_master");
 $mysqli->set_charset("utf8mb4");
 //$mysqli->set_charset("utf8");
 $mysqli->query("SET time_zone='" . set_mysql_timezone() . "';");
+@$id = '1';
+$query = "SELECT * FROM setting WHERE id = '" . $id . "';";
 
-$liff_full = "1657192181-Wn1RV2db";
-$liff_close = "1657192181-OgEgXVG0";
-$oa = "https://lin.ee/4mGaHre";
+if ($result = $mysqli->query($query)) {
+    $rows = $result->fetch_array();
+    $result_arr[] = $rows;
+    mysqli_free_result($result);
+}
+
+
+$liff_full = $result_arr[0]["linefull"];
+$liff_close = $result_arr[0]["lineclose"];
+$oa = $result_arr[0]["lineoauth"];
 
 //MYSQL時區同步PHP時區
 function set_mysql_timezone()

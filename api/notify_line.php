@@ -21,7 +21,17 @@ LINE MESSAGE除非是PHP錯誤, 不然沒辦法DEBUG
 
 file_put_contents(dirname(__FILE__) . "/./api/log/" . date("Ymdhis") . "line_notify.txt", json_encode($_POST, JSON_UNESCAPED_UNICODE));
 
-$channelAccessToken = 'LquHnxgBs6+ChUvSfQdsZ0BER/dN1BK9/jDet/WGg3lb4ujVoObBXOKDQoG3cV+gBf5YAhqBrDj8g9T/NnCQwUwN88soy3m112nPI92I44h+02+y61H7JsxrsIWSD5FCQuSX9cN6Abc5sBDNLYIuEAdB04t89/1O/w1cDnyilFU=';
+
+@$id = '1';
+$query = "SELECT * FROM setting WHERE id = '" . $id . "';";
+
+if ($result = $mysqli->query($query)) {
+    $rows = $result->fetch_array();
+    $result_arr[] = $rows;
+    mysqli_free_result($result);
+}
+
+$channelAccessToken = $result_arr[0]["linetoken"];
 
 // $users = array("LINE UUID","LINE UUID","LINE UUID","LINE UUID","LINE UUID");
 // 可多人

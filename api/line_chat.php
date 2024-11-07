@@ -14,9 +14,17 @@ https://manager.line.biz/beacon/register
 總設定
 https://developers.line.biz/en/
 */
+@$id = '1';
+$query = "SELECT * FROM setting WHERE id = '" . $id . "';";
 
-$channelAccessToken = 'LquHnxgBs6+ChUvSfQdsZ0BER/dN1BK9/jDet/WGg3lb4ujVoObBXOKDQoG3cV+gBf5YAhqBrDj8g9T/NnCQwUwN88soy3m112nPI92I44h+02+y61H7JsxrsIWSD5FCQuSX9cN6Abc5sBDNLYIuEAdB04t89/1O/w1cDnyilFU=';
-$channelSecret = '3d69302c7055ec4972038f7c3fc1bf40';
+if ($result = $mysqli->query($query)) {
+    $rows = $result->fetch_array();
+    $result_arr[] = $rows;
+    mysqli_free_result($result);
+}
+
+$channelAccessToken = $result_arr[0]["linetoken"];
+$channelSecret = $result_arr[0]["linesecret"];
 
 $line_string = file_get_contents('php://input');
 $line_obj = json_decode($line_string); //為物件
