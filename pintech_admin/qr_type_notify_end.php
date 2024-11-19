@@ -129,4 +129,3 @@ if (count($err_msg)) {
 }
 echo "<script>history.go(-1)</script>";
 exit;
-
