@@ -58,7 +58,7 @@ if (isset($_GET["liff_state"])) {
                         "userId": userId
                     }));
 
-                    if (end_point.startsWith("big_redirect.php") || end_point.startsWith("code_redirect.php") || end_point.startsWith("info.php")) {
+                    if (end_point.startsWith("big_redirect.php") || end_point.startsWith("code_redirect.php") || end_point.startsWith("info.php") || end_point.startsWith("big_info.php")) {
                         targetHref(end_point, profile) // 不檢查會員是否存在
                     } else {
                         /* ajax 判斷該 userId 是否存在 */
