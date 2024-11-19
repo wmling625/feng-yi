@@ -6,6 +6,7 @@ include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
 @$types = params_security($_GET["types"]);
 @$items = params_security($_GET["items"]);
 @$keyword = params_security($_GET["keyword"]);
+@$form = params_security($_GET["form"]);
 @$orders = params_security($_GET["orders"]);
 @$qrbigParams = params_security($_GET["qrbigParams"]);
 @$paid = params_security($_GET["paid"]);
@@ -66,6 +67,11 @@ if (!empty($types)) {
 if (!empty($keyword)) {
     array_push($filter_sql_arr, "((A.nickname LIKE '%" . $keyword . "%') OR (A.account LIKE '%" . $keyword . "%') OR (A.title LIKE '%" . $keyword . "%'))");
 }
+
+if (!empty($form)) {
+    array_push($filter_sql_arr, "(A.form LIKE '%" . $form . "%')");
+}
+
 
 if (!empty($orders)) {
     if ($orders == -1) {
@@ -284,6 +290,11 @@ if ($result = $mysqli->query($query_big)) {
                                         <div class="col-md-3 col-sm-6 mt-2">
                                             <input type="text" class="form-control" name="keyword" data-bs-toggle="tooltip" title="會員姓名、Line暱稱、手機" placeholder="會員姓名、Line暱稱、手機" value="<?php echo $keyword; ?>" search_ref>
                                         </div>
+
+                                        <div class="col-md-3 col-sm-6 mt-2">
+                                            <input type="text" class="form-control" name="form" data-bs-toggle="tooltip" title="關鍵字" placeholder="會員社區關鍵字" value="<?php echo $form; ?>" search_ref>
+                                        </div>
+
                                         <div class="col-md-12 mt-2 row">
                                             <div class="col-md-6 col-sm-12 float-left"><?php echo $page->myde_showTotal(); ?>
                                                 <br /><span class="text-sm text-muted">排序：<span class="text-sm text-primary">停用|啟用小至大&#8594;<?php echo array_search($date_type, $search_date_type); ?>新至舊</span></span>

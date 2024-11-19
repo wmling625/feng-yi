@@ -16,6 +16,18 @@ include_once(dirname(__FILE__) . "/phplibs/front_head.php");
 @$redirect = aes_decrypt(params_security($_POST["redirect"]));
 @$profile = params_security($_POST["profile"]);
 
+$formValues = isset($_POST['form']) && is_array($_POST['form']) ? $_POST['form'] : [];
+$sanitizedFormValues = [];
+
+// Sanitize each value
+foreach ($formValues as $key => $value) {
+    $sanitizedFormValues[$key] = params_security($value);
+}
+
+// Convert to JSON
+$form = json_encode($sanitizedFormValues, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+
 $err_msg = array();
 
 if (!token_validation($value, $token)) {
@@ -80,7 +92,7 @@ if (count($err_msg) > 0) {
     }
 
     /* 註冊動作、更新userId */
-    $query = "INSERT INTO `member`(`member_id`, `account`, `user_id`, `title`, `nickname`, `types_option`, `city`, `region`, `pub_date`, `last_date`, `orders`) VALUES (uuid(),'" . $mobile . "','" . $userId . "','" . $title . "','" . $nickname . "','" . $types_option . "','" . $city . "','" . $region . "', NOW(), NOW(), 1) ON DUPLICATE KEY UPDATE `user_id` = '" . $userId . "', `title` = '" . $title . "', `nickname` = '" . $nickname . "', `types_option` = '" . $types_option . "', `city` = '" . $city . "', `region` = '" . $region . "', `last_date` = NOW(), `orders` = 1";
+    $query = "INSERT INTO `member`(`member_id`, `account`, `user_id`, `title`, `nickname`, `types_option`, `city`, `region`, `form`, `pub_date`, `last_date`, `orders`) VALUES (uuid(),'" . $mobile . "','" . $userId . "','" . $title . "','" . $nickname . "','" . $types_option . "','" . $city . "','" . $region . "','" . $mysqli->real_escape_string($form) . "', NOW(), NOW(), 1) ON DUPLICATE KEY UPDATE `user_id` = '" . $userId . "', `title` = '" . $title . "', `nickname` = '" . $nickname . "', `types_option` = '" . $types_option . "', `city` = '" . $city . "', `region` = '" . $region . "', `last_date` = NOW(), `orders` = 1";
     if ($mysqli->query($query)) {
         if (!$isLogin) {
             echo "<script>alert('註冊成功，將直接為您登入，請稍後...')</script>";

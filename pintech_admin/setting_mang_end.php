@@ -13,6 +13,18 @@ $err_msg = array();
 @$linetoken = params_security($_POST["linetoken"]);
 @$linesecret = params_security($_POST["linesecret"]);
 
+// Retrieve community inputs as JSON
+$communities = [];
+if (!empty($_POST['community']['label']) && !empty($_POST['community']['name'])) {
+    foreach ($_POST['community']['label'] as $index => $label) {
+        $communities[] = [
+            'label' => params_security($label),
+            'name' => params_security($_POST['community']['name'][$index])
+        ];
+    }
+}
+$communityJSON = json_encode($communities, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
 
 //if (empty($content)) {
 //    array_push($err_msg, "必填欄位未填寫，請檢查");
@@ -33,6 +45,7 @@ if (count($err_msg)) {
               `lineoauth` = '" . $lineoauth . "',
               `linetoken` = '" . $linetoken . "',
               `linesecret` = '" . $linesecret . "',
+              `form` = '" . $mysqli->real_escape_string($communityJSON) . "',
               `last_date` = NOW()";
         $query .= " WHERE `id` = '" . $id . "'; ";
         // `failed` = '" . $failed . "',

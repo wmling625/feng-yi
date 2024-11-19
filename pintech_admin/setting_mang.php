@@ -184,6 +184,36 @@ if ($result = $mysqli->query($query)) {
                                                         <input req data-title="Line Close" class="form-control" name="linesecret" placeholder="請輸入Line Secret" value="<?php echo isset($result_arr[0]["linesecret"]) ? $result_arr[0]["linesecret"] : "" ?>">
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <th width="15%">社區<span class="required"></span></th>
+                                                    <td>
+                                                        <div id="community-inputs">
+                                                            <!-- Existing inputs from the database -->
+                                                            <?php
+                                                            if (!empty($result_arr[0]["form"])) {
+                                                                // Decode the stored JSON or associative array
+                                                                $communities = json_decode($result_arr[0]["form"], true);
+                                                                if (is_array($communities)) {
+                                                                    foreach ($communities as $community) {
+                                                                        echo '<div class="input-group mb-2">';
+                                                                        echo '<input type="text" name="community[label][]" class="form-control" placeholder="請輸入標籤 (Label)" value="' . htmlspecialchars($community['label']) . '">';
+                                                                        echo '<input type="text" name="community[name][]" class="form-control" placeholder="請輸入名稱 (Name)" value="' . htmlspecialchars($community['name']) . '">';
+                                                                        echo '<button type="button" class="btn btn-danger remove-community">-</button>';
+                                                                        echo '</div>';
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                echo '<div class="input-group mb-2">';
+                                                                echo '<input type="text" name="community[label][]" class="form-control" placeholder="請輸入標籤 (Label)">';
+                                                                echo '<input type="text" name="community[name][]" class="form-control" placeholder="請輸入名稱 (Name)">';
+                                                                echo '<button type="button" class="btn btn-danger remove-community">-</button>';
+                                                                echo '</div>';
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                        <button type="button" class="btn btn-success" id="add-community">+</button>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -216,7 +246,34 @@ if ($result = $mysqli->query($query)) {
 
     </div>
     <!-- ./wrapper -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const communityInputs = document.getElementById("community-inputs");
+            const addCommunityBtn = document.getElementById("add-community");
 
+            // Add new community input group
+            addCommunityBtn.addEventListener("click", function() {
+                const newInputGroup = document.createElement("div");
+                newInputGroup.classList.add("input-group", "mb-2");
+
+                newInputGroup.innerHTML = `
+            <input type="text" name="community[label][]" class="form-control" placeholder="請輸入標籤 (Label)">
+            <input type="text" name="community[name][]" class="form-control" placeholder="請輸入名稱 (Name)">
+            <button type="button" class="btn btn-danger remove-community">-</button>
+        `;
+
+                communityInputs.appendChild(newInputGroup);
+            });
+
+            // Remove a community input group
+            communityInputs.addEventListener("click", function(event) {
+                if (event.target.classList.contains("remove-community")) {
+                    const inputGroup = event.target.parentElement;
+                    communityInputs.removeChild(inputGroup);
+                }
+            });
+        });
+    </script>
     <?php include_once(dirname(__FILE__) . "/../phplibs/backend_footer.php") ?>
 </body>
 
