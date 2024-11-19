@@ -6,6 +6,7 @@ include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
 @$types = params_security($_GET["types"]);
 @$items = params_security($_GET["items"]);
 @$keyword = params_security($_GET["keyword"]);
+@$form = params_security($_GET["form"]);
 @$orders = params_security($_GET["orders"]);
 @$qrbigParams = params_security($_GET["qrbigParams"]);
 @$paid = params_security($_GET["paid"]);
@@ -66,6 +67,11 @@ if (!empty($types)) {
 if (!empty($keyword)) {
     array_push($filter_sql_arr, "((A.nickname LIKE '%" . $keyword . "%') OR (A.account LIKE '%" . $keyword . "%') OR (A.title LIKE '%" . $keyword . "%'))");
 }
+
+if (!empty($form)) {
+    array_push($filter_sql_arr, "(A.form LIKE '%" . $form . "%')");
+}
+
 
 if (!empty($orders)) {
     if ($orders == -1) {
@@ -284,6 +290,11 @@ if ($result = $mysqli->query($query_big)) {
                                         <div class="col-md-3 col-sm-6 mt-2">
                                             <input type="text" class="form-control" name="keyword" data-bs-toggle="tooltip" title="會員姓名、Line暱稱、手機" placeholder="會員姓名、Line暱稱、手機" value="<?php echo $keyword; ?>" search_ref>
                                         </div>
+
+                                        <div class="col-md-3 col-sm-6 mt-2">
+                                            <input type="text" class="form-control" name="form" data-bs-toggle="tooltip" title="關鍵字" placeholder="會員社區關鍵字" value="<?php echo $form; ?>" search_ref>
+                                        </div>
+
                                         <div class="col-md-12 mt-2 row">
                                             <div class="col-md-6 col-sm-12 float-left"><?php echo $page->myde_showTotal(); ?>
                                                 <br /><span class="text-sm text-muted">排序：<span class="text-sm text-primary">停用|啟用小至大&#8594;<?php echo array_search($date_type, $search_date_type); ?>新至舊</span></span>
@@ -320,6 +331,7 @@ if ($result = $mysqli->query($query_big)) {
                                                 <th width="10%">會員性別<br />
                                                     <span class="text-sm text-muted font-weight-normal">活動區域</span>
                                                 </th>
+                                                <th width="10%">所屬單位</th>
                                                 <th width="10%">擁有單位管理權限</th>
                                                 <th width="10%">
                                                     啟用<br />
@@ -338,8 +350,19 @@ if ($result = $mysqli->query($query_big)) {
                                                 echo '<td colspan="7">查無資料</td>';
                                                 echo '</tr>';
                                             } else {
+                                                
                                                 foreach ($result_arr as $key => $value) {
+                                                    $query = "SELECT *, qr_type_big.title AS typeTitle FROM `qrcode_big` LEFT JOIN `qr_type_big` ON qrcode_big.qr_type_big_id = qr_type_big.qr_type_big_id WHERE `member_id` = '" . $value['member_id'] . "'";
+                                                    $type_arr = array();
+                                                    if ($result = $mysqli->query($query)) {
+                                                        $rows = $result->fetch_array();
+                                                        $type_arr[] = $rows;
+                                                        mysqli_free_result($result);
+                                                    }
 
+                                                    $typeTitle = $type_arr[0]['typeTitle'];
+                                                    
+                                                    
                                                     echo '<tr>';
                                                     echo '<td>';
                                                     echo '<div class="icheck-primary d-inline">';
@@ -352,6 +375,11 @@ if ($result = $mysqli->query($query_big)) {
                                                     echo '<td>' . $value["title"] . '</td>';
                                                     echo '<td>' . $value["nickname"] . '<br/><span class="text-sm text-muted">' . $value["account"] . '</span></td>';
                                                     echo '<td>' . $value["types_option"] . '<br/><span class="text-sm text-muted">' . $value["city"] . $value["region"] . '</span></td>';
+                                                    echo '<td>';
+                                                    foreach ($type_arr as $key => $type) {
+                                                        echo (!empty($type['typeTitle'])) ? $type['typeTitle'] . ',' : '<i class="fa-solid fa-x"></i>';
+                                                    }
+                                                    echo '</td>';
                                                     echo '<td>';
                                                     echo (!empty($value["qr_type_big_id"])) ? '<i class="fa-solid fa-check text-success"></i> ' . $value["big_title"] : '<i class="fa-solid fa-x"></i>';
                                                     echo '</td>';
