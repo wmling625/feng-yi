@@ -19,7 +19,7 @@ $text_arr = array(); // 圖文連結廣告
 
 $query = "";
 $query .= "SELECT *, 1 AS 'member' FROM member WHERE user_id = '" . $profile_json['userId'] . "' ; ";
-$query .= "SELECT A.*, B.`content` AS license, B.qr_type_id, 1 AS 'history' FROM `history` AS A INNER JOIN `qrcode` AS B ON A.`qrcode_id`=B.`qrcode_id` WHERE A.`history_id` = '" . $history_id . "'; ";
+$query .= "SELECT A.*, B.`contents` AS license, B.qr_type_id, 1 AS 'history' FROM `history` AS A INNER JOIN `qrcode` AS B ON A.`qrcode_id`=B.`qrcode_id` WHERE A.`history_id` = '" . $history_id . "'; ";
 
 if ($mysqli->multi_query($query)) {
     do {
@@ -42,7 +42,7 @@ if ($mysqli->multi_query($query)) {
 if (count($result_arr) == 0) {
     $query = "";
     $query .= "SELECT *, 1 AS 'member' FROM member WHERE user_id = '" . $profile_json['userId'] . "' ; ";
-    $query .= "SELECT A.*, B.`content` AS license, B.qr_type_big_id, 1 AS 'history' FROM `history` AS A INNER JOIN `qrcode_big` AS B ON A.`qrcode_big_id` = B.`qrcode_big_id` WHERE A.`history_id` = '" . $history_id . "'; ";
+    $query .= "SELECT A.*, B.`contents` AS license, B.qr_type_big_id, 1 AS 'history' FROM `history` AS A INNER JOIN `qrcode_big` AS B ON A.`qrcode_big_id` = B.`qrcode_big_id` WHERE A.`history_id` = '" . $history_id . "'; ";
     if ($mysqli->multi_query($query)) {
         do {
             if ($result = $mysqli->store_result()) {
