@@ -16,25 +16,40 @@ include_once(dirname(__FILE__) . "/phplibs/front_head.php");
 @$redirect = aes_decrypt(params_security($_POST["redirect"]));
 @$profile = params_security($_POST["profile"]);
 
-$formValues = isset($_POST['form']) && is_array($_POST['form']) ? $_POST['form'] : [];
-$sanitizedFormValues = [];
-
-// Sanitize each value
-foreach ($formValues as $key => $value) {
-    $sanitizedFormValues[$key] = params_security($value);
+$communities = [];
+if (!empty($_POST['form']['label']) && !empty($_POST['form']['name'])) {
+    foreach ($_POST['form']['label'] as $index => $label) {
+        $communities[] = [
+            'label' => params_security($label),
+            'name' => params_security($_POST['form']['name'][$index])
+        ];
+    }
 }
-
-// Convert to JSON
-$form = json_encode($sanitizedFormValues, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-
-
 $err_msg = array();
+$result_arr = [];
+$query = "SELECT * FROM `smscode` WHERE `mobile` = $mobile AND `code` = $code";
 
-if (!token_validation($value, $token)) {
-    array_push($err_msg, "value與token錯誤");
+if ($result = $mysqli->query($query)) {
+    $total = mysqli_num_rows($result);
+    if ($total > 0) {
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $result_arr[] = $row;
+        }
+    } else {
+        array_push($err_msg, "驗證失敗，請再試一次");
+    }
+
+    mysqli_free_result($result);
 }
 
-if (empty($mobile) || empty($nickname) || empty($types_option) || empty($city) || empty($region)) {
+$form = json_encode($communities, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+
+// if (!token_validation($value, $token)) {
+//     array_push($err_msg, "value與token錯誤");
+// }
+
+if (empty($mobile) || empty($nickname) || empty($types_option)) {
     array_push($err_msg, "請確認必填項目是否皆已填寫");
 } else {
     if (!validate_twmobile($mobile)) {
@@ -48,12 +63,15 @@ if (empty($mobile) || empty($nickname) || empty($types_option) || empty($city) |
 // 驗證手機驗證碼
 $isValid = false;
 if (!$isLogin) {
-    /* 註冊流程 */
-    if ($code === "88888") {
+    if ($total > 0) {
+        $query = "UPDATE smscode SET is_ok = 1 WHERE mobile = '" . $mobile . "' AND `code` = '" . $code . "' AND orders <= 1; ";
+        $mysqli->query($query);
         $isValid = true;
-    } else {
-        array_push($err_msg, "驗證碼請輸入88888");
     }
+    /* 註冊流程 */
+    // if (count($result_arr) == 0) {
+    //     array_push($err_msg, "驗證碼不符合");
+    // }
     //    $query = "SELECT `code` FROM `smscode` WHERE mobile = '" . $mobile . "' AND orders <= 1 AND TIMESTAMPDIFF(SECOND,pub_date,NOW()) < 305 and is_ok = -1 ORDER BY pub_date DESC LIMIT 0,1; "; // 是否在300秒內驗證
     //    if ($result = $mysqli->query($query)) {
     //        $total = mysqli_num_rows($result);
@@ -92,7 +110,7 @@ if (count($err_msg) > 0) {
     }
 
     /* 註冊動作、更新userId */
-    $query = "INSERT INTO `member`(`member_id`, `account`, `user_id`, `title`, `nickname`, `types_option`, `city`, `region`, `form`, `pub_date`, `last_date`, `orders`) VALUES (uuid(),'" . $mobile . "','" . $userId . "','" . $title . "','" . $nickname . "','" . $types_option . "','" . $city . "','" . $region . "','" . $mysqli->real_escape_string($form) . "', NOW(), NOW(), 1) ON DUPLICATE KEY UPDATE `user_id` = '" . $userId . "', `title` = '" . $title . "', `nickname` = '" . $nickname . "', `types_option` = '" . $types_option . "', `city` = '" . $city . "', `region` = '" . $region . "', `last_date` = NOW(), `orders` = 1";
+    $query = "INSERT INTO `member`(`member_id`, `account`, `user_id`, `title`, `nickname`, `types_option`, `form`, `pub_date`, `last_date`, `orders`) VALUES (uuid(),'" . $mobile . "','" . $userId . "','" . $title . "','" . $nickname . "','" . $types_option . "','" . $mysqli->real_escape_string($form) . "', NOW(), NOW(), 1) ON DUPLICATE KEY UPDATE `user_id` = '" . $userId . "', `title` = '" . $title . "', `nickname` = '" . $nickname . "', `types_option` = '" . $types_option . "', `city` = '" . $city . "', `region` = '" . $region . "', `last_date` = NOW(), `orders` = 1";
     if ($mysqli->query($query)) {
         if (!$isLogin) {
             echo "<script>alert('註冊成功，將直接為您登入，請稍後...')</script>";

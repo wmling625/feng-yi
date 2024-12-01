@@ -22,9 +22,9 @@ include_once(dirname(__FILE__) . "/phplibs/front_head.php");
 
 $err_msg = array();
 
-if (!token_validation($value, $token)) {
-    array_push($err_msg, "value與token錯誤");
-}
+// if (!token_validation($value, $token)) {
+//     array_push($err_msg, "value與token錯誤");
+// }
 
 if (empty($contents0)) {
     array_push($err_msg, "請填寫留言內容");
@@ -66,7 +66,7 @@ if (count($err_msg) > 0) {
             "license" => $license
         );
 //        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toOwner&user_id=" . $user_id1 . "&qr_type_id=" . $qr_type_id . "&history_id=" . $uuid . "&lat=" . $lat . "&lng=" . $lng . "&license=" . $license;
-        $url = "https://feng-yi.tw/api/notify_line.php";
+        $url = "https://marketingchain.feng-yi.tw/api/notify_line.php";
         download_page($url, $data_arr);
         echo "<script>alert('推播成功')</script>";
     }else{

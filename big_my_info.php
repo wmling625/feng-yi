@@ -214,11 +214,25 @@ if ($mysqli->multi_query($query1)) {
                                     </div>
                                 </div>
                                 <div class="col-6">
+                                    <?php
+                                    $formArray = !empty($member_arr[0]["form"]) ? json_decode($member_arr[0]["form"], true) : [];
+                                    if (!empty($formArray)) {
+                                        foreach ($formArray as $res) {
+                                            echo '<div class="item">';
+                                            echo '<div class="label">' . htmlspecialchars($res['label']) . ': </div>';
+                                            echo '<div class="content">' . htmlspecialchars($res['name']) . '</div>';
+                                            echo '</div>';
+                                        }
+                                    }
+                                    ?>
+                                </div>
+
+                                <!-- <div class="col-6">
                                     <div class="item">
                                         <div class="label">活動區域</div>
                                         <div class="content"><?php echo isset($result_arr[0]['city']) ? $result_arr[0]['city'] . $result_arr[0]['region'] : ""; ?></div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- <div class="text-center">
                             <a class="btn btn-primary btn-block" href="edit.html"><i class="las la-edit"></i>編輯我的個人資訊</a>

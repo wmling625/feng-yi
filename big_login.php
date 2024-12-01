@@ -11,10 +11,10 @@ $box_arr = array("請選擇您的性別" => "", "男" => "男", "女" => "女");
 $profile_json = array();
 $result_arr = array();
 
-if (empty($profile)) {
-    echo "<script>document.location.href = 'https://liff.line.me/" . $liff_close . "';</script>";
-    exit;
-}
+// if (empty($profile)) {
+//     echo "<script>document.location.href = 'https://liff.line.me/" . $liff_close . "';</script>";
+//     exit;
+// }
 
 $profile_json = json_decode(aes_decrypt($profile), true);
 $query = "SELECT * FROM member WHERE user_id = '" . $profile_json['userId'] . "'";
@@ -104,10 +104,10 @@ if ($setting_result = $mysqli->query($setting_query)) {
                             <?php
                             $formArray = !empty($setting_arr[0]["form"]) ? json_decode($setting_arr[0]["form"], true) : [];
                             if (!empty($formArray)) {
-                                foreach ($formArray as $res) {
+                                foreach ($formArray as $index => $res) {
                                     echo '<div class="form-item warning-box">';
-                                    echo '<label for="">' . htmlspecialchars($res['label']) . ': </label>';
-                                    echo '<input type="text" name="form[' . htmlspecialchars($res['name']) . ']" class="form-control form-control-lg" placeholder="請輸入" value="">';
+                                    echo '<input readonly type="text" name="form[label][' . $index . ']" class="form-control" placeholder="' . htmlspecialchars($res['label']) . '" value="' . htmlspecialchars($res['label']) . '">';
+                                    echo '<input type="text" name="form[name][' . $index . ']" class="form-control form-control-lg" placeholder="請輸入" value="">';
                                     echo '</div>';
                                 }
                             } else {
@@ -132,7 +132,7 @@ if ($setting_result = $mysqli->query($setting_query)) {
                                 <label for="">驗證碼：</label>
                                 <div class="input-group">
                                     <input name="code" id="sms-input" type="text" class="form-control form-control-lg"
-                                        value="88888" readonly>
+                                        value="">
                                 </div>
                                 <span class="alert-text">*此為必填欄位</span>
                             </div>

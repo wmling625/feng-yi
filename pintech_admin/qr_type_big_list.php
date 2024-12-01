@@ -344,7 +344,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                                 echo '<td class="text-center">';
                                                 foreach ($member_arr as $key => $member) {
                                                     if ($member['qr_type_big_id'] == $value['qr_type_big_id']) {
-                                                         echo $member["title"] .' , ';
+                                                        echo $member["title"] . ' , ';
                                                     }
                                                 }
                                                 echo '</td>';
@@ -412,6 +412,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                 </div>
                                 <?php
                                 $image_arr = array("file0" => "推播圖片");
+                                $file_arr = array("file1" => array("推播影片", "", "3"));
                                 $upload_dir = "../uploads/others/";
                                 // 圖片
                                 foreach ($image_arr as $key => $value) {
@@ -428,6 +429,43 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                     echo '</label>';
                                     echo '<textarea name="' . $key . '_64" class="hide"></textarea>';
                                     echo '</div>';
+                                }
+
+                                // 附件
+                                foreach ($file_arr as $key => $value) {
+                                    $required = ($value[1] !== "") ? "*" : "";
+                                    $del_str = "";
+                                    $file_str = "";
+                                    if (isset($result_arr[0][$key]) && $result_arr[0][$key] !== "") {
+                                        $file = $result_arr[0][$key];
+                                        $file_loc = $upload_dir . $file;
+
+                                        if ($file != "") {
+                                            if (file_exists($file_loc)) {
+                                                $file_str = "<a href='" . $file_loc . "' target='_blank'>" . $file . "</a>";
+
+                                                $file_sql = aes_encrypt(" update advertisement set " . $key . " = '' where advertisement_id = '" . $advertisement_id . "'; ");
+
+                                                $file_str = "<br/><a class='text-sm text-muted' href='" . $file_loc . "' target='_blank'><i class='fa-regular fa-file mr-2'></i>" . $file . "</a>";
+                                                $del_str = '<a href="javascript:void(0)" class="text-sm text-danger ml-2" file_sql="' . $file_sql . '" ><i class="fa-solid fa-trash"></i></a>';
+                                            }
+                                        }
+                                    }
+                                    echo '<div class="form-group">';
+
+                                    echo '<label for="' . $key . '">' . $value[0] . '</label>';
+                                    echo '<span class="required">' . $required . '</span>';
+                                    echo '<span class="mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="僅接受.mp4、.webm檔">';
+                                    echo '<i class="fa-regular fa-circle-question" aria-hidden="true"></i>';
+                                    echo '</span>';
+                                    echo '<label class="btn btn-outline-primary mb-0">';
+                                    echo '<input accept="video/mp4,video/webm" style="display:none;" ' . $value[1] . ' class="filesupload" data-title="' . $value[0] . '" type="file" name="' . $key . '" value="" data-file="' . aes_encrypt($file) . '" data-id="' . $value[2] . '" />';
+                                    echo '<i class="fa-solid fa-cloud-arrow-up"></i> 上傳檔案';
+                                    echo '<span class="text-sm mx-2" id="filename"></span>';
+                                    echo $file_str;
+                                    echo $del_str;
+                                    echo '</div>';
+
                                 }
                                 ?>
                             </div>

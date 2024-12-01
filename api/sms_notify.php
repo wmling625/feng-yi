@@ -51,29 +51,29 @@ if (count($err_msg) > 0) {
 
     if ($needSMS) {
 
-//        // 檢查60內是否發過驗證碼
-//        $query = "SELECT count(*) as counts FROM `smscode` WHERE mobile = '" . $mobile . "' AND orders <= 1 AND TIMESTAMPDIFF(SECOND, pub_date, NOW()) < 60 ORDER BY pub_date DESC LIMIT 0,1";
-//
-//        if ($result = $mysqli->query($query)) {
-//            $rows = $result->fetch_assoc();
-//            $counts = $rows["counts"];
-//            if ($counts == 0) {
-//                // 新增簡訊發送紀錄
-//                $query = "INSERT INTO smscode(smscode_id, code, mobile, pub_date, orders) VALUES (uuid(),'" . $code . "', '" . $mobile . "', now(), 1)";
-//                $mysqli->query($query);
-//
-//                //目標,內容,80,帳號,密碼
-//                if (sms_send_c2c($mobile, "【會員通知】註冊驗證碼：" . $code, 80, "0960678008", "nl3aul6app")) {
-//                    $callback = array("state" => "1", "message" => "驗證簡訊已發送，請在5分鐘內完成驗證");
-//                } else {
-//                    $callback = array("state" => "-1", "message" => "簡訊發送失敗，請稍後再嘗試一次。");
-//                }
-//            } else {
-//                array_push($err_msg, "發送時間請間隔60秒");
-//            }
-//            mysqli_free_result($result);
-//        }
-        $callback = array("state" => "1", "message" => "手機驗證成功");
+       // 檢查60內是否發過驗證碼
+       $query = "SELECT count(*) as counts FROM `smscode` WHERE mobile = '" . $mobile . "' AND orders <= 1 AND TIMESTAMPDIFF(SECOND, pub_date, NOW()) < 60 ORDER BY pub_date DESC LIMIT 0,1";
+
+       if ($result = $mysqli->query($query)) {
+           $rows = $result->fetch_assoc();
+           $counts = $rows["counts"];
+           if ($counts == 0) {
+               // 新增簡訊發送紀錄
+               $query = "INSERT INTO smscode(smscode_id, code, mobile, pub_date, orders) VALUES (uuid(),'" . $code . "', '" . $mobile . "', now(), 1)";
+               $mysqli->query($query);
+
+               //目標,內容,80,帳號,密碼
+               if (sms_send_c2c($mobile, "【會員通知】註冊驗證碼：" . $code, 80, "0960678008", "nl3aul6app")) {
+                   $callback = array("state" => "1", "message" => "驗證簡訊已發送，請在5分鐘內完成驗證");
+               } else {
+                   $callback = array("state" => "-1", "message" => "簡訊發送失敗，請稍後再嘗試一次。");
+               }
+           } else {
+               array_push($err_msg, "發送時間請間隔60秒");
+           }
+           mysqli_free_result($result);
+       }
+        // $callback = array("state" => "1", "message" => "手機驗證成功");
     }
 
 }

@@ -85,102 +85,102 @@ if ((location.pathname).indexOf("fill_in") >= 0 ||
     });
 
     // 2022-07-06 註解 by 田
-    // $("#mobile").on('keyup', function () {
-    //     if ($(this).val() !== "") {
-    //         $(".progress-btn").removeClass("disabled")
-    //     } else {
-    //         $(".progress-btn").addClass("disabled")
-    //     }
-    // })
+    $("#mobile").on('keyup', function () {
+        if ($(this).val() !== "") {
+            $(".progress-btn").removeClass("disabled")
+        } else {
+            $(".progress-btn").addClass("disabled")
+        }
+    })
 
     // 2022-07-01 註解 by 田
-    // $(".progress-btn").click(function () {
-    //     var sum_arr = [];
-    //     $(this).closest(".input-group").find("input").each(function (i, n) {
-    //         var title = $.trim($(this).attr("title"));
-    //         if ($("#mobile").val() == undefined || $("#mobile").val() == "") {
-    //             $(this).closest(".warning-box").find(".alert-text").addClass("show");
-    //             sum_arr.push(title)
-    //         } else if ((this.name).indexOf("tel") >= 0 && ValidateMobile($(this).val()) == false) {
-    //             $(this).closest(".warning-box").find(".alert-text").addClass("show");
-    //             sum_arr.push("手機格式錯誤");
-    //         }
-    //     })
-    //     if (sum_arr.length > 0) {
-    //         sum_arr = $.unique(sum_arr); //消除重複的陣列元素
-    //         sum_arr = sum_arr.join("、");
-    //     } else {
-    //         $(this).addClass("wait");
-    //         $(this).attr("disabled", true);
-    //         var $this = $(this);
-    //
-    //         var t = 60;
-    //         var intervalID = setInterval(function () {
-    //             $(".progress-btn span").html('(' + t + ')');
-    //             t = t - 1;
-    //             if (t == "-1") {
-    //                 clearInterval(intervalID);
-    //                 $(".progress-btn span").html("");
-    //                 $this.removeClass("wait");
-    //                 $this.attr("disabled", false);
-    //                 return false;
-    //             }
-    //         }, 1000);
-    //     }
-    //
-    // })
+    $(".progress-btn").click(function () {
+        var sum_arr = [];
+        $(this).closest(".input-group").find("input").each(function (i, n) {
+            var title = $.trim($(this).attr("title"));
+            if ($("#mobile").val() == undefined || $("#mobile").val() == "") {
+                $(this).closest(".warning-box").find(".alert-text").addClass("show");
+                sum_arr.push(title)
+            } else if ((this.name).indexOf("tel") >= 0 && ValidateMobile($(this).val()) == false) {
+                $(this).closest(".warning-box").find(".alert-text").addClass("show");
+                sum_arr.push("手機格式錯誤");
+            }
+        })
+        if (sum_arr.length > 0) {
+            sum_arr = $.unique(sum_arr); //消除重複的陣列元素
+            sum_arr = sum_arr.join("、");
+        } else {
+            $(this).addClass("wait");
+            $(this).attr("disabled", true);
+            var $this = $(this);
+    
+            var t = 60;
+            var intervalID = setInterval(function () {
+                $(".progress-btn span").html('(' + t + ')');
+                t = t - 1;
+                if (t == "-1") {
+                    clearInterval(intervalID);
+                    $(".progress-btn span").html("");
+                    $this.removeClass("wait");
+                    $this.attr("disabled", false);
+                    return false;
+                }
+            }, 1000);
+        }
+    
+    })
 
     // 2022-07-04 註解 by 田
-    // $(document).on("click", "#sms-btn", function () {
-    //     var sumarr = [];
-    //     $(".st-1").find("input").each(function () {
-    //         if ($(this).val() == "") {
-    //             $(this).closest(".warning-box").find(".alert-text").addClass("show");
-    //             $(this).addClass("alert-border");
-    //             sumarr.push("有空白欄位")
-    //         }
-    //     })
-    //     if (sumarr.length > 0) {
-    //         sumarr = sumarr.join("、");
-    //
-    //     } else {
-    //         $('#sms-success').modal('show');
-    //         setTimeout(function () {
-    //             $('#sms-success').modal('hide');
-    //         }, 1200);
-    //     }
-    //
-    //     $('#sms-success').on("hidden.bs.modal", function () {
-    //         $("#mobile").attr("readonly", true);
-    //         $("#sms-input").attr("readonly", true);
-    //         $(".st-2").removeClass("hidden");
-    //         $(".progress-btn").addClass("hidden");
-    //
-    //
-    //         $("#mobile").addClass("okay");
-    //         $(".okay-text").addClass("show");
-    //         $(".sms-form-item").addClass("hidden")
-    //     })
-    //     // if ($("#sms-input").val() !== "" && $("#mobile").val() !== "") {
-    //     //     $("#mobile").attr("readonly",true);
-    //     //     $("#sms-input").attr("readonly",true);
-    //     //     $(".st-2").removeClass("hidden");
-    //     //     $(".progress-btn").addClass("hidden");
-    //     //     $('#sms-success').modal('show');
-    //
-    //
-    //     //     $("#mobile").addClass("okay");
-    //     //     $(".okay-text").addClass("show");
-    //     //     $(".sms-form-item").addClass("hidden")
-    //
-    //     //     setTimeout(function() {
-    //     //         $('#sms-success').modal('hide');
-    //     //     }, 1200);
-    //     // }else {
-    //     //     $(this).closest(".warning-box").find(".alert-text").addClass("show");
-    //     //     $(this).addClass("alert-border");
-    //     // }
-    // })
+    $(document).on("click", "#sms-btn", function () {
+        var sumarr = [];
+        $(".st-1").find("input").each(function () {
+            if ($(this).val() == "") {
+                $(this).closest(".warning-box").find(".alert-text").addClass("show");
+                $(this).addClass("alert-border");
+                sumarr.push("有空白欄位")
+            }
+        })
+        if (sumarr.length > 0) {
+            sumarr = sumarr.join("、");
+    
+        } else {
+            $('#sms-success').modal('show');
+            setTimeout(function () {
+                $('#sms-success').modal('hide');
+            }, 1200);
+        }
+    
+        $('#sms-success').on("hidden.bs.modal", function () {
+            $("#mobile").attr("readonly", true);
+            $("#sms-input").attr("readonly", true);
+            $(".st-2").removeClass("hidden");
+            $(".progress-btn").addClass("hidden");
+    
+    
+            $("#mobile").addClass("okay");
+            $(".okay-text").addClass("show");
+            $(".sms-form-item").addClass("hidden")
+        })
+        if ($("#sms-input").val() !== "" && $("#mobile").val() !== "") {
+            $("#mobile").attr("readonly",true);
+            $("#sms-input").attr("readonly",true);
+            $(".st-2").removeClass("hidden");
+            $(".progress-btn").addClass("hidden");
+            $('#sms-success').modal('show');
+    
+    
+            $("#mobile").addClass("okay");
+            $(".okay-text").addClass("show");
+            $(".sms-form-item").addClass("hidden")
+    
+            setTimeout(function() {
+                $('#sms-success').modal('hide');
+            }, 1200);
+        }else {
+            $(this).closest(".warning-box").find(".alert-text").addClass("show");
+            $(this).addClass("alert-border");
+        }
+    })
 
 }
 

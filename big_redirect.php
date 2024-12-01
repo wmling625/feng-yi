@@ -65,7 +65,7 @@ if ($result_arr[0]['orders'] == "-1") {
 }
 
 /* 如果當前掃描的會員不存在 or 會員資料不齊全(手機、姓名、性別、活動區域)，那就需要先註冊/補齊資料、再綁定 */
-if (count($member_arr) === 0 || (count($member_arr) > 0 && (empty($member_arr[0]["account"]) || empty($member_arr[0]["nickname"]) || empty($member_arr[0]["types_option"]) || empty($member_arr[0]["city"]) || empty($member_arr[0]["region"])))) {
+if (count($member_arr) === 0 || (count($member_arr) > 0 && (empty($member_arr[0]["account"]) || empty($member_arr[0]["nickname"]) || empty($member_arr[0]["types_option"])))) {
     $link = "big_login.php?redirect=" . aes_encrypt("big_fill_in.php?qr_type_big_id=" . aes_encrypt($qr_type_big_id)) . "&profile=" . $profile;
 } else {
     /* 判斷是否已綁定 */

@@ -214,7 +214,8 @@ if ($mysqli->multi_query($query1)) {
                                         <div class="content"><?php echo isset($result_arr[0]['nickname']) ? $result_arr[0]['nickname'] : ""; ?></div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-6">
+                                <?php /*
+                                <div class="col-6">
                                     <div class="item">
                                         <div class="label">性別</div>
                                         <div class="content"><?php echo isset($result_arr[0]['types_option']) ? $result_arr[0]['types_option'] : ""; ?></div>
@@ -225,7 +226,8 @@ if ($mysqli->multi_query($query1)) {
                                         <div class="label">活動區域</div>
                                         <div class="content"><?php echo isset($result_arr[0]['city']) ? $result_arr[0]['city'] . $result_arr[0]['region'] : ""; ?></div>
                                     </div>
-                                </div> -->
+                                </div> 
+                                */ ?>
                             </div>
                             <div class="btn-group w-100">
                                 <a href="tel:<?php echo isset($result_arr[0]['account']) ? $result_arr[0]['account'] : ""; ?>" class="btn btn-secondary w-50"><i class="fas fa-phone-alt"></i>撥打電話</a>
