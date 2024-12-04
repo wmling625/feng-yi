@@ -20,11 +20,24 @@ include_once(dirname(__FILE__) . "/phplibs/front_head.php");
 
 @$contents0 = remove_emoji(params_security($_POST["contents0"], 'text'));
 
+@$id = '1';
+$setting_arr = array();
+$domain = '';
+$query = "SELECT * FROM setting WHERE id = '" . $id . "';";
+
+if ($result = $mysqli->query($query)) {
+    $rows = $result->fetch_array();
+    $setting_arr[] = $rows;
+    mysqli_free_result($result);
+}
+
+$domain = $setting_arr[0]["domain"];
+
 $err_msg = array();
 
-// if (!token_validation($value, $token)) {
-//     array_push($err_msg, "value與token錯誤");
-// }
+if (!token_validation($value, $token)) {
+    array_push($err_msg, "value與token錯誤");
+}
 
 if (empty($contents0)) {
     array_push($err_msg, "請填寫留言內容");
@@ -66,7 +79,7 @@ if (count($err_msg) > 0) {
             "license" => $license
         );
 //        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toOwner&user_id=" . $user_id1 . "&qr_type_id=" . $qr_type_id . "&history_id=" . $uuid . "&lat=" . $lat . "&lng=" . $lng . "&license=" . $license;
-        $url = "https://marketingchain.feng-yi.tw/api/notify_line.php";
+        $url = "https://" . $domain . "/api/notify_line.php";
         download_page($url, $data_arr);
         echo "<script>alert('推播成功')</script>";
     }else{

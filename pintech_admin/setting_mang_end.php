@@ -12,6 +12,7 @@ $err_msg = array();
 @$lineoauth = params_security($_POST["lineoauth"]);
 @$linetoken = params_security($_POST["linetoken"]);
 @$linesecret = params_security($_POST["linesecret"]);
+@$domain = params_security($_POST["domain"]);
 
 // Retrieve community inputs as JSON
 $communities = [];
@@ -45,6 +46,7 @@ if (count($err_msg)) {
               `lineoauth` = '" . $lineoauth . "',
               `linetoken` = '" . $linetoken . "',
               `linesecret` = '" . $linesecret . "',
+              `domain` = '" . $domain . "',
               `form` = '" . $mysqli->real_escape_string($communityJSON) . "',
               `last_date` = NOW()";
         $query .= " WHERE `id` = '" . $id . "'; ";
