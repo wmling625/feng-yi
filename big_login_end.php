@@ -28,6 +28,7 @@ if (!empty($_POST['form']['label']) && !empty($_POST['form']['name'])) {
 $err_msg = array();
 $result_arr = [];
 $query = "SELECT * FROM `smscode` WHERE `mobile` = $mobile AND `code` = $code";
+$total = 0;
 
 if ($result = $mysqli->query($query)) {
     $total = mysqli_num_rows($result);

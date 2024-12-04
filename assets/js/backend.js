@@ -1203,7 +1203,7 @@ $(function () {
     }
 
     //###############以下為列表頁面 fun#######################//
-    if (location.pathname.indexOf("_list.php") >= 0) {
+    if (location.pathname.indexOf("_list.php") >= 0 || location.pathname.indexOf("verify") >= 0 ) {
       // 列表批次選取
       $("input[name=box_toggle]").click(function (event) {
         if (this.checked) {

@@ -1,18 +1,18 @@
 <?php
 include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
 
-
-@$min_date = params_security($_GET["min_date"]);
-@$max_date = params_security($_GET["max_date"]);
 @$types = params_security($_GET["types"]);
 @$keyword = params_security($_GET["keyword"]);
-@$orders = params_security($_GET["orders"]);
+@$status = params_security($_GET["status"]);
 @$limit = params_security($_GET["limit"]);
 @$date_type = params_security($_GET["date_type"]);
 @$model = "update";
 @$id = '1';
 $code = random_str(6, "int");
 
+$url_param = add_pararm($_SERVER['PHP_SELF'], array("date_type" => $date_type,  "types" => $types, "keyword" => $keyword, "status" => $status, "limit" => $limit));
+//$search_orders = array("全部狀態" => "", "啟用" => "1", "未啟用" => "-1");
+$search_orders = array("全部狀態" => "", "已使用" => "-1", "尚未使用" => "1");
 
 // 頁碼相關設定
 $total = 0;
@@ -20,10 +20,32 @@ $showrow = !empty($limit) ? $limit : 25;
 $curpage = empty($_GET['page']) ? 1 : params_security($_GET['page'], "int");
 $url_page = "?page={page}";
 
+$filter_sql_arr = array();
+$filter_sql_str = "";
+
+if (!empty($status)) {
+    if ($status == -1) {
+        array_push($filter_sql_arr, "is_ok = -1");
+    } else if ($status == 1) {
+        array_push($filter_sql_arr, "is_ok = 1");
+    }
+}
+
+if (!empty($keyword)) {
+    array_push($filter_sql_arr, "(mobile LIKE '%" . $keyword . "%')");
+}
+
+if (count($filter_sql_arr) > 0) {
+    $filter_sql_str = implode(" AND ", $filter_sql_arr);
+} else {
+    $filter_sql_str = "1";
+}
+
 $url = $url_param . $url_page;
 
 $result_arr = array();
-$query = "SELECT * FROM `smscode` ORDER BY `pub_date` DESC";
+
+$query = "SELECT * FROM `smscode` WHERE " . $filter_sql_str . "  ORDER BY `pub_date` DESC";
 
 if ($result = $mysqli->query($query)) {
     $total = mysqli_num_rows($result);
@@ -67,7 +89,9 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
 <body class="sidebar-mini layout-footer-fixed layout-navbar-fixed layout-fixed">
 
     <div class="wrapper">
-
+        <?php
+        echo "<input type='hidden' name='del_sql' value='" . aes_encrypt("DELETE FROM `smscode` WHERE find_in_set(mobile, '?1') >0") . "'/>";
+        ?>
         <!-- Preloader -->
         <!-- <div class="preloader flex-column justify-content-center align-items-center">
         <img class="animation__shake" src="../assets/img/favicon.ico" alt="AdminLTELogo" height="60" width="60">
@@ -154,85 +178,115 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                     <!-- /.row -->
                     <div class="row">
                         <div class="col-12">
-                            <form method="post" id="form" enctype="multipart/form-data"
-                                action="<?php echo str_replace("_mang.php", "_mang_end.php", $_SERVER['PHP_SELF']) ?>">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-bs-toggle="tooltip" title="新增驗證碼" id="smsNotify">
-                                                新增
-                                            </button>
-                                            <!-- <button type="button" class="btn btn-sm btn-danger" name="box_del">批次刪除</button> -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-bs-toggle="tooltip" title="新增驗證碼" id="smsNotify">
+                                            新增
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" name="box_del">批次刪除</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 mt-2">
+                                            <select class="form-control" name="status" data-bs-toggle="tooltip" title="回覆狀態"
+                                                search_ref>
+                                                <?php echo gen_options($search_orders, $status) ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 mt-2">
+                                            <input type="text" class="form-control" data-bs-toggle="tooltip"
+                                                title="電話號碼"
+                                                name="keyword"
+                                                placeholder="電話號碼"
+                                                value="<?php echo $keyword; ?>" search_ref>
+                                        </div>
+                                        <div class="col-md-12 mt-2 row">
+                                            <div class="col-md-6 col-sm-12 float-left"><?php echo $page->myde_showTotal(); ?>
+                                                <br /><span class="text-sm text-muted">排序：<span class="text-sm text-primary">新至舊</span></span>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12 float-right d-flex flex-wrap align-items-end justify-content-end p-0">
+                                                <?php echo $page->myde_showRow(); ?>
+                                                <button type="button" name="search_button"
+                                                    class="btn btn-sm btn-outline-danger mx-1">搜尋
+                                                </button>
+                                                <button type="button" name="clear_filter"
+                                                    class="btn btn-sm btn-outline-info mx-1">清除條件
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="card">
-                                    <!-- /.card-header -->
-                                    <div class="card-body table-responsive p-0">
-                                        <table class="table table-bordered table-hover text-nowrap">
-                                            <thead>
-                                                <tr class="text-center">
-                                                    <th width="5%">
-                                                        <div class="icheck-primary d-inline">
-                                                            <input type="checkbox" id="box_toggle" name="box_toggle">
-                                                            <label for="box_toggle">
-                                                            </label>
-                                                        </div>
-                                                    </th>
-                                                    <th width="10%">驗證碼</th>
-                                                    <th width="15%">電話號碼</th>
-                                                    <th width="10%">狀態</th>
-                                                    <th width="10%">創立日期</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="text-center">
-                                                <?php
-                                                if ($total == 0) {
-                                                    echo '<tr>';
-                                                    echo '<td colspan="9">查無資料</td>';
-                                                    echo '</tr>';
+                            <div class="card">
+                                <!-- /.card-header -->
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-bordered table-hover text-nowrap">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th width="5%">
+                                                    <div class="icheck-primary d-inline">
+                                                        <input type="checkbox" id="box_toggle" name="box_toggle">
+                                                        <label for="box_toggle">
+                                                        </label>
+                                                    </div>
+                                                </th>
+                                                <th width="10%">驗證碼</th>
+                                                <th width="15%">電話號碼</th>
+                                                <th width="10%">狀態</th>
+                                                <th width="10%">創立日期</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                            <?php
+                                            if ($total == 0) {
+                                                echo '<tr>';
+                                                echo '<td colspan="9">查無資料</td>';
+                                                echo '</tr>';
+                                            }
+
+                                            foreach ($result_arr as $key => $value) {
+
+                                                echo '<tr>';
+
+                                                echo '<td>';
+                                                echo '<div class="icheck-primary d-inline">';
+                                                echo '<input type="checkbox" id="' . $value['smscode_id'] . '" name="box_list" value="' . $value['smscode_id'] . '">';
+                                                echo '<label for="' . $value['smscode_id'] . '">';
+                                                echo '</label>';
+                                                echo '</div>';
+                                                echo '</td>';
+                                                echo '<td>' . $value["code"] . '</td>';
+                                                echo '<td>' . $value["mobile"]  . '</td>';
+                                                echo '<td>';
+                                                if ($value["is_ok"] == "-1") {
+                                                    echo '<span class="text-danger">已使用</span>';
+                                                } elseif ($value["orders"] == "1") {
+                                                    echo '<span class="text-success">尚未使用</span>';
                                                 }
-
-                                                foreach ($result_arr as $key => $value) {
-
-                                                    echo '<tr>';
-
-                                                    echo '<td>';
-                                                    echo '<div class="icheck-primary d-inline">';
-                                                    echo '<input type="checkbox" id="' . $value['smscode_id'] . '" name="box_list" value="' . $value['smscode_id'] . '">';
-                                                    echo '<label for="' . $value['smscode_id'] . '">';
-                                                    echo '</label>';
-                                                    echo '</div>';
-                                                    echo '</td>';
-                                                    echo '<td>' . $value["code"] . '</td>';
-                                                    echo '<td>' . $value["mobile"]  . '</td>';
-                                                    echo '<td>';
-                                                    if ($value["is_ok"] == "-1") {
-                                                        echo '<span class="text-danger">以使用</span>';
-                                                    } elseif ($value["orders"] == "1") {
-                                                        echo '<span class="text-success">尚未使用</span>';
-                                                    }
-                                                    echo '</td>';
-                                                    echo '<td>' . $value["pub_date"]  . '</td>';
-                                                    echo '</tr>';
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.card-body -->
-                                    <?php
-                                    if ($total > $showrow) {
-                                        echo '<div class="card-footer clearfix">';
-                                        echo $page->myde_write();
-                                        echo '</div>';
-                                    }
-                                    ?>
+                                                echo '</td>';
+                                                echo '<td>' . $value["pub_date"]  . '</td>';
+                                                echo '</tr>';
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <!-- /.card -->
-                            </form>
-                            <!-- /.form -->
+                                <!-- /.card-body -->
+                                <?php
+                                if ($total > $showrow) {
+                                    echo '<div class="card-footer clearfix">';
+                                    echo $page->myde_write();
+                                    echo '</div>';
+                                }
+                                ?>
+                            </div>
+                            <!-- /.card -->
                         </div>
                     </div>
                     <!-- /.row -->
@@ -256,7 +310,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="message">驗證碼<span class="required">*</span></label>
-                                    <input name="verify_code" readonly req class="form-control" id="verify_code" value="<?php echo $code?>" />
+                                    <input name="verify_code" readonly req class="form-control" id="verify_code" value="<?php echo $code ?>" />
                                 </div>
                                 <div class="form-group">
                                     <label for="message">電話號碼<span class="required">*</span></label>
