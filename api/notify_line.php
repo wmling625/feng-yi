@@ -23,6 +23,7 @@ file_put_contents(dirname(__FILE__) . "/./api/log/" . date("Ymdhis") . "line_not
 
 
 @$id = '1';
+$domain = '';
 $query = "SELECT * FROM setting WHERE id = '" . $id . "';";
 
 if ($result = $mysqli->query($query)) {
@@ -31,6 +32,7 @@ if ($result = $mysqli->query($query)) {
     mysqli_free_result($result);
 }
 
+$domain = $result_arr[0]["domain"];
 $channelAccessToken = $result_arr[0]["linetoken"];
 
 // $users = array("LINE UUID","LINE UUID","LINE UUID","LINE UUID","LINE UUID");
@@ -77,7 +79,7 @@ if ($model == "toAll") {
 
         $file_loc = $upload_dir . $file0;
         if (file_exists($file_loc)) {
-            $msg[1] = array("type" => "image", "source" => "https://feng-yi.tw/uploads/others/" . $file0);
+            $msg[1] = array("type" => "image", "source" => "https://" . $domain . "/uploads/others/" . $file0);
         }
     }
 }
@@ -132,11 +134,11 @@ if ($model !== "toAll") {
         $result_arr = array_unique($result_arr);
         $rows = array();
         foreach ($result_arr as $value) {
-            $photo = "https://oneqrcode.feng-yi.tw/uploads/others/" . $value['file0'];
+            $photo = "https://" . $domain . "/uploads/others/" . $value['file0'];
             $title = $value['title'];
             $sub = $value['contents'];
             $btn1 = "連結";
-            $url1 = "https://oneqrcode.feng-yi.tw/ad_redirect.php?advertisement_id=" . $value['advertisement_id'] . "&link=" . urlencode($value['introd']);
+            $url1 = "https://" . $domain . "/ad_redirect.php?advertisement_id=" . $value['advertisement_id'] . "&link=" . urlencode($value['introd']);
 
             $rows[] = [
                 "type" => "bubble",

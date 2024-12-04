@@ -12,11 +12,11 @@ $err_msg = array();
 @$lineoauth = params_security($_POST["lineoauth"]);
 @$linetoken = params_security($_POST["linetoken"]);
 @$linesecret = params_security($_POST["linesecret"]);
+@$domain = params_security($_POST["domain"]);
 
-
-//if (empty($content)) {
-//    array_push($err_msg, "必填欄位未填寫，請檢查");
-//}
+if (empty($domain)) {
+   array_push($err_msg, "必填欄位未填寫，請檢查");
+}
 
 if (count($err_msg)) {
     echo "<script>alert('" . implode("\n", $err_msg) . "')</script>";
@@ -33,6 +33,7 @@ if (count($err_msg)) {
               `lineoauth` = '" . $lineoauth . "',
               `linetoken` = '" . $linetoken . "',
               `linesecret` = '" . $linesecret . "',
+              `domain` = '" . $domain . "',
               `last_date` = NOW()";
         $query .= " WHERE `id` = '" . $id . "'; ";
         // `failed` = '" . $failed . "',

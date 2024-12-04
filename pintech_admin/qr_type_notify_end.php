@@ -6,6 +6,19 @@ $err_msg = array();
 @$ids = params_security($_POST['ids']); // 標籤id
 @$message = params_security($_POST['message'], 'text'); // 推播訊息內容
 
+@$id = '1';
+$setting_arr = array();
+$domain = '';
+$query = "SELECT * FROM setting WHERE id = '" . $id . "';";
+
+if ($result = $mysqli->query($query)) {
+    $rows = $result->fetch_array();
+    $setting_arr[] = $rows;
+    mysqli_free_result($result);
+}
+
+$domain = $setting_arr[0]["domain"];
+
 if (empty($ids) || empty($message)) {
     array_push($err_msg, "必填欄位未填寫，請檢查");
 }
@@ -103,7 +116,7 @@ if (count($err_msg)) {
             "file0" => $file0
         );
 //        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toAll&user_id=" . $userIds . "&contents1=" . urlencode($message) . "&file0=" . urlencode($file0);
-        $url = "https://feng-yi.tw/api/notify_line.php";
+        $url = "https://" . $domain . "/api/notify_line.php";
         file_put_contents(dirname(__FILE__) . "/../api/log/" . date("Ymdhis") . "ids.txt", json_encode($data_arr, JSON_UNESCAPED_UNICODE));
 
         download_page($url, $data_arr);
