@@ -1,0 +1,1 @@
+[{"type":"text","source":"社區住戶請掃這個QR Code"},{"type":"image","source":"https:\/\/marketingchain.feng-yi.tw\/uploads\/others\/06e851ac-c255-4522-a945-e5ddea0731fb.jpeg"}]

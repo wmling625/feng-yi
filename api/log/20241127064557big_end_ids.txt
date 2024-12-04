@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"U06acdfa34522cc5961e6604b13777f6c,U5b51e4f70843c9c1c6ef7a1242bba177,U0e344d667cb6811305b3d2545ebfc101,U195ea6818a0e5de5e98063f98c026bc2","contents1":"管理費繳費單已發送","file0":""}
