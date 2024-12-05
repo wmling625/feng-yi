@@ -191,34 +191,45 @@ if ($result = $mysqli->query($query)) {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th width="15%">社區<span class="required"></span></th>
+                                                    <th width="15%">驗證碼狀態<span class="required">*</span></th>
                                                     <td>
-                                                        <div id="community-inputs">
-                                                            <!-- Existing inputs from the database -->
-                                                            <?php
-                                                            if (!empty($result_arr[0]["form"])) {
-                                                                // Decode the stored JSON or associative array
-                                                                $communities = json_decode($result_arr[0]["form"], true);
-                                                                if (is_array($communities)) {
-                                                                    foreach ($communities as $community) {
-                                                                        echo '<div class="input-group mb-2">';
-                                                                        echo '<input type="text" name="community[label][]" class="form-control" placeholder="請輸入標籤 (Label)" value="' . htmlspecialchars($community['label']) . '">';
-                                                                        echo '<input type="text" name="community[name][]" class="form-control" placeholder="請輸入名稱 (Name)" value="' . htmlspecialchars($community['name']) . '">';
-                                                                        echo '<button type="button" class="btn btn-danger remove-community">-</button>';
-                                                                        echo '</div>';
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                echo '<div class="input-group mb-2">';
-                                                                echo '<input type="text" name="community[label][]" class="form-control" placeholder="請輸入標籤 (Label)">';
-                                                                echo '<input type="text" name="community[name][]" class="form-control" placeholder="請輸入名稱 (Name)">';
-                                                                echo '<button type="button" class="btn btn-danger remove-community">-</button>';
-                                                                echo '</div>';
-                                                            }
-                                                            ?>
-                                                        </div>
-                                                        <button type="button" class="btn btn-success" id="add-community">+</button>
+                                                        <!-- Hidden input to hold the toggle state value -->
+                                                        <input type="hidden" id="verificationCodeStatus" name="smscode" value="<?php echo isset($result_arr[0]["smscode"]) ? $result_arr[0]["smscode"] : "-1"; ?>">
+
+                                                        <!-- Toggle button -->
+                                                        <button type="button" id="toggleVerificationCode" class="btn btn-secondary">
+                                                            <?php echo isset($result_arr[0]["smscode"]) && $result_arr[0]["smscode"] == "1" ? "開啟" : "關閉"; ?>
+                                                        </button>
                                                     </td>
+                                                </tr>
+                                                <th width="15%">社區<span class="required"></span></th>
+                                                <td>
+                                                    <div id="community-inputs">
+                                                        <!-- Existing inputs from the database -->
+                                                        <?php
+                                                        if (!empty($result_arr[0]["form"])) {
+                                                            // Decode the stored JSON or associative array
+                                                            $communities = json_decode($result_arr[0]["form"], true);
+                                                            if (is_array($communities)) {
+                                                                foreach ($communities as $community) {
+                                                                    echo '<div class="input-group mb-2">';
+                                                                    echo '<input type="text" name="community[label][]" class="form-control" placeholder="請輸入標籤 (Label)" value="' . htmlspecialchars($community['label']) . '">';
+                                                                    echo '<input type="text" name="community[name][]" class="form-control" placeholder="請輸入名稱 (Name)" value="' . htmlspecialchars($community['name']) . '">';
+                                                                    echo '<button type="button" class="btn btn-danger remove-community">-</button>';
+                                                                    echo '</div>';
+                                                                }
+                                                            }
+                                                        } else {
+                                                            echo '<div class="input-group mb-2">';
+                                                            echo '<input type="text" name="community[label][]" class="form-control" placeholder="請輸入標籤 (Label)">';
+                                                            echo '<input type="text" name="community[name][]" class="form-control" placeholder="請輸入名稱 (Name)">';
+                                                            echo '<button type="button" class="btn btn-danger remove-community">-</button>';
+                                                            echo '</div>';
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <button type="button" class="btn btn-success" id="add-community">+</button>
+                                                </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -276,6 +287,27 @@ if ($result = $mysqli->query($query)) {
                 if (event.target.classList.contains("remove-community")) {
                     const inputGroup = event.target.parentElement;
                     communityInputs.removeChild(inputGroup);
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggleButton = document.getElementById("toggleVerificationCode");
+            const statusInput = document.getElementById("verificationCodeStatus");
+
+            toggleButton.addEventListener("click", function() {
+                if (statusInput.value === "1") {
+                    // Disable
+                    statusInput.value = "-1";
+                    toggleButton.textContent = "關閉";
+                    toggleButton.classList.remove("btn-success");
+                    toggleButton.classList.add("btn-secondary");
+                } else {
+                    // Enable
+                    statusInput.value = "1";
+                    toggleButton.textContent = "開啟";
+                    toggleButton.classList.remove("btn-secondary");
+                    toggleButton.classList.add("btn-success");
                 }
             });
         });
