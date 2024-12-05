@@ -11,10 +11,10 @@ $box_arr = array("請選擇您的性別" => "", "男" => "男", "女" => "女");
 $profile_json = array();
 $result_arr = array();
 
-// if (empty($profile)) {
-//     echo "<script>document.location.href = 'https://liff.line.me/" . $liff_close . "';</script>";
-//     exit;
-// }
+if (empty($profile)) {
+    echo "<script>document.location.href = 'https://liff.line.me/" . $liff_close . "';</script>";
+    exit;
+}
 
 $profile_json = json_decode(aes_decrypt($profile), true);
 $query = "SELECT * FROM member WHERE user_id = '" . $profile_json['userId'] . "'";
@@ -131,8 +131,17 @@ if ($setting_result = $mysqli->query($setting_query)) {
                             <div class="form-item warning-box" id="mobileValidation">
                                 <label for="">驗證碼：</label>
                                 <div class="input-group">
-                                    <input name="code" id="sms-input" type="text" class="form-control form-control-lg"
-                                        value="">
+                                    <?php
+                                    if ($setting_arr[0]['smscode'] == 1) { ?>
+                                        <input name="code" id="sms-input" type="text" class="form-control form-control-lg"
+                                            value="">
+                                        <input name="codetype" type="hidden" value="1">
+                                    <?php  } else {  ?>
+                                        <input readonly name="code" id="sms-input" type="text" class="form-control form-control-lg"
+                                            value="88888">
+                                        <input name="codetype" type="hidden" value="-1">
+                                    <?php } ?>
+
                                 </div>
                                 <span class="alert-text">*此為必填欄位</span>
                             </div>

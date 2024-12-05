@@ -15,6 +15,7 @@ include_once(dirname(__FILE__) . "/phplibs/front_head.php");
 @$isLogin = aes_decrypt(params_security($_POST["isLogin"]));
 @$redirect = aes_decrypt(params_security($_POST["redirect"]));
 @$profile = params_security($_POST["profile"]);
+@$codetype = params_security($_POST["codetype"]);
 
 $communities = [];
 if (!empty($_POST['form']['label']) && !empty($_POST['form']['name'])) {
@@ -26,24 +27,28 @@ if (!empty($_POST['form']['label']) && !empty($_POST['form']['name'])) {
     }
 }
 $err_msg = array();
-$result_arr = [];
-$query = "SELECT * FROM `smscode` WHERE `mobile` = $mobile AND `code` = $code";
-$total = 0;
 
-if ($result = $mysqli->query($query)) {
-    $total = mysqli_num_rows($result);
-    if ($total > 0) {
-        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $result_arr[] = $row;
+if ($codetype == 1) {
+    $result_arr = [];
+    $query = "SELECT * FROM `smscode` WHERE `mobile` = $mobile AND `code` = $code";
+    $total = 0;
+
+    if ($result = $mysqli->query($query)) {
+        $total = mysqli_num_rows($result);
+        if ($total > 0) {
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                $result_arr[] = $row;
+            }
+        } else {
+            array_push($err_msg, "驗證失敗，請再試一次");
         }
-    } else {
-        array_push($err_msg, "驗證失敗，請再試一次");
+
+        mysqli_free_result($result);
     }
 
-    mysqli_free_result($result);
+    $form = json_encode($communities, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
-$form = json_encode($communities, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
 
 // if (!token_validation($value, $token)) {
@@ -64,11 +69,20 @@ if (empty($mobile) || empty($nickname) || empty($types_option)) {
 // 驗證手機驗證碼
 $isValid = false;
 if (!$isLogin) {
-    if ($total > 0) {
-        $query = "UPDATE smscode SET is_ok = 1 WHERE mobile = '" . $mobile . "' AND `code` = '" . $code . "' AND orders <= 1; ";
-        $mysqli->query($query);
-        $isValid = true;
+    if ($codetype == 1) {
+        if ($total > 0) {
+            $query = "UPDATE smscode SET is_ok = 1 WHERE mobile = '" . $mobile . "' AND `code` = '" . $code . "' AND orders <= 1; ";
+            $mysqli->query($query);
+            $isValid = true;
+        }
+    } else {
+        if ($code === "88888") {
+            $isValid = true;
+        } else {
+            array_push($err_msg, "驗證碼請輸入88888");
+        }
     }
+
     /* 註冊流程 */
     // if (count($result_arr) == 0) {
     //     array_push($err_msg, "驗證碼不符合");
