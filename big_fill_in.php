@@ -85,7 +85,7 @@ if (count($bind_arr) > 0) {
 }
 
 $uuid = gen_uuid();
-$query = "INSERT INTO `qrcode_big`(`qrcode_big_id`, `qr_type_big_id`, `member_id`, `title`, `intro`, `content`, `pub_date`, `last_date`, `orders`) VALUES ('" . $uuid . "','" . $qr_type_big_id . "','" . $member_arr[0]["member_id"] . "','" . $title . "','" . $intro . "','" . $contents . "', NOW(), NOW(), 1)";
+$query = "INSERT INTO `qrcode_big`(`qrcode_big_id`, `qr_type_big_id`, `member_id`, `title`, `intro`, `contents`, `pub_date`, `last_date`, `orders`) VALUES ('" . $uuid . "','" . $qr_type_big_id . "','" . $member_arr[0]["member_id"] . "','" . $title . "','" . $intro . "','" . $contents . "', NOW(), NOW(), 1)";
 
 // var_dump($mysqli->query($query));exit;
 

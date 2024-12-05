@@ -10,10 +10,10 @@ $box_arr = array("請選擇您的性別" => "", "男" => "男", "女" => "女");
 $profile_json = array();
 $result_arr = array();
 
-if (empty($profile)) {
-    echo "<script>document.location.href = 'https://liff.line.me/" . $liff_close . "';</script>";
-    exit;
-}
+// if (empty($profile)) {
+//     echo "<script>document.location.href = 'https://liff.line.me/" . $liff_close . "';</script>";
+//     exit;
+// }
 
 $profile_json = json_decode(aes_decrypt($profile), true);
 $query = "SELECT * FROM member WHERE user_id = '" . $profile_json['userId'] . "'";
