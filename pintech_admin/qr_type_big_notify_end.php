@@ -94,7 +94,7 @@ if (count($err_msg)) {
                 $result_arr[] = $row['user_id'];
 
                 $uuid = gen_uuid();
-                $query1 .= "INSERT INTO `history`(`history_id`, `qrcode_big_id`, `user_id1`, `display_name`, `contents0`, `file0`, `file1`, `pub_date`, `orders`) VALUES ('" . $uuid . "','" . $row['qrcode_big_id'] . "','" . $row['user_id'] . "','系統推播','" . $message . "','" . $file0 . "','" . $file1 . "',NOW(),2); ";
+                $query1 .= "INSERT INTO `history`(`history_id`, `qrcode_big_id`, `user_id1`, `display_name`, `contents0`, `file0`, `file1`, `pub_date`, `orders`) VALUES ('" . $uuid . "','" . $row['qrcode_big_id'] . "','" . $row['user_id'] . "','系統推播','" . $message . "','" . $file0 . "'" . $file1 . "',NOW(),2); ";
             }
         } else {
             echo "<script>alert('查無符合對象')</script>";

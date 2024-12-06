@@ -18,6 +18,7 @@ LINE MESSAGE除非是PHP錯誤, 不然沒辦法DEBUG
 @$license = urldecode(params_security($_POST['license'])); // 家屬姓名
 
 @$file0 = urldecode(params_security($_POST['file0'])); // 推播圖片
+@$file1 = urldecode(params_security($_POST['file1'])); // 推播影片
 
 file_put_contents(dirname(__FILE__) . "/./api/log/" . date("Ymdhis") . "line_notify.txt", json_encode($_POST, JSON_UNESCAPED_UNICODE));
 
@@ -85,7 +86,7 @@ if ($model == "toAll") {
         }
 
         if (file_exists($file_loc1)) {
-            $msg[1] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1);
+            $msg[2] = array("type" => "file", "source" => "https://" . $domain . "/uploads/others/" . $file1);
         }
     }
 }
