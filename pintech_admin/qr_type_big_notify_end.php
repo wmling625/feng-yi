@@ -90,7 +90,7 @@ if (count($err_msg)) {
                 $result_arr[] = $row['user_id'];
 
                 $uuid = gen_uuid();
-                $query1 .= "INSERT INTO `history`(`history_id`, `qrcode_big_id`, `user_id1`, `display_name`, `contents0`, `file0`, `pub_date`, `orders`) VALUES ('" . $uuid . "','" . $row['qrcode_big_id'] . "','" . $row['user_id'] . "','系統推播','" . $message . "','" . $file0 . "',NOW(),2); ";
+                $query1 .= "INSERT INTO `history`(`history_id`, `qrcode_big_id`, `user_id1`, `display_name`, `contents0`, `file0`, `file1`, `pub_date`, `orders`) VALUES ('" . $uuid . "','" . $row['qrcode_big_id'] . "','" . $row['user_id'] . "','系統推播','" . $message . "','" . $file0 . "','" . $file1 . "',NOW(),2); ";
 
             }
         } else {
@@ -115,7 +115,9 @@ if (count($err_msg)) {
             "model" => "toAll",
             "user_id" => $userIds,
             "contents1" => $message,
-            "file0" => $file0
+            "file0" => $file0,
+            'file1' => $file1
+
         );
 //        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toAll&user_id=" . $userIds . "&contents1=" . urlencode($message) . "&file0=" . urlencode($file0);
         $url = "https://" . $domain . "/api/notify_line.php";

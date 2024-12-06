@@ -1912,7 +1912,7 @@ function file_upload($limitedext, $upload_dir, $new_file, $option = [])
 				}
 
 				if (isset($option["file_name"])) { //如果自訂檔名
-					if ($ext == ".jpg" or $ext == ".jpeg" or $ext == ".bmp" or $ext == ".png") { //圖檔強制轉換,ios不支援中文檔名
+					if ($ext == ".jpg" or $ext == ".jpeg" or $ext == ".bmp" or $ext == ".png" or $ext == ".mp4") { //圖檔強制轉換,ios不支援中文檔名
 						//$file_name = gen_uuid() . $ext; //即便自訂檔名, 遇到圖檔都強制轉換檔名, 不然IOS對中文檔名支持度很低
 						$file_name = $src_filename . $ext;
 					}else{
@@ -1920,7 +1920,7 @@ function file_upload($limitedext, $upload_dir, $new_file, $option = [])
 					}
 					
 				} else { //如果沒自訂檔名					
-					if ($ext == ".jpg" or $ext == ".jpeg" or $ext == ".bmp" or $ext == ".png") { //圖檔強制轉換,ios不支援中文檔名
+					if ($ext == ".jpg" or $ext == ".jpeg" or $ext == ".bmp" or $ext == ".png" or $ext == ".mp4") { //圖檔強制轉換,ios不支援中文檔名
 						$file_name = gen_uuid() . $ext;
 					}else{ //如果沒自訂檔名且不是圖檔, 就用合法原本檔名
 						$file_name = date("YmdHis") . "_" . $src_filename . $ext;

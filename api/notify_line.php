@@ -18,6 +18,7 @@ LINE MESSAGE除非是PHP錯誤, 不然沒辦法DEBUG
 @$license = urldecode(params_security($_POST['license'])); // 家屬姓名
 
 @$file0 = urldecode(params_security($_POST['file0'])); // 推播圖片
+@$file1 = urldecode(params_security($_POST['file1'])); // 推播影片
 
 file_put_contents(dirname(__FILE__) . "/./api/log/" . date("Ymdhis") . "line_notify.txt", json_encode($_POST, JSON_UNESCAPED_UNICODE));
 
@@ -58,19 +59,24 @@ if ($model == "toOwner") {
         $contents .= "https://www.google.com/maps/search/?api=1&query=" . $lat . "," . $lng;
     }
 
-//    $contents .= "https://findit.linebot.tw/comment.php?history_id=" . $history_id;
+    //    $contents .= "https://findit.linebot.tw/comment.php?history_id=" . $history_id;
 
 } elseif ($model == "toPeople") {
     $contents = "一碼通關心您\n";
     $contents .= $license . " 已回覆您的留言↓\n"; //的家屬
     $contents .= "\n";
     $contents .= "他說：「" . $contents1 . "」";
-
 } elseif ($model == "toAll") {
     $contents = br2nl(htmlspecialchars_decode($contents1));
+    if ($file1 != "") {
+        $video_url = "https://" . $domain . "/uploads/others/" . $file1;
+        $contents .= "\n $video_url";
+    }
 }
 
 $msg[0] = array("type" => "text", "source" => $contents);
+
+
 //可推播文字
 
 if ($model == "toAll") {
@@ -78,6 +84,7 @@ if ($model == "toAll") {
         $upload_dir = "../uploads/others/";
 
         $file_loc = $upload_dir . $file0;
+
         if (file_exists($file_loc)) {
             $msg[1] = array("type" => "image", "source" => "https://" . $domain . "/uploads/others/" . $file0);
         }
@@ -127,7 +134,7 @@ if ($model !== "toAll") {
     }
 
     if ($mysqli->multi_query($query1)) {
-        while ($mysqli->more_results() && $mysqli->next_result()) ;
+        while ($mysqli->more_results() && $mysqli->next_result());
     }
 
     if ($total > 0) {
