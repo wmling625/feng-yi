@@ -78,8 +78,14 @@ if ($model == "toAll") {
         $upload_dir = "../uploads/others/";
 
         $file_loc = $upload_dir . $file0;
+        $file_loc1 = $upload_dir . $file1;
+
         if (file_exists($file_loc)) {
             $msg[1] = array("type" => "image", "source" => "https://" . $domain . "/uploads/others/" . $file0);
+        }
+
+        if (file_exists($file_loc1)) {
+            $msg[1] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1);
         }
     }
 }
