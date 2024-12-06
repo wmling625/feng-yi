@@ -59,19 +59,24 @@ if ($model == "toOwner") {
         $contents .= "https://www.google.com/maps/search/?api=1&query=" . $lat . "," . $lng;
     }
 
-//    $contents .= "https://findit.linebot.tw/comment.php?history_id=" . $history_id;
+    //    $contents .= "https://findit.linebot.tw/comment.php?history_id=" . $history_id;
 
 } elseif ($model == "toPeople") {
     $contents = "一碼通關心您\n";
     $contents .= $license . " 已回覆您的留言↓\n"; //的家屬
     $contents .= "\n";
     $contents .= "他說：「" . $contents1 . "」";
-
 } elseif ($model == "toAll") {
     $contents = br2nl(htmlspecialchars_decode($contents1));
+    if ($file1 != "") {
+        $video_url = "https://" . $domain . "/uploads/others/" . $file1;
+        $contents .= "\n $video_url";
+    }
 }
 
 $msg[0] = array("type" => "text", "source" => $contents);
+
+
 //可推播文字
 
 if ($model == "toAll") {
@@ -79,14 +84,9 @@ if ($model == "toAll") {
         $upload_dir = "../uploads/others/";
 
         $file_loc = $upload_dir . $file0;
-        $file_loc1 = $upload_dir . $file1;
 
         if (file_exists($file_loc)) {
             $msg[1] = array("type" => "image", "source" => "https://" . $domain . "/uploads/others/" . $file0);
-        }
-
-        if (file_exists($file_loc1)) {
-            $msg[2] = array("type" => "file", "source" => "https://" . $domain . "/uploads/others/" . $file1);
         }
     }
 }
@@ -134,7 +134,7 @@ if ($model !== "toAll") {
     }
 
     if ($mysqli->multi_query($query1)) {
-        while ($mysqli->more_results() && $mysqli->next_result()) ;
+        while ($mysqli->more_results() && $mysqli->next_result());
     }
 
     if ($total > 0) {
