@@ -44,7 +44,7 @@ if (count($err_msg)) {
 
         $query .= "where admin_id = '" . $admin_id . "';";
     }
-
+    
     if ($mysqli->query($query)) {
         echo "<script>alert('儲存成功')</script>";
         echo "<script>history.go(-2)</script>";

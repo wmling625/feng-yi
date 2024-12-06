@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                         <?php if (isset($result_arr[0]["nickname"])) { ?>
                                                             <input req readonly data-title="名稱" class="form-control" name="nickname" placeholder="請輸入管理員名稱" value="<?php echo isset($result_arr[0]["nickname"]) ? $result_arr[0]["nickname"] : "" ?>">
                                                         <?php } else { ?>
-                                                            <input req data-title="名稱" class="form-control nickname_input" name="nickname" placeholder="請輸入管理員名稱" value="">
+                                                            <input data-title="名稱" class="form-control nickname_input" name="nickname" placeholder="請輸入管理員名稱" value="">
                                                             <select style="display:none;" data-title="單位管理權限" name="nickname" id="nickname_dropdown" class="form-control col-md-6" defaults="<?php echo isset($result_arr[0]["nickname"]) ? $result_arr[0]["nickname"] : ""; ?>">
                                                             </select>
                                                         <?php } ?>
