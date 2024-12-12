@@ -13,7 +13,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$mysqli = new mysqli("localhost", "root", 'root1234', "feng_master");
+$mysqli = new mysqli("localhost", "mark_root", 'E@Pi67%K2+b+fr!F', "mark_fengyi");
 
 $mysqli->set_charset("utf8mb4");
 //$mysqli->set_charset("utf8");

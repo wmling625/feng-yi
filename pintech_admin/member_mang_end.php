@@ -16,7 +16,7 @@ $err_msg = array();
 @$types = params_security($_GET["types"]);
 
 
-if (empty($nickname) || empty($types_option) || empty($city) || empty($region)) {
+if (empty($nickname) || empty($types_option) || empty($qr_type_big_id)) {
     array_push($err_msg, "必填欄位未填寫，請檢查");
 }
 

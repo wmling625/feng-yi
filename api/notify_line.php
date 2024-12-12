@@ -18,6 +18,8 @@ LINE MESSAGE除非是PHP錯誤, 不然沒辦法DEBUG
 @$license = urldecode(params_security($_POST['license'])); // 家屬姓名
 
 @$file0 = urldecode(params_security($_POST['file0'])); // 推播圖片
+@$file1 = urldecode(params_security($_POST['file1'])); // 推播影片
+
 
 file_put_contents(dirname(__FILE__) . "/./api/log/" . date("Ymdhis") . "line_notify.txt", json_encode($_POST, JSON_UNESCAPED_UNICODE));
 
@@ -43,9 +45,19 @@ $users = explode(",", $user_id);
 $contents = "";
 if ($model == "toOwner") {
 
+    $user_query = "SELECT * FROM `member` WHERE `user_id` = '" . $user_id . "';";
+    $user_arr = array();
+    $receive_name = '';
+    if ($result = $mysqli->query($user_query)) {
+        $rows = $result->fetch_array();
+        $user_arr[] = $rows;
+        mysqli_free_result($result);
+        $receive_name = $user_arr[0]['title'];
+    }
+
     // $contents = "📢 親愛的家屬 ：有人留言給您，來去瞧瞧！👀\n";
     $contents = "一碼通關心您\n";
-    $contents .= $license . " 您好\n";
+    $contents .= $receive_name . " 您好\n";
     $contents .= "有人掃描您的會員通知二維碼\n";
     // $contents .= "請盡速協尋您的家屬\n";
     $contents .= "\n";
@@ -58,19 +70,34 @@ if ($model == "toOwner") {
         $contents .= "https://www.google.com/maps/search/?api=1&query=" . $lat . "," . $lng;
     }
 
-//    $contents .= "https://findit.linebot.tw/comment.php?history_id=" . $history_id;
+    //    $contents .= "https://findit.linebot.tw/comment.php?history_id=" . $history_id;
 
 } elseif ($model == "toPeople") {
-    $contents = "一碼通關心您\n";
-    $contents .= $license . " 已回覆您的留言↓\n"; //的家屬
-    $contents .= "\n";
-    $contents .= "他說：「" . $contents1 . "」";
+    @$reply_user = params_security($_POST['reply_user']);
+    $user_query = "SELECT * FROM `member` WHERE `user_id` = '" . $reply_user . "';";
+    $user_arr = array();
+    if ($result = $mysqli->query($user_query)) {
+        $rows = $result->fetch_array();
+        $user_arr[] = $rows;
+        mysqli_free_result($result);
+    }
+    $reply_name = $user_arr[0]['title'];
 
+    $contents = "一碼通關心您\n";
+    $contents .= $reply_name . " 已回覆您的留言↓\n"; //的家屬
+    $contents .= "\n";
+    $contents .= "回覆：「" . $contents1 . "」";
 } elseif ($model == "toAll") {
     $contents = br2nl(htmlspecialchars_decode($contents1));
+    // if ($file1 != "") {
+    //     $video_url = "https://" . $domain . "/uploads/others/" . $file1;
+    //     $contents .= "\n $video_url";
+    // }
 }
 
 $msg[0] = array("type" => "text", "source" => $contents);
+
+
 //可推播文字
 
 if ($model == "toAll") {
@@ -78,14 +105,14 @@ if ($model == "toAll") {
         $upload_dir = "../uploads/others/";
 
         $file_loc = $upload_dir . $file0;
-        $file_loc1 = $upload_dir . $file1;
+        $file_loc1 = $upload_dir . $file01;
 
         if (file_exists($file_loc)) {
             $msg[1] = array("type" => "image", "source" => "https://" . $domain . "/uploads/others/" . $file0);
         }
 
         if (file_exists($file_loc1)) {
-            $msg[1] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1);
+            $msg[2] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1);
         }
     }
 }
@@ -133,7 +160,7 @@ if ($model !== "toAll") {
     }
 
     if ($mysqli->multi_query($query1)) {
-        while ($mysqli->more_results() && $mysqli->next_result()) ;
+        while ($mysqli->more_results() && $mysqli->next_result());
     }
 
     if ($total > 0) {

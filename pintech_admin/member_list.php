@@ -331,6 +331,7 @@ if ($result = $mysqli->query($query_big)) {
                                                 <th width="10%">會員性別<br />
                                                     <span class="text-sm text-muted font-weight-normal">活動區域</span>
                                                 </th>
+                                                <th width="10%">所屬單位</th>
                                                 <th width="10%">擁有單位管理權限</th>
                                                 <th width="10%">
                                                     啟用<br />
@@ -349,8 +350,19 @@ if ($result = $mysqli->query($query_big)) {
                                                 echo '<td colspan="7">查無資料</td>';
                                                 echo '</tr>';
                                             } else {
+                                                
                                                 foreach ($result_arr as $key => $value) {
+                                                    $query = "SELECT *, qr_type_big.title AS typeTitle FROM `qrcode_big` LEFT JOIN `qr_type_big` ON qrcode_big.qr_type_big_id = qr_type_big.qr_type_big_id WHERE `member_id` = '" . $value['member_id'] . "'";
+                                                    $type_arr = array();
+                                                    if ($result = $mysqli->query($query)) {
+                                                        $rows = $result->fetch_array();
+                                                        $type_arr[] = $rows;
+                                                        mysqli_free_result($result);
+                                                    }
 
+                                                    $typeTitle = $type_arr[0]['typeTitle'];
+                                                    
+                                                    
                                                     echo '<tr>';
                                                     echo '<td>';
                                                     echo '<div class="icheck-primary d-inline">';
@@ -363,6 +375,11 @@ if ($result = $mysqli->query($query_big)) {
                                                     echo '<td>' . $value["title"] . '</td>';
                                                     echo '<td>' . $value["nickname"] . '<br/><span class="text-sm text-muted">' . $value["account"] . '</span></td>';
                                                     echo '<td>' . $value["types_option"] . '<br/><span class="text-sm text-muted">' . $value["city"] . $value["region"] . '</span></td>';
+                                                    echo '<td>';
+                                                    foreach ($type_arr as $key => $type) {
+                                                        echo (!empty($type['typeTitle'])) ? $type['typeTitle'] . ',' : '<i class="fa-solid fa-x"></i>';
+                                                    }
+                                                    echo '</td>';
                                                     echo '<td>';
                                                     echo (!empty($value["qr_type_big_id"])) ? '<i class="fa-solid fa-check text-success"></i> ' . $value["big_title"] : '<i class="fa-solid fa-x"></i>';
                                                     echo '</td>';

@@ -60,7 +60,8 @@ if (count($err_msg) > 0) {
         "qr_type_id" => $qr_type_id,
         "history_id" => $history_id,
         "contents1" => $contents1,
-        "license" => $license
+        "license" => $license,
+        'reply_user' => $user_id1
     );
 //        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toPeople&user_id=" . $user_id0 . "&qr_type_id=" . $qr_type_id . "&history_id=" . $history_id . "&contents1=" . urlencode($contents1) . "&license=" . $license;
     $url = "https://" . $domain . "/api/notify_line.php";
