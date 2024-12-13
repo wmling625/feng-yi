@@ -69,8 +69,8 @@ if (count($filter_sql_arr) > 0) {
 
 $result_arr = array();
 
-if (isset($_SESSION['admin']['qr_type_big_id']) && $_SESSION['admin']['qr_type_big_id'] != '') {
-    $qrcode_big = "SELECT * FROM `member` WHERE `qr_type_big_id` = '" .  $_SESSION['admin']['qr_type_big_id'] . "';";
+if (isset($_SESSION['admin']['member_id']) && $_SESSION['admin']['member_id'] != '') {
+    $qrcode_big = "SELECT * FROM `member` WHERE `qr_type_big_id` = '" .  $_SESSION['admin']['member_id'] . "';";
     if ($result = $mysqli->query($qrcode_big)) {
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             $result_type_big_arr[] = $row;
