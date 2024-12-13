@@ -213,7 +213,7 @@ if ($mysqli->multi_query($query)) {
                                                 </select>
                                             </td>
                                         </tr>
-                                        <!-- <tr>
+                                        <tr>
                                             <th width="25%">活動區域<span class="required">*</span></th>
                                             <td>
                                                 <div class="input-group">
@@ -233,7 +233,7 @@ if ($mysqli->multi_query($query)) {
                                                     </select>
                                                 </div>
                                             </td>
-                                        </tr> -->
+                                        </tr>
                                         <tr>
                                             <th width="25%">單位管理權限<span class="required"></span></th>
                                             <td>
