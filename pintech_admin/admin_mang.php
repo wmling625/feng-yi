@@ -6,6 +6,7 @@ include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
 
 $result_arr = array();
 $qrcode_big_id = '';
+$member_id = '';
 $box_arr = array("個人資料" => "me_mang.php", "最新消息" => "news_list.php", "合作店家" => "place_list.php");
 $query = "SELECT * FROM admin WHERE admin_id = '" . $admin_id . "';";
 
@@ -40,6 +41,7 @@ function get_member($mysqli, $qr_type_big_id)
 
         mysqli_free_result($result);
     }
+
     $output = "";
     foreach ($result_member_arr as $member) {
         $output .= "<option value='{$member['title']}' data-member-id='{$member['member_id']}'>{$member['title']}</option>";
@@ -54,9 +56,7 @@ function get_qrcode_big_id($mysqli, $qr_type_big_id, $member_id)
     $result_qrcode = $mysqli->query($query_qrcode);
 
     if ($row = $result_qrcode->fetch_array(MYSQLI_ASSOC)) {
-        $qrcode_big_id = $row['qrcode_big_id'];
-
-        return $qrcode_big_id;
+        return  $row['qrcode_big_id'];
     } else {
         return null;
     }
@@ -284,7 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <input type="hidden" name="admin_id" value="<?php echo $admin_id; ?>">
                                         <input type="hidden" name="model" value="<?php echo $model; ?>">
                                         <!-- Hidden input for qrcode_big_id -->
-                                        <input type="hidden" id="qrcode_big_id" name="qrcode_big_id" value="<?php echo $qrcode_big_id; ?>">
+                                        <input type="hidden" id="member_id" name="member_id" value="<?php echo $member_id; ?>">
 
                                     </div>
                                 </div>
@@ -315,10 +315,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 qr_type_big_id: qr_type_big_id
                             },
                             success: function(response) {
+                                console.log(response);
                                 if (response) {
                                     $('.nickname_input').hide();
                                     $('#nickname_dropdown').show();
                                     $('#nickname_dropdown').html(response);
+                                    var member_id = $('#nickname_dropdown').find(':selected').data('member-id');
+                                    $('#member_id').val(member_id);
                                     $('#qrcode_big_id').val('');
                                 } else {
                                     $('.nickname_input').show();
@@ -346,6 +349,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             success: function(response) {
                                 console.log(response);
                                 $('#qrcode_big_id').val(response);
+                                $('#member_id').val(member_id);
                             },
                             error: function(xhr, status, error) {
                                 console.error('AJAX Error:', status, error);
