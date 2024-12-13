@@ -68,7 +68,19 @@ if (count($filter_sql_arr) > 0) {
 }
 
 $result_arr = array();
-$query = "SELECT A.*, B.title AS name FROM history AS A INNER JOIN member AS B ON A.`user_id1`=B.`user_id` WHERE " . $filter_sql_str . " ORDER BY A." . $date_type . " DESC";
+if (isset($_SESSION['admin']['qr_type_big_id']) && $_SESSION['admin']['qr_type_big_id'] != '') {
+    $qrcode_big = "SELECT * FROM `member` WHERE `qr_type_big_id` = '" .  $_SESSION['admin']['qr_type_big_id'] . "';";
+    if ($result = $mysqli->query($qrcode_big)) {
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $result_type_big_arr[] = $row;
+        }
+        mysqli_free_result($result);
+    }
+    $admin_user = $result_type_big_arr[0]['user_id'];
+    $query = "SELECT A.*, B.title AS name FROM history AS A INNER JOIN member AS B ON A.`user_id1`= B.`user_id` WHERE " . $filter_sql_str . " AND ( A.`user_id0` = '" . $admin_user . "' OR A.`user_id1` = '" . $admin_user . "') ORDER BY A." . $date_type . " DESC";
+} else {
+    $query = "SELECT A.*, B.title AS name FROM history AS A INNER JOIN member AS B ON A.`user_id1`= B.`user_id` WHERE " . $filter_sql_str . " ORDER BY A." . $date_type . " DESC";
+}
 
 if ($result = $mysqli->query($query)) {
     $total = mysqli_num_rows($result);
