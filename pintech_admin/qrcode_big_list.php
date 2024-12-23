@@ -314,7 +314,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                                 </th>
                                                 <th width="5%">綁定時間<!--<br/>
                                             <span class="text-sm text-muted font-weight-normal">更新時間</span>--></th>
-                                                <th width="10%">功能</th>
+                                                <!-- <th width="10%">功能</th> -->
                                             </tr>
                                         </thead>
                                         <tbody class="text-center">
@@ -372,9 +372,9 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                                     //                                            echo '<span class="text-sm text-secondary">' . $value["last_date"] . '</span><br/>';
                                                     //                                            echo '</td>';
 
-                                                    echo '<td>';
-                                                    echo '<a href="' . $link . '" target="_blank" class="mx-1 btn btn-sm btn-outline-dark">前台連結</a>';
-                                                    echo '</td>';
+                                                    // echo '<td>';
+                                                    // echo '<a href="' . $link . '" target="_blank" class="mx-1 btn btn-sm btn-outline-dark">前台連結</a>';
+                                                    // echo '</td>';
 
                                                     echo '</tr>';
                                                 }

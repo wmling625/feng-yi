@@ -1,7 +1,7 @@
 <?php
 // error_reporting(E_ALL);
 session_name("pintech_findit");
-@session_regenerate_id();
+@session_regenerate_id();   
 set_time_limit(0);
 ini_set('session.gc_maxlifetime', 200000);
 ini_set('memory_limit', '256M');
@@ -13,7 +13,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$mysqli = new mysqli("localhost", "mark_root", 'E@Pi67%K2+b+fr!F', "mark_fengyi");
+$mysqli = new mysqli("localhost", "root", 'root1234', "feng_master");
 
 $mysqli->set_charset("utf8mb4");
 //$mysqli->set_charset("utf8");
