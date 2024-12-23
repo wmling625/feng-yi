@@ -4,7 +4,7 @@ $icon_array = array(
     "初始頁" => "fa-solid fa-star",
     "管理員" => "fa-solid fa-user-secret",
     "廣告管理" => "fa-solid fa-rectangle-ad",
-    "QRCode管理" => "fa-solid fa-qrcode",
+    // "QRCode管理" => "fa-solid fa-qrcode",
     "單位條碼管理" => "fa-solid fa-qrcode",
     "會員管理" => "fa-solid fa-user-group",
     "通知歷程" => "fa-brands fa-line",
@@ -13,8 +13,8 @@ $icon_array = array(
 
 $menu_array["初始頁"][0] = array("title" => "初始頁", "link" => "init.php", "target" => "_self", "checked" => true, "user_checked" => true, "user_show" => true);
 
-$menu_array["QRCode管理"][0] = array("title" => "標籤群組", "link" => "qr_type_list.php", "target" => "_self", "checked" => false, "user_checked" => false, "user_show" => false);
-$menu_array["QRCode管理"][1] = array("title" => "QRCode", "link" => "qrcode_list.php", "target" => "_self", "checked" => false, "user_checked" => false, "user_show" => false);
+// $menu_array["QRCode管理"][0] = array("title" => "標籤群組", "link" => "qr_type_list.php", "target" => "_self", "checked" => false, "user_checked" => false, "user_show" => false);
+// $menu_array["QRCode管理"][1] = array("title" => "QRCode", "link" => "qrcode_list.php", "target" => "_self", "checked" => false, "user_checked" => false, "user_show" => false);
 
 $menu_array["單位條碼管理"][] = array("title" => "單位條碼", "link" => "qr_type_big_list.php", "target" => "_self", "checked" => false, "user_checked" => false, "user_show" => false);
 $menu_array["單位條碼管理"][] = array("title" => "綁定紀錄", "link" => "qrcode_big_list.php", "target" => "_self", "checked" => false, "user_checked" => false, "user_show" => false);
