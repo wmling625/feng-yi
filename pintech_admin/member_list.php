@@ -350,7 +350,7 @@ if ($result = $mysqli->query($query_big)) {
                                                 echo '<td colspan="7">查無資料</td>';
                                                 echo '</tr>';
                                             } else {
-                                                
+
                                                 foreach ($result_arr as $key => $value) {
                                                     $query = "SELECT *, qr_type_big.title AS typeTitle FROM `qrcode_big` LEFT JOIN `qr_type_big` ON qrcode_big.qr_type_big_id = qr_type_big.qr_type_big_id WHERE `member_id` = '" . $value['member_id'] . "'";
                                                     $type_arr = array();
@@ -360,9 +360,11 @@ if ($result = $mysqli->query($query_big)) {
                                                         mysqli_free_result($result);
                                                     }
 
-                                                    $typeTitle = $type_arr[0]['typeTitle'];
-                                                    
-                                                    
+                                                    if (isset($type_arr[0]['typeTitle'])) {
+                                                        $typeTitle = $type_arr[0]['typeTitle'];
+                                                    }
+
+
                                                     echo '<tr>';
                                                     echo '<td>';
                                                     echo '<div class="icheck-primary d-inline">';
