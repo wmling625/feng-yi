@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+
+include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
 $err_msg = array();
 
 @$ids = params_security($_POST['ids']); // 單位id
