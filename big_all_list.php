@@ -160,7 +160,7 @@ if ($result = $mysqli->query($query)) {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form method="post" id="form" enctype="multipart/form-data" action="qr_type_big_notify_end.php">
+                        <form method="post" id="form" enctype="multipart/form-data" action="big_code_notify_end.php">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="message">推播內容<span class="required">*</span></label>
