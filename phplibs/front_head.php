@@ -2,6 +2,7 @@
 include_once(dirname(__FILE__) . "/./root.php");
 include_once(dirname(__FILE__) . "/./root_global.php");
 include_once(dirname(__FILE__)."/./sms/mitake_sms/sms.php");
+include_once(dirname(__FILE__) . "/./SimpleImage_areafill.php");
 
 $filename = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']); //取得目前檔名
 

@@ -1,6 +1,5 @@
 <?php
 include_once(dirname(__FILE__) . "/./phplibs/front_head.php");
-
 @$profile = params_security($_GET["profile"]);
 
 $result_arr = array();
@@ -169,7 +168,7 @@ if ($result = $mysqli->query($query)) {
                                 <?php
                                 $image_arr = array("file0" => "推播圖片");
                                 $file_arr = array("file1" => array("推播影片", "", "3"));
-                                $upload_dir = "../uploads/others/";
+                                $upload_dir = "/uploads/others/";
                                 // 圖片
                                 foreach ($image_arr as $key => $value) {
                                     $file = "";

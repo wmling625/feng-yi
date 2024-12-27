@@ -1,15 +1,10 @@
 <?php
 
-error_reporting(E_ALL);
-
-include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
+include_once(dirname(__FILE__) . "/./phplibs/front_head.php");
 $err_msg = array();
 
 @$ids = params_security($_POST['ids']); // 單位id
 @$message = params_security($_POST['message'], 'text'); // 推播訊息內容
-
-
-
 @$id = '1';
 $setting_arr = array();
 $domain = '';
@@ -41,7 +36,7 @@ if (count($err_msg)) {
     }
 
     // 上傳位置
-    $upload_dir = "../uploads/others/";
+    $upload_dir = "./uploads/others/";
     for ($i = 0; $i <= count($file_array) - 1; $i++) {
 
         // 副檔名限制
@@ -64,6 +59,7 @@ if (count($err_msg)) {
             //        $option["file_name"] = mb_pathinfo($_FILES['file' . $i], PATHINFO_FILENAME);
 
             $up_arr = file_upload($limited_ext, $upload_dir, $new_file, $option);
+
             $up_state = $up_arr["up_state"];
             $up_name = $up_arr["up_name"];
             $up_message = $up_arr["up_message"];
@@ -86,7 +82,8 @@ if (count($err_msg)) {
 
 
     $result_arr = array();
-    $query = "SELECT A.`qrcode_big_id`, B.`user_id` FROM `qrcode_big` AS A INNER JOIN `member` AS B ON A.`member_id` = B.`member_id` WHERE find_in_set(A.`qr_type_big_id`, '" . $ids . "') >0 AND A.`orders` >= 0 AND B.`orders` >= 0 ";
+    $query = "SELECT A.`qrcode_big_id`, B.`user_id` FROM `qrcode_big` AS A INNER JOIN `member` AS B ON A.`member_id` = B.`member_id` WHERE find_in_set(A.`qrcode_big_id`, '" . $ids . "') >0 AND A.`orders` >= 0 AND B.`orders` >= 0 ";
+    // var_dump($query);exit;
 
     $query1 = "";
     if ($result = $mysqli->query($query)) {
