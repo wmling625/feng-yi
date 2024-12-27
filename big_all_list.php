@@ -131,8 +131,8 @@ if ($result = $mysqli->query($query)) {
                                     echo '<div class="item">';
                                     echo '  <span class="p-3 title-1">' . ($key + 1) . '</span>';
                                     echo '  <div class="icheck-primary">';
-                                    echo '    <input type="checkbox" id="' . $value['qr_type_big_id'] . '" name="box_list" value="' . $value['qr_type_big_id'] . '">';
-                                    echo '    <label for="' . $value['qr_type_big_id'] . '"></label>';
+                                    echo '    <input type="checkbox" id="' . $value['qrcode_big_id'] . '" name="box_list" value="' . $value['qrcode_big_id'] . '">';
+                                    echo '    <label for="' . $value['qrcode_big_id'] . '"></label>';
                                     echo '  </div>';
                                     echo '  <a href="' . $link . '" class="textbox">';
                                     echo '    <p class="mb-0 title-1"><i class="fas fa-qrcode"></i>' . $value['nickname'] . '</p>';
