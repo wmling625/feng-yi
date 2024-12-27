@@ -214,7 +214,7 @@ if ($result = $mysqli->query($query)) {
                                     echo '<i class="fa-regular fa-circle-question" aria-hidden="true"></i>';
                                     echo '</span>';
                                     echo '<label class="btn btn-outline-primary mb-0">';
-                                    echo '<input accept="video/mp4,video/webm" style="display:none;" ' . $value[1] . ' class="filesupload" data-title="' . $value[0] . '" type="file" name="' . $key . '" value="" data-file="' . aes_encrypt($file) . '" data-id="' . $value[2] . '" />';
+                                    echo '<input accept="video/mp4,video/webm" max_mb="70" style="display:none;" ' . $value[1] . ' class="filesupload" data-title="' . $value[0] . '" type="file" name="' . $key . '" value="" data-file="' . aes_encrypt($file) . '" data-id="' . $value[2] . '" />';
                                     echo '<i class="fa-solid fa-cloud-arrow-up"></i> 上傳檔案';
                                     echo '<span class="text-sm mx-2" id="filename"></span>';
                                     echo $file_str;
