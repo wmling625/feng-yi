@@ -393,7 +393,7 @@ $(function () {
             })
         }
 
-        if ((location.pathname).indexOf("qr_type_") >= 0) {
+        if ((location.pathname).indexOf("qr_type_") >= 0 || (location.pathname).indexOf("member_") >= 0 ) {
             // 推播訊息給擁有該標籤QRCode的所有會員
             $("button[id=lineNotify]").click(function (event) {
                 // 找到所有被勾選的id，並合併成,字串

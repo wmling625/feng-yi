@@ -240,6 +240,9 @@ if ($result = $mysqli->query($query_big)) {
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-tools">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-bs-toggle="tooltip" title="推播給該單位條碼會員" id="lineNotify">
+                                            推播訊息
+                                        </button>
                                         <!--                                    <a href="member_mang.php?model=add" type="button"-->
                                         <!--                                       class="btn btn-sm btn-success">新增</a>-->
                                         <button type="button" class="btn btn-sm btn-danger" name="box_del">批次刪除</button>
@@ -434,6 +437,92 @@ if ($result = $mysqli->query($query_big)) {
                 <!-- /.row -->
 
             </section>
+            <!-- Modal -->
+            <div class="modal fade" id="lineNotifyModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">發送 QRCode</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="post" id="form" enctype="multipart/form-data" action="member_notify_end.php">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="message">推播內容<span class="required">*</span></label>
+                                    <textarea req class="form-control" rows="10" name="message" id="message" placeholder="請輸入推播的訊息內容，僅接受純文字"></textarea>
+                                </div>
+                                <?php
+                                $image_arr = array("file0" => "推播圖片");
+                                $file_arr = array("file1" => array("推播影片", "", "3"));
+                                $upload_dir = "../uploads/others/";
+                                // 圖片
+                                foreach ($image_arr as $key => $value) {
+                                    $file = "";
+                                    $default = $upload_dir . "nophoto.png";
+                                    $b64_selector = "textarea[name=" . $key . "_64]";
+                                    $prev_selector = "[name=" . $key . "_prev]";
+                                    $func_str = "selectFileImage(this, 200, 200, '" . $b64_selector . "', '" . $prev_selector . "', 'rwd')";
+
+                                    echo '<div class="form-group">';
+                                    echo '<label for="' . $key . '">' . $value . '<span class="required"></span></label>';
+                                    echo '<label class="upload_cover img-thumbnail" style="background-image: url(' . $default . ');" name="' . $key . '_prev">';
+                                    echo '<input class="file" type="file" onchange="' . $func_str . '" name="' . $key . '" id="' . $key . '">';
+                                    echo '</label>';
+                                    echo '<textarea name="' . $key . '_64" class="hide"></textarea>';
+                                    echo '</div>';
+                                }
+
+                                // 附件
+                                foreach ($file_arr as $key => $value) {
+                                    $required = ($value[1] !== "") ? "*" : "";
+                                    $del_str = "";
+                                    $file_str = "";
+                                    if (isset($result_arr[0][$key]) && $result_arr[0][$key] !== "") {
+                                        $file = $result_arr[0][$key];
+                                        $file_loc = $upload_dir . $file;
+
+                                        if ($file != "") {
+                                            if (file_exists($file_loc)) {
+                                                $file_str = "<a href='" . $file_loc . "' target='_blank'>" . $file . "</a>";
+
+                                                $file_sql = aes_encrypt(" update advertisement set " . $key . " = '' where advertisement_id = '" . $advertisement_id . "'; ");
+
+                                                $file_str = "<br/><a class='text-sm text-muted' href='" . $file_loc . "' target='_blank'><i class='fa-regular fa-file mr-2'></i>" . $file . "</a>";
+                                                $del_str = '<a href="javascript:void(0)" class="text-sm text-danger ml-2" file_sql="' . $file_sql . '" ><i class="fa-solid fa-trash"></i></a>';
+                                            }
+                                        }
+                                    }
+                                    echo '<div class="form-group">';
+
+                                    echo '<label for="' . $key . '">' . $value[0] . '</label>';
+                                    echo '<span class="required">' . $required . '</span>';
+                                    echo '<span class="mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="僅接受.mp4、.webm檔">';
+                                    echo '<i class="fa-regular fa-circle-question" aria-hidden="true"></i>';
+                                    echo '</span>';
+                                    echo '<label class="btn btn-outline-primary mb-0">';
+                                    echo '<input accept="video/mp4,video/webm" style="display:none;" ' . $value[1] . ' class="filesupload" data-title="' . $value[0] . '" type="file" name="' . $key . '" value="" data-file="' . aes_encrypt($file) . '" data-id="' . $value[2] . '" />';
+                                    echo '<i class="fa-solid fa-cloud-arrow-up"></i> 上傳檔案';
+                                    echo '<span class="text-sm mx-2" id="filename"></span>';
+                                    echo $file_str;
+                                    echo $del_str;
+                                    echo '</div>';
+                                }
+                                ?>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <input type="hidden" class="form-control" name="ids" id="ids" value="">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                                <button type="button" class="btn btn-primary" id="lineNotifyConfirm">送出</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
         </div><!-- /.container-fluid -->
 
         <!-- /.content-wrapper -->
