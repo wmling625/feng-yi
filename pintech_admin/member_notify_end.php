@@ -5,8 +5,7 @@ $err_msg = array();
 
 @$ids = params_security($_POST['ids']); // 單位id
 @$message = params_security($_POST['message'], 'text'); // 推播訊息內容
-
-
+@$qrcodebig = params_security($_POST['qrcodebig']); // qrcodebig id
 
 @$id = '1';
 $setting_arr = array();
@@ -84,7 +83,7 @@ if (count($err_msg)) {
 
 
     $result_arr = array();
-    $query = "SELECT A.`qrcode_big_id`, B.`user_id` FROM `qrcode_big` AS A INNER JOIN `member` AS B ON A.`member_id` = B.`member_id` WHERE find_in_set(A.`qr_type_big_id`, '" . $ids . "') >0 AND A.`orders` >= 0 AND B.`orders` >= 0 ";
+    $query = "SELECT A.`qrcode_big_id`, B.`user_id` FROM `qrcode_big` AS A INNER JOIN `member` AS B ON A.`member_id` = B.`member_id` WHERE find_in_set(A.`qrcode_big_id`, '" . $qrcodebig . "') >0 AND A.`orders` >= 0 AND B.`orders` >= 0 ";
 
     $query1 = "";
     if ($result = $mysqli->query($query)) {

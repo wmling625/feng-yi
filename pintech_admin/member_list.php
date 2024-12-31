@@ -94,13 +94,15 @@ if (count($filter_sql_arr) > 0) {
 $result_arr = array();
 
 if (isset($_SESSION['admin']['qr_type_big_id'])) {
-    $query = "SELECT A.*, B.title AS 'big_title' 
+    $query = "SELECT A.*, B.title AS 'big_title', C.qrcode_big_id AS 'qrcode_big_id'
     FROM member A 
     LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id 
+    LEFT JOIN qrcode_big C ON A.member_id = C.member_id
     WHERE B.qr_type_big_id = '" . $mysqli->real_escape_string($_SESSION['admin']['qr_type_big_id']) . "' 
     ORDER BY A.orders ASC";
 } else {
-    $query = "SELECT A.*, B.title AS 'big_title' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
+    $query = "SELECT A.*, B.title AS 'big_title', C.qrcode_big_id AS 'qrcode_big_id' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id LEFT JOIN qrcode_big C ON A.member_id = C.member_id
+ WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
 }
 
 
@@ -366,12 +368,10 @@ if ($result = $mysqli->query($query_big)) {
                                                     if (isset($type_arr[0]['typeTitle'])) {
                                                         $typeTitle = $type_arr[0]['typeTitle'];
                                                     }
-
-
                                                     echo '<tr>';
                                                     echo '<td>';
                                                     echo '<div class="icheck-primary d-inline">';
-                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '">';
+                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '" name="box_list" qrcodebig="' . $value['qrcode_big_id'] . '">';
                                                     echo '<label for="' . $value['member_id'] . '">';
                                                     echo '</label>';
                                                     echo '</div>';
@@ -513,6 +513,7 @@ if ($result = $mysqli->query($query_big)) {
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <input type="hidden" class="form-control" name="ids" id="ids" value="">
+                                <input type="hidden" class="form-control" name="qrcodebig" id="qrcodebig" value="">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
                                 <button type="button" class="btn btn-primary" id="lineNotifyConfirm">送出</button>
                             </div>

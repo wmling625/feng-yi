@@ -401,6 +401,12 @@ $(function () {
                     return $(this).val();
                 }).get().join(",");
 
+                if((location.pathname).indexOf("member_") >= 0) {
+                    var qrcodebig = $('input[name=box_list]:checked').map(function () {
+                        return $(this).attr('qrcodebig');
+                    }).get().join(",");
+                }
+
                 if (id !== "") {
                     // 發送的Modal資訊帶入
                     var memberModal = $('#lineNotifyModal');
@@ -408,6 +414,7 @@ $(function () {
                     memberModal.on('shown.bs.modal', function (e) {
                         // do something...
                         $('[name=ids]').val(id);
+                        $('[name=qrcodebig]').val(qrcodebig);
 
                         $("button[id=lineNotifyConfirm]").click(function (event) {
                             var this_form = Boolean($(this).parents('form')) ? $(this).parents('form') : $('#' + $(this).attr('form'));
