@@ -904,7 +904,6 @@ $(function () {
 
             // 列表批次選取
             $("input[name=box_toggle]").click(function (event) {
-                alert('here');
                 if (this.checked) {
                     $("input[name=box_list]").each(function () { //loop through each checkbox
                         $(this).prop('checked', true); //check
