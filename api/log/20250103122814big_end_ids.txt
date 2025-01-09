@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"U64b26c4f0c0de6994d232d49fd3b4712,Uc61aacf2ec7f93e973fa42fd20b8877a","contents1":"推DM含影片","file0":"3885e709-9d61-4657-8daf-dac91408c7a5.png","file1":"2230b50d-bdcf-42e0-bd2d-824ee930e03b.mp4"}

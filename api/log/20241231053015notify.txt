@@ -1,0 +1,1 @@
+[{"type":"text","source":"全部推播"},{"type":"image","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/a9a5c054-50d7-477a-9844-0b3d5b4d2a7d.jpg"},{"type":"video","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/b8ae9f2d-0df5-4930-913f-4e336233e9cf.mp4"}]

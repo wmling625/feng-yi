@@ -1,0 +1,1 @@
+[{"type":"text","source":"推eDM不含影像"},{"type":"image","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/c934eb93-8cdd-4188-bf31-e92bdde424a5.jpg"},{"type":"video","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/"}]

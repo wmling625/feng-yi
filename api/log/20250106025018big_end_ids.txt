@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"U64b26c4f0c0de6994d232d49fd3b4712","contents1":"TEST with video 2","file0":"2accd86d-09c1-456e-a0c3-8f1aa11f5408.jpg","file1":"54e65510-bb5a-460f-8fed-bbc8fe9c38bf.mp4"}

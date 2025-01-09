@@ -1,0 +1,1 @@
+[{"type":"text","source":"message with no video 2"},{"type":"image","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/3d4b34da-3097-45b3-97f5-9ca1d0a775f1.jpg"}]

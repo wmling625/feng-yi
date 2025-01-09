@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"Uc61aacf2ec7f93e973fa42fd20b8877a,Ueb977dbf61e7cf41b4e152fe09eac15c,U64b26c4f0c0de6994d232d49fd3b4712","contents1":"managerA管理員已選擇管理分會, 第1次發送推播","file0":"","file1":""}

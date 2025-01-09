@@ -113,7 +113,7 @@ if (count($err_msg)) {
 
         $result_arr = array_unique($result_arr);
         $userIds = implode(",", $result_arr);
-
+        
         $data_arr = array(
             "model" => "toAll",
             "user_id" => $userIds,
@@ -125,7 +125,6 @@ if (count($err_msg)) {
         $url = "https://" . $domain . "/api/notify_line.php";
         file_put_contents(dirname(__FILE__) . "/../api/log/" . date("Ymdhis") . "big_end_ids.txt", json_encode($data_arr, JSON_UNESCAPED_UNICODE));
         download_page($url, $data_arr);
-
         echo "<script>alert('推播成功')</script>";
     } else {
         file_put_contents(dirname(__FILE__) . "/../api/log/" . date("Ymdhis") . "big_end_query.txt", $query1);

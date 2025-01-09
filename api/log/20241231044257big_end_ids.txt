@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"U67f8ddd425738a296a4ce7e56a809567,Uc61aacf2ec7f93e973fa42fd20b8877a,U64b26c4f0c0de6994d232d49fd3b4712","contents1":"[公告] 親愛的會員您好, 歡迎加入本行銷一碼通平台, 本社群的公告事項如下：<br \/>1. OOOOO<br \/>2. OOOOOO","file0":"","file1":""}

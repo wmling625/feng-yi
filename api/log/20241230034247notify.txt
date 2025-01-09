@@ -1,0 +1,1 @@
+[{"type":"text","source":"手機推播測試"},{"type":"image","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/edfdd6b3-602b-40f5-9d6c-44624d44cd95.jpg"},{"type":"video","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/0fedccc1-ee5f-4dfc-91c3-35564de969ed.mp4"}]

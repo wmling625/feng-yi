@@ -1,0 +1,1 @@
+[{"type":"text","source":"TEST with video"},{"type":"image","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/1c704eeb-7446-488d-9a98-4263e0c75998.jpg"},{"type":"video","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/9477f8b7-156b-4671-8479-b147bb93c528.mp4"}]

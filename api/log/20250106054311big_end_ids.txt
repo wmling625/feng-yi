@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"U67f8ddd425738a296a4ce7e56a809567,Uc61aacf2ec7f93e973fa42fd20b8877a,U5033bcb57e28935225096696870e8cf0,U64b26c4f0c0de6994d232d49fd3b4712","contents1":"單發影片","file0":"","file1":"593f8ece-aef2-462b-9051-f49b1d21cce5.mp4"}

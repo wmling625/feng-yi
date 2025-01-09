@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"Ueb977dbf61e7cf41b4e152fe09eac15c","contents1":"後端會員推播測試","file0":"","file1":""}

@@ -1,0 +1,1 @@
+[{"type":"text","source":"推播測試不含影片\r\n222222"},{"type":"image","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/091e79d8-8f2d-4416-971d-ec7aea5ce8c9.jpg"},{"type":"video","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/355eb98f-02be-42d0-91a1-1c865a0e804f.mp4"}]
