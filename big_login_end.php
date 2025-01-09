@@ -83,7 +83,7 @@ if (count($err_msg) > 0) {
     $query = "INSERT INTO `member`(`member_id`, `account`, `user_id`, `title`, `nickname`, `types_option`, `city`, `region`, `pub_date`, `last_date`, `orders`) VALUES (uuid(),'" . $mobile . "','" . $userId . "','" . $title . "','" . $nickname . "','" . $types_option . "','" . $city . "','" . $region . "', NOW(), NOW(), 1) ON DUPLICATE KEY UPDATE `user_id` = '" . $userId . "', `title` = '" . $title . "', `nickname` = '" . $nickname . "', `types_option` = '" . $types_option . "', `city` = '" . $city . "', `region` = '" . $region . "', `last_date` = NOW(), `orders` = 1";
     if ($mysqli->query($query)) {
         if (!$isLogin) {
-            echo "<script>alert('註冊成功，將直接為您登入，請稍後...')</script>";
+            // echo "<script>alert('註冊成功，將直接為您登入，請稍後...')</script>";
         }
     }
 
@@ -96,7 +96,7 @@ if (count($err_msg) > 0) {
             echo "<script>alert('查無資訊，請確認手機是否輸入正確')</script>";
             echo "<script>history.go(-1)</script>";
         } else {
-            echo "<script>alert('登入成功')</script>";
+            // echo "<script>alert('登入成功')</script>";
             if ($redirect !== "") {
                 echo "<script>document.location.href = '" . $redirect . "&profile=" . urlencode($profile) . "&title=" . urlencode($mobile) . "&intro=" . urlencode($nickname) . "&contents=" . urlencode($contents) . "'</script>";
             } else {

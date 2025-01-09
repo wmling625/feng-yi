@@ -90,7 +90,7 @@ $query = "INSERT INTO `qrcode_big`(`qrcode_big_id`, `qr_type_big_id`, `member_id
 // var_dump($mysqli->query($query));exit;
 
 if ($mysqli->query($query)) {
-    echo "<script>alert('綁定成功!')</script>";
+    // echo "<script>alert('綁定成功!')</script>";
     // echo "<script>document.location.href='big_my_info.php?qrcode_big_id=" . aes_encrypt($uuid) . "&profile=" . $profile . "'</script>";
     echo '<script>document.location.href = "' . $oa . '"</script>';
     exit;
