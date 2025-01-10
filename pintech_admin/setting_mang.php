@@ -1,5 +1,6 @@
 <?php
 include_once(dirname(__FILE__) . "/../phplibs/backend_head.php");
+$super = isset($_SESSION['admin']['account']) ? $_SESSION['admin']['account'] : "admin";
 
 @$model = "update";
 @$id = '1';
@@ -154,36 +155,38 @@ if ($result = $mysqli->query($query)) {
                                                             placeholder="請輸入預設推播留言"><?php echo isset($result_arr[0]["content"]) ? br2nl($result_arr[0]["content"]) : "" ?></textarea>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th width="15%">Line liff 大碼<span class="required">*</span></th>
-                                                    <td>
-                                                        <input req data-title="Line Full" class="form-control" name="linefull" placeholder="請輸入Line Full" value="<?php echo isset($result_arr[0]["linefull"]) ? $result_arr[0]["linefull"] : "" ?>">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th width="15%">Line liff 關閉<span class="required">*</span></th>
-                                                    <td>
-                                                        <input req data-title="Line Close" class="form-control" name="lineclose" placeholder="請輸入Line Close" value="<?php echo isset($result_arr[0]["lineclose"]) ? $result_arr[0]["lineclose"] : "" ?>">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th width="15%">Line Oauth<span class="required">*</span></th>
-                                                    <td>
-                                                        <input req data-title="Line Oauth" class="form-control" name="lineoauth" placeholder="請輸入Line Oauth" value="<?php echo isset($result_arr[0]["lineoauth"]) ? $result_arr[0]["lineoauth"] : "" ?>">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th width="15%">Line Chat Channel Access Token<span class="required">*</span></th>
-                                                    <td>
-                                                        <input req data-title="Line Token" class="form-control" name="linetoken" placeholder="請輸入Line Token" value="<?php echo isset($result_arr[0]["linetoken"]) ? $result_arr[0]["linetoken"] : "" ?>">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th width="15%">Line Chat Channel Secret<span class="required">*</span></th>
-                                                    <td>
-                                                        <input req data-title="Line Close" class="form-control" name="linesecret" placeholder="請輸入Line Secret" value="<?php echo isset($result_arr[0]["linesecret"]) ? $result_arr[0]["linesecret"] : "" ?>">
-                                                    </td>
-                                                </tr>
+                                                <?php if ($super == 'admin') { ?>
+                                                    <tr>
+                                                        <th width="15%">Line liff 大碼<span class="required">*</span></th>
+                                                        <td>
+                                                            <input req data-title="Line Full" class="form-control" name="linefull" placeholder="請輸入Line Full" value="<?php echo isset($result_arr[0]["linefull"]) ? $result_arr[0]["linefull"] : "" ?>">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="15%">Line liff 關閉<span class="required">*</span></th>
+                                                        <td>
+                                                            <input req data-title="Line Close" class="form-control" name="lineclose" placeholder="請輸入Line Close" value="<?php echo isset($result_arr[0]["lineclose"]) ? $result_arr[0]["lineclose"] : "" ?>">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="15%">Line Oauth<span class="required">*</span></th>
+                                                        <td>
+                                                            <input req data-title="Line Oauth" class="form-control" name="lineoauth" placeholder="請輸入Line Oauth" value="<?php echo isset($result_arr[0]["lineoauth"]) ? $result_arr[0]["lineoauth"] : "" ?>">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="15%">Line Chat Channel Access Token<span class="required">*</span></th>
+                                                        <td>
+                                                            <input req data-title="Line Token" class="form-control" name="linetoken" placeholder="請輸入Line Token" value="<?php echo isset($result_arr[0]["linetoken"]) ? $result_arr[0]["linetoken"] : "" ?>">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="15%">Line Chat Channel Secret<span class="required">*</span></th>
+                                                        <td>
+                                                            <input req data-title="Line Close" class="form-control" name="linesecret" placeholder="請輸入Line Secret" value="<?php echo isset($result_arr[0]["linesecret"]) ? $result_arr[0]["linesecret"] : "" ?>">
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
                                                 <tr>
                                                     <th width="15%">網域<span class="required">*</span></th>
                                                     <td>
