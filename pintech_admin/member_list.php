@@ -98,7 +98,7 @@ if (isset($_SESSION['admin']['qr_type_big_id'])) {
     FROM member A 
     LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id 
     LEFT JOIN qrcode_big C ON A.member_id = C.member_id
-    WHERE B.qr_type_big_id = '" . $mysqli->real_escape_string($_SESSION['admin']['qr_type_big_id']) . "' 
+    WHERE C.qr_type_big_id = '" . $mysqli->real_escape_string($_SESSION['admin']['qr_type_big_id']) . "' 
     ORDER BY A.orders ASC";
 } else {
     $query = "SELECT A.*, B.title AS 'big_title', C.qrcode_big_id AS 'qrcode_big_id' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id LEFT JOIN qrcode_big C ON A.member_id = C.member_id
