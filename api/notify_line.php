@@ -112,7 +112,7 @@ if ($model == "toAll") {
         if ($file1 != "") {
             $file_loc1 = $upload_dir . $file1;
             if (file_exists($file_loc1)) {
-                $msg[2] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1);
+                $msg[1] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1, 'preview' => "https://" . $domain . "/assets/img/play.jpg" );
             }
         }
     } else {

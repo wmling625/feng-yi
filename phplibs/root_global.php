@@ -2347,23 +2347,24 @@ function aes_validation($no_encrypt, $encrypt)
 }
 function aes_encrypt($input)
 {
-	$key = '3883136338831363';
-	$data = openssl_encrypt($input, 'AES-128-ECB', $key, OPENSSL_RAW_DATA);
-	$data = base64_encode($data);
-	$data = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
-	return $data;
+    $key = '3883136338831363';
+    $input = gzcompress($input); // Compress the input
+    $data = openssl_encrypt($input, 'AES-128-ECB', $key, OPENSSL_RAW_DATA);
+    $data = base64_encode($data);
+    $data = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
+    return $data;
 }
 
 function aes_decrypt($input)
 {
-	$key = '3883136338831363';
-	$data = str_replace(array('-', '_'), array('+', '/'), $input);
-	$mod4 = strlen($data) % 4;
-	if ($mod4) {
-		$data .= substr('====', $mod4);
-	}
-	$decrypted = openssl_decrypt(base64_decode($data), 'AES-128-ECB', $key, OPENSSL_RAW_DATA);
-	return $decrypted;
+    $key = '3883136338831363';
+    $data = str_replace(array('-', '_'), array('+', '/'), $input);
+    $mod4 = strlen($data) % 4;
+    if ($mod4) {
+        $data .= substr('====', $mod4);
+    }
+    $decrypted = openssl_decrypt(base64_decode($data), 'AES-128-ECB', $key, OPENSSL_RAW_DATA);
+    return gzuncompress($decrypted); // Decompress the input
 }
 
 /*

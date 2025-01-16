@@ -67,7 +67,7 @@ if (count($filter_sql_arr) > 0) {
 }
 
 $result_arr = array();
-$query = "SELECT * FROM `pintech_logs`.`list` WHERE " . $filter_sql_str . " AND `db_name`='pintech_findit' ORDER BY pub_date DESC";
+$query = "SELECT * FROM `feng_master_logs`.`list` WHERE " . $filter_sql_str . " AND `db_name`='feng_master' ORDER BY pub_date DESC";
 
 if ($result = $mysqli->query($query)) {
     $total = mysqli_num_rows($result);
