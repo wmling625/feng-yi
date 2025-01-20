@@ -218,8 +218,8 @@ if ($mysqli->multi_query($query1)) {
                                         echo isset($result_arr[0]['last_date']) ? $result_arr[0]['last_date'] : "";
                                         echo '</div>';
                                         echo '<div class="text-right">';
-                                        echo '<button class="btn btn-sm btn-short btn-primary editopen-btn"
-                                                type="button">' . $btnText . '</button>';
+                                        // echo '<button class="btn btn-sm btn-short btn-primary editopen-btn"
+                                        //         type="button">' . $btnText . '</button>';
                                         echo '</div>';
                                         echo '</div>';
                                     }

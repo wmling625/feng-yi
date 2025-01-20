@@ -48,8 +48,16 @@ if (count($err_msg) > 0) {
 
 
     $uuid = gen_uuid();
+
+    $select_query = "SELECT * FROM `history` WHERE `history_id` = '$history_id'";
+    $result = $mysqli->query($select_query);
+
+    if ($result && $result->num_rows > 0) {
+        $query = "INSERT INTO `history_list`(`history_id`, `content`, `last_date`) VALUES ('" . $history_id . "','" . $contents1 . "', 'NOW()'";
+        $mysqli->query($query);
+    }   
     // 家屬 回覆民眾
-    $query = "UPDATE `history` SET `contents1`='" . $contents1 . "', `last_date`= NOW(), `orders`= 1 WHERE `history_id`='" . $history_id . "' ";
+    // $query = "UPDATE `history` SET `contents1`='" . $contents1 . "', `last_date`= NOW(), `orders`= 1 WHERE `history_id`='" . $history_id . "' ";
 
     $mysqli->query($query);
 
@@ -63,12 +71,11 @@ if (count($err_msg) > 0) {
         "license" => $license,
         'reply_user' => $user_id1
     );
-//        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toPeople&user_id=" . $user_id0 . "&qr_type_id=" . $qr_type_id . "&history_id=" . $history_id . "&contents1=" . urlencode($contents1) . "&license=" . $license;
+    //        $url = "https://oneqrcode.feng-yi.tw/api/notify_line.php?model=toPeople&user_id=" . $user_id0 . "&qr_type_id=" . $qr_type_id . "&history_id=" . $history_id . "&contents1=" . urlencode($contents1) . "&license=" . $license;
     $url = "https://" . $domain . "/api/notify_line.php";
     download_page($url, $data_arr);
 
     echo "<script>alert('推播成功')</script>";
     echo "<script>history.go(-1)</script>";
     exit;
-
 }
