@@ -15,6 +15,7 @@ if (!empty($profile)) {
 $canReply = true;
 $member_arr = array();
 $result_arr = array();
+$history_arr = array();
 $text_arr = array(); // 圖文連結廣告
 
 $query = "";
@@ -59,6 +60,15 @@ if (count($result_arr) == 0) {
             if ($mysqli->more_results()) {
             }
         } while ($mysqli->more_results() && $mysqli->next_result());
+    }
+
+    $select_query = "SELECT * FROM `history_list` WHERE `history_id` = '$history_id'";
+    $history_result = $mysqli->query($select_query);
+
+    if ($history_result = $mysqli->query($select_query)) {
+        $rows = $history_result->fetch_array();
+        $history_arr[] = $rows;
+        mysqli_free_result($result);
     }
 }
 
@@ -217,6 +227,16 @@ if ($mysqli->multi_query($query1)) {
                                         echo '<div class="date">';
                                         echo isset($result_arr[0]['last_date']) ? $result_arr[0]['last_date'] : "";
                                         echo '</div>';
+                                        if ($history_result) {
+                                            foreach ($history_result as $key => $history) {
+                                                echo '<p class="sent-content mb-0">';
+                                                echo isset($history['contents']) ? br2nl($history['contents']) : "";
+                                                echo '</p>';
+                                                echo '<div class="date">';
+                                                echo isset($history['last_date']) ? $history['last_date'] : "";
+                                                echo '</div>';
+                                            }
+                                        }
                                         echo '<div class="text-right">';
                                         // echo '<button class="btn btn-sm btn-short btn-primary editopen-btn"
                                         //         type="button">' . $btnText . '</button>';
