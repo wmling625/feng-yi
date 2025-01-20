@@ -53,9 +53,10 @@ if (count($err_msg) > 0) {
     $result = $mysqli->query($select_query);
 
     if ($result && $result->num_rows > 0) {
-        $query = "INSERT INTO `history_list`(`history_id`, `content`, `last_date`) VALUES ('" . $history_id . "','" . $contents1 . "', 'NOW()'";
+        $query = "INSERT INTO `history_list` (`history_id`, `content`, `last_date`) 
+          VALUES ('" . $history_id . "', '" . $contents1 . "', NOW())";
         $mysqli->query($query);
-    }   
+    }
     // 家屬 回覆民眾
     // $query = "UPDATE `history` SET `contents1`='" . $contents1 . "', `last_date`= NOW(), `orders`= 1 WHERE `history_id`='" . $history_id . "' ";
 
