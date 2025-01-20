@@ -230,7 +230,7 @@ if ($mysqli->multi_query($query1)) {
                                         if ($history_result) {
                                             foreach ($history_result as $key => $history) {
                                                 echo '<p class="sent-content mb-0">';
-                                                echo isset($history['contents']) ? br2nl($history['contents']) : "";
+                                                echo isset($history['content']) ? br2nl($history['content']) : "";
                                                 echo '</p>';
                                                 echo '<div class="date">';
                                                 echo isset($history['last_date']) ? $history['last_date'] : "";
