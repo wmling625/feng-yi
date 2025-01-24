@@ -231,7 +231,7 @@ if ($mysqli->multi_query($query1)) {
                                         echo isset($result_arr[0]['last_date']) ? $result_arr[0]['last_date'] : "";
                                         echo '</div>';
                                         if ($history_arr) {
-                                            foreach ($history_arr as $key => $history_arr) {
+                                            foreach ($history_arr as $key => $history) {
                                                 echo '<p class="sent-content mb-0">';
                                                 echo isset($history['content']) ? br2nl($history['content']) : "";
                                                 echo '</p>';
