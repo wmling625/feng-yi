@@ -65,11 +65,14 @@ if (count($result_arr) == 0) {
     $select_query = "SELECT * FROM `history_list` WHERE `history_id` = '$history_id'";
     $history_result = $mysqli->query($select_query);
 
-    if ($history_result = $mysqli->query($select_query)) {
-        $rows = $history_result->fetch_array();
-        $history_arr[] = $rows;
-        mysqli_free_result($result);
-    }
+    if ($history_result) {
+        while ($row = $history_result->fetch_assoc()) {
+            $history_arr[] = $row; // Add each row to the array
+        }
+        $history_result->free(); // Free the result set
+    } else {
+        echo "Error: " . $mysqli->error; // Handle query errors
+    }  
 }
 
 
@@ -227,7 +230,7 @@ if ($mysqli->multi_query($query1)) {
                                         echo '<div class="date">';
                                         echo isset($result_arr[0]['last_date']) ? $result_arr[0]['last_date'] : "";
                                         echo '</div>';
-                                        if ($history_result) {
+                                        if ($history_arr) {
                                             foreach ($history_arr as $key => $history_arr) {
                                                 echo '<p class="sent-content mb-0">';
                                                 echo isset($history['content']) ? br2nl($history['content']) : "";
