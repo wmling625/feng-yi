@@ -58,8 +58,8 @@ if (count($err_msg) > 0) {
         $mysqli->query($query);
     }
     // 家屬 回覆民眾
-    // $query = "UPDATE `history` SET `contents1`='" . $contents1 . "', `last_date`= NOW(), `orders`= 1 WHERE `history_id`='" . $history_id . "' ";
-    // $mysqli->query($query);
+    $query = "UPDATE `history` SET `orders`= 1 WHERE `history_id`='" . $history_id . "' ";
+    $mysqli->query($query);
 
     // 推播給民眾
     $data_arr = array(
