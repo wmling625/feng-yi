@@ -1,0 +1,1 @@
+[{"type":"text","source":"測試1"},{"type":"image","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/386c4f1a-452e-4e28-b5c6-638f6f2bdba9.jpeg"}]

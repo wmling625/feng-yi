@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"U8aa97155b1fb607e8b2cfe5ebc4dde09,U5033bcb57e28935225096696870e8cf0,U657eb1f7520d5656ae6d9ee0709e1b08","contents1":"只發圖片","file0":"b86974bc-78b1-4d63-93bf-c1f3f0c82fd4.jpg","file1":"5b4911f0-2887-4dc6-b2c3-2fdd00e149bc.mp4"}

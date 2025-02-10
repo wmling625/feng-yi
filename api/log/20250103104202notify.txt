@@ -1,0 +1,1 @@
+[{"type":"text","source":"沒有影片只有文字加eDM"},{"type":"image","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/bf02c739-4007-4361-acf3-0b7a711651ad.jpg"},{"type":"video","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/"}]

@@ -1,0 +1,1 @@
+INSERT INTO `history`(`history_id`, `qrcode_big_id`, `user_id1`, `display_name`, `contents0`, `file0`, `file1`, `pub_date`, `orders`) VALUES ('f43f2292-55fc-49b6-98ce-80345dafe220','ec20945b-d385-44dd-8f05-07abb08fef5b','U4520c3ff2e311127c774daebfb8e4106','系統推播','test 工程用','16a804a6-5403-4064-8f90-f0787194f0a4.png'ce6b8a40-bf9c-4f97-aa82-4880812712ec.mp4',NOW(),2); 

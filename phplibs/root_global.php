@@ -1415,10 +1415,9 @@ function line_notify($channelAccessToken, $users = array(), $msg = array())
 							$maybe_imagemap_img	= 1;
 							$imagemap_photo = $value0["source"];
 						}							
-					} else if ($value0["type"] == "video") {
-						$maybe_imagemap_img	= 1;
-						array_push($messages, ['type' => 'video', 'originalContentUrl' => $value0["source"], 'previewImageUrl' => $value0["source"]]);
-					}
+				} else if ($value0["type"] == "video") {
+					array_push($messages, ['type' => 'video', 'originalContentUrl' => $value0["source"], 'previewImageUrl' => $value0["preview"]]);
+				}
 			}			
 		
 		if($maybe_imagemap_txt == 1 and $maybe_imagemap_img == 1){

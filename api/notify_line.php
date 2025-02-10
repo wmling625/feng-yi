@@ -101,20 +101,39 @@ $msg[0] = array("type" => "text", "source" => $contents);
 //可推播文字
 
 if ($model == "toAll") {
-    if ($file0 !== "") {
-        $upload_dir = "../uploads/others/";
-
+    $upload_dir = "../uploads/others/";
+    if ($file0 != "") {
         $file_loc = $upload_dir . $file0;
+<<<<<<< HEAD
         $file_loc1 = $upload_dir . $file01;
+=======
+>>>>>>> master
 
         if (file_exists($file_loc)) {
             $msg[1] = array("type" => "image", "source" => "https://" . $domain . "/uploads/others/" . $file0);
         }
 
+<<<<<<< HEAD
         if (file_exists($file_loc1)) {
             $msg[2] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1);
+=======
+        if ($file1 != "") {
+            $file_loc1 = $upload_dir . $file1;
+            if (file_exists($file_loc1)) {
+                $msg[2] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1, 'preview' => "https://" . $domain . "/assets/img/play.jpg" );
+            }
+        }
+    } else {
+        if ($file1 != "") {
+            $file_loc1 = $upload_dir . $file1;
+            if (file_exists($file_loc1)) {
+                $msg[1] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1, 'preview' => "https://" . $domain . "/assets/img/play.jpg" );
+            }
+>>>>>>> master
         }
     }
+
+   
 }
 
 

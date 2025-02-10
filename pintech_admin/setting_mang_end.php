@@ -27,10 +27,9 @@ if (!empty($_POST['community']['label']) && !empty($_POST['community']['name']))
 }
 $communityJSON = json_encode($communities, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-
-//if (empty($content)) {
-//    array_push($err_msg, "必填欄位未填寫，請檢查");
-//}
+if (empty($domain)) {
+   array_push($err_msg, "必填欄位未填寫，請檢查");
+}
 
 if (count($err_msg)) {
     echo "<script>alert('" . implode("\n", $err_msg) . "')</script>";

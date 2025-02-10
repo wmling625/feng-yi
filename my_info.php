@@ -39,7 +39,7 @@ if ($mysqli->multi_query($query)) {
         }
     } while ($mysqli->more_results() && $mysqli->next_result());
 }
-var_dump($result_arr);
+// var_dump($result_arr);
 if (count($result_arr) == 0) {
     echo "<script>alert('查無QRCode')</script>";
     echo "<script>document.location.href='code_list.php?profile=" . $profile . "'</script>";

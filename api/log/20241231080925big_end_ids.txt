@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"U64b26c4f0c0de6994d232d49fd3b4712,Ueb977dbf61e7cf41b4e152fe09eac15c","contents1":"後端會員推播測試123","file0":"39ac12c9-c4f2-4e8c-afa7-31eaffc2f5fe.png","file1":"d6ab3243-23a1-47d3-9f13-2127eec4e275.mp4"}

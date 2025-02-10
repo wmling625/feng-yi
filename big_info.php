@@ -260,20 +260,20 @@ if ($mysqli->multi_query($query1)) {
                                 $disabled = "";
                                 $btnText = "送出";
 
-                                if (count($message_arr) > 0) {
-                                    $model = "edit";
-                                    $now = date('Y-m-d H:i:s');
-                                    if (isset($message_arr[0]['pub_date'])) {
-                                        $diff = DateDiff($now, $message_arr[0]['pub_date'], "s");
-                                        if ($diff <= 300) {
-                                            /* 未間隔5分鐘，需要重複留言 */
-                                            $canNote = false;
-                                            $readonly = "readonly";
-                                            $disabled = "disabled";
-                                            $btnText = "留言請間隔5分鐘";
-                                        }
-                                    }
-                                }
+                                // if (count($message_arr) > 0) {
+                                //     $model = "edit";
+                                //     $now = date('Y-m-d H:i:s');
+                                //     if (isset($message_arr[0]['pub_date'])) {
+                                //         $diff = DateDiff($now, $message_arr[0]['pub_date'], "s");
+                                //         if ($diff <= 300) {
+                                //             /* 未間隔5分鐘，需要重複留言 */
+                                //             $canNote = false;
+                                //             $readonly = "readonly";
+                                //             $disabled = "disabled";
+                                //             $btnText = "留言請間隔5分鐘";
+                                //         }
+                                //     }
+                                // }
 
                                 /* 代表不可以留言 */
                                 //                            if (!$canNote) {
@@ -296,12 +296,12 @@ if ($mysqli->multi_query($query1)) {
                                     <div class="col-lg-8">
                                         <p class="mb-2">推播留言內容 ：</p><!--聯繫家屬-->
                                         <div class="form-item warning-box">
-                                            <textarea class="form-control" name="contents0" id="contents0" rows="3" placeholder="請輸入留言內容，送出後需間隔5分鐘後才可再次留言" req="Y" <?php echo $readonly; ?>><?php echo isset($message_arr[0]['contents0']) ? br2nl($message_arr[0]['contents0']) : br2nl($default_content); ?></textarea>
+                                            <textarea class="form-control" name="contents0" id="contents0" rows="3" placeholder="請輸入留言內容" req="Y" <?php echo $readonly; ?>><?php echo isset($message_arr[0]['contents0']) ? br2nl($message_arr[0]['contents0']) : br2nl($default_content); ?></textarea>
                                             <span class="alert-text">*此為必填欄位</span>
                                         </div>
                                     </div>
                                     <div class="col-8">
-                                        <button class="submit-btn btn btn-primary btn-block btn-shadow hover-down" type="button" <?php echo $disabled; ?>><?php echo $btnText; ?>
+                                        <button class="submit-btn btn btn-primary btn-block btn-shadow hover-down" type="button"><?php echo $btnText; ?>
                                         </button>
                                         <input type="hidden" name="model" value="<?php echo aes_encrypt($model); ?>">
                                         <input type="hidden" name="qrcode_id" value="<?php echo aes_encrypt($qrcode_id); ?>">

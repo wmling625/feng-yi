@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"Ueb977dbf61e7cf41b4e152fe09eac15c,U64b26c4f0c0de6994d232d49fd3b4712,U67f8ddd425738a296a4ce7e56a809567","contents1":"後台推播測試","file0":"ccd64123-8596-41e9-8c3d-6a960f65e5f0.jpeg","file1":"65581c2c-9251-4fa5-bb74-e60a8df97bfa.mp4"}

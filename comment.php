@@ -15,6 +15,7 @@ if (!empty($profile)) {
 $canReply = true;
 $member_arr = array();
 $result_arr = array();
+$history_arr = array();
 $text_arr = array(); // 圖文連結廣告
 
 $query = "";
@@ -42,7 +43,7 @@ if ($mysqli->multi_query($query)) {
 if (count($result_arr) == 0) {
     $query = "";
     $query .= "SELECT *, 1 AS 'member' FROM member WHERE user_id = '" . $profile_json['userId'] . "' ; ";
-    $query .= "SELECT A.*, B.`content` AS license, B.qr_type_big_id, 1 AS 'history' FROM `history` AS A INNER JOIN `qrcode_big` AS B ON A.`qrcode_big_id` = B.`qrcode_big_id` WHERE A.`history_id` = '" . $history_id . "'; ";
+    $query .= "SELECT A.*, B.`contents` AS license, B.qr_type_big_id, 1 AS 'history' FROM `history` AS A INNER JOIN `qrcode_big` AS B ON A.`qrcode_big_id` = B.`qrcode_big_id` WHERE A.`history_id` = '" . $history_id . "'; ";
     if ($mysqli->multi_query($query)) {
         do {
             if ($result = $mysqli->store_result()) {
@@ -60,6 +61,18 @@ if (count($result_arr) == 0) {
             }
         } while ($mysqli->more_results() && $mysqli->next_result());
     }
+
+    $select_query = "SELECT * FROM `history_list` WHERE `history_id` = '$history_id'";
+    $history_result = $mysqli->query($select_query);
+
+    if ($history_result) {
+        while ($row = $history_result->fetch_assoc()) {
+            $history_arr[] = $row; // Add each row to the array
+        }
+        $history_result->free(); // Free the result set
+    } else {
+        echo "Error: " . $mysqli->error; // Handle query errors
+    }  
 }
 
 
@@ -178,29 +191,29 @@ if ($mysqli->multi_query($query1)) {
                                     $disabled = "";
                                     $hidden = "";
                                     $btnText = "編輯留言<i class='fas fa-pen'></i>";
-                                    if (count($result_arr) > 0) {
-                                        if (isset($result_arr[0]['orders'])) {
-                                            if ($result_arr[0]['orders'] == '1') {
-                                                $hidden = "hidden";
-                                                $model = "edit";
-                                                $now = date('Y-m-d H:i:s');
-                                                if (isset($result_arr[0]['last_date'])) {
-                                                    $diff = DateDiff($now, $result_arr[0]['last_date'], "s");
-                                                    if ($diff <= 300) {
-                                                        /* 未間隔5分鐘，需要重複留言 */
-                                                        $canReply = false;
-                                                        $readonly = "readonly";
-                                                        $disabled = "disabled";
-                                                        $btnText = "回覆請間隔5分鐘";
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    // if (count($result_arr) > 0) {
+                                    //     if (isset($result_arr[0]['orders'])) {
+                                    //         if ($result_arr[0]['orders'] == '1') {
+                                    //             $hidden = "hidden";
+                                    //             $model = "edit";
+                                    //             $now = date('Y-m-d H:i:s');
+                                    //             if (isset($result_arr[0]['last_date'])) {
+                                    //                 $diff = DateDiff($now, $result_arr[0]['last_date'], "s");
+                                    //                 if ($diff <= 300) {
+                                    //                     /* 未間隔5分鐘，需要重複留言 */
+                                    //                     $canReply = false;
+                                    //                     $readonly = "readonly";
+                                    //                     $disabled = "disabled";
+                                    //                     $btnText = "回覆請間隔5分鐘";
+                                    //                 }
+                                    //             }
+                                    //         }
+                                    //     }
+                                    // }
                                     ?>
 
                                     <div class="reply-box <?php echo $hidden; ?>">
-                                        <textarea class="form-control" name="contents1" id="contents1" placeholder="請輸入回覆內容，送出後需間隔5分鐘後才可再次回覆" cols="30" rows="3"><?php echo isset($result_arr[0]['contents1']) ? br2nl($result_arr[0]['contents1']) : ""; ?></textarea>
+                                        <textarea class="form-control" name="contents1" id="contents1" placeholder="請輸入回覆內容" cols="30" rows="3"><?php echo isset($result_arr[0]['contents1']) ? br2nl($result_arr[0]['contents1']) : ""; ?></textarea>
                                         <div class="text-right">
                                             <button class="btn btn-sm btn-primary mt-3 reply-btn disabled" type="submit">
                                                 回覆<i class="fas fa-reply"></i></button>
@@ -217,25 +230,37 @@ if ($mysqli->multi_query($query1)) {
                                         echo '<div class="date">';
                                         echo isset($result_arr[0]['last_date']) ? $result_arr[0]['last_date'] : "";
                                         echo '</div>';
+                                        if ($history_arr) {
+                                            foreach ($history_arr as $key => $history) {
+                                                echo '<p class="sent-content mb-0">';
+                                                echo isset($history['content']) ? br2nl($history['content']) : "";
+                                                echo '</p>';
+                                                echo '<div class="date">';
+                                                echo isset($history['last_date']) ? $history['last_date'] : "";
+                                                echo '</div>';
+                                            }
+                                        }
                                         echo '<div class="text-right">';
-                                        echo '<button class="btn btn-sm btn-short btn-primary editopen-btn"
-                                                type="button" ' . $disabled . '>' . $btnText . '</button>';
+                                        // echo '<button class="btn btn-sm btn-short btn-primary editopen-btn"
+                                        //         type="button">' . $btnText . '</button>';
                                         echo '</div>';
                                         echo '</div>';
                                     }
                                     ?>
-                                    <!--<div class="my-reply">
-                                    <span class="label">我的回覆：</span>
-                                    <p class="sent-content mb-0">
-                                        <?php echo isset($result_arr[0]['contents1']) ? br2nl($result_arr[0]['contents1']) : ""; ?>
-                                    </p>
-                                    <div class="date"><?php echo isset($result_arr[0]['last_date']) ? $result_arr[0]['last_date'] : ""; ?></div>
-                                    <div class="text-right">
-                                        <button class="btn btn-sm btn-short btn-primary editopen-btn"
+                                    <?php /*
+                                    <div class="my-reply">
+                                        <span class="label">我的回覆：</span>
+                                        <p class="sent-content mb-0">
+                                            <?php echo isset($result_arr[0]['contents1']) ? br2nl($result_arr[0]['contents1']) : ""; ?>
+                                        </p>
+                                        <div class="date"><?php echo isset($result_arr[0]['last_date']) ? $result_arr[0]['last_date'] : ""; ?></div>
+                                        <div class="text-right">
+                                            <button class="btn btn-sm btn-short btn-primary editopen-btn"
                                                 type="button" <?php echo $disabled; ?>><?php echo $btnText; ?>
-                                        </button>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>-->
+                                    */ ?>
 
                                 </div>
                                 <input type="hidden" name="history_id" value="<?php echo aes_encrypt($history_id); ?>">

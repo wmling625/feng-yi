@@ -1,0 +1,1 @@
+[{"type":"text","source":"後端會員推播測試123"},{"type":"image","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/39ac12c9-c4f2-4e8c-afa7-31eaffc2f5fe.png"},{"type":"video","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/d6ab3243-23a1-47d3-9f13-2127eec4e275.mp4"}]

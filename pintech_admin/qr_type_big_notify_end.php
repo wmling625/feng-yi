@@ -108,6 +108,7 @@ if (count($err_msg)) {
         exit;
     }
 
+    // var_dump($query1);exit;
     if ($mysqli->multi_query($query1)) {
         while ($mysqli->more_results() && $mysqli->next_result());
 

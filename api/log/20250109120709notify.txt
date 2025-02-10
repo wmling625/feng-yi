@@ -1,0 +1,1 @@
+[{"type":"text","source":"碧龍宮"},{"type":"video","source":"https:\/\/oneqrcode3.feng-yi.tw\/uploads\/others\/725545ea-d170-4d45-af17-538e505aaedf.mp4","preview":"https:\/\/oneqrcode3.feng-yi.tw\/assets\/img\/play.jpg"}]

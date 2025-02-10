@@ -501,7 +501,14 @@ $(function () {
       });
     }
 
+<<<<<<< HEAD
     if (location.pathname.indexOf("qr_type_") >= 0) {
+=======
+    if (
+      location.pathname.indexOf("qr_type_") >= 0 ||
+      location.pathname.indexOf("member_") >= 0
+    ) {
+>>>>>>> master
       // 推播訊息給擁有該標籤QRCode的所有會員
       $("button[id=lineNotify]").click(function (event) {
         // 找到所有被勾選的id，並合併成,字串
@@ -512,6 +519,18 @@ $(function () {
           .get()
           .join(",");
 
+<<<<<<< HEAD
+=======
+        if (location.pathname.indexOf("member_") >= 0) {
+          var qrcodebig = $("input[name=box_list]:checked")
+            .map(function () {
+              return $(this).attr("qrcodebig");
+            })
+            .get()
+            .join(",");
+        }
+
+>>>>>>> master
         if (id !== "") {
           // 發送的Modal資訊帶入
           var memberModal = $("#lineNotifyModal");
@@ -519,6 +538,10 @@ $(function () {
           memberModal.on("shown.bs.modal", function (e) {
             // do something...
             $("[name=ids]").val(id);
+<<<<<<< HEAD
+=======
+            $("[name=qrcodebig]").val(qrcodebig);
+>>>>>>> master
 
             $("button[id=lineNotifyConfirm]").click(function (event) {
               var this_form = Boolean($(this).parents("form"))
@@ -547,6 +570,7 @@ $(function () {
       });
     }
 
+<<<<<<< HEAD
     if (location.pathname.indexOf("verify") >= 0) {
       // 推播訊息給擁有該標籤QRCode的所有會員
       $("button[id=smsNotify]").click(function (event) {
@@ -580,6 +604,8 @@ $(function () {
       });
     }
 
+=======
+>>>>>>> master
     if (location.pathname.indexOf("qrcode_list") >= 0) {
       // 列表儲存排序
       $("button[name=save_qr]").click(function (event) {
@@ -1203,7 +1229,11 @@ $(function () {
     }
 
     //###############以下為列表頁面 fun#######################//
+<<<<<<< HEAD
     if (location.pathname.indexOf("_list.php") >= 0 || location.pathname.indexOf("verify") >= 0 ) {
+=======
+    if (location.pathname.indexOf("_list.php") >= 0) {
+>>>>>>> master
       // 列表批次選取
       $("input[name=box_toggle]").click(function (event) {
         if (this.checked) {

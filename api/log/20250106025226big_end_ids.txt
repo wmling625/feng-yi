@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"Uc61aacf2ec7f93e973fa42fd20b8877a,Ueb977dbf61e7cf41b4e152fe09eac15c,U64b26c4f0c0de6994d232d49fd3b4712,U67f8ddd425738a296a4ce7e56a809567","contents1":"image with video","file0":"7e3325a6-a365-44a7-9e8e-1220046ab74b.png","file1":"e9dbefbb-4926-4aa3-b9b2-8589e7ba5977.mp4"}

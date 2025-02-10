@@ -1,0 +1,1 @@
+{"model":"toAll","user_id":"U22c9861ebcc6317aac553ec880ebe2f5,Ucdf9cf563c078fc37aa2aa432fb906b3,Ueb8c79c70269a59ec4d2c5f476059a18,U91e9ea27db4a36bc3ab55777fb6f4601,Ua4dc0f9fa2f2ec01320a3fc635ecc788,Ud0482bf5964c4e5474b7cfc7c0426942","contents1":"幫我買條煙","file0":"171f7e02-4dcc-4552-bcc5-9bef11f7ceab.jpg","file1":""}
