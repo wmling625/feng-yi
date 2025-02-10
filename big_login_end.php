@@ -30,7 +30,7 @@ $err_msg = array();
 
 if ($codetype == 1) {
     $result_arr = [];
-    $query = "SELECT * FROM `smscode` WHERE `mobile` = $mobile AND `code` = $code";
+    $query = "SELECT * FROM `smscode` WHERE `mobile` = $mobile AND `code` = $code AND `is_ok` = 1";
     $total = 0;
 
     if ($result = $mysqli->query($query)) {
