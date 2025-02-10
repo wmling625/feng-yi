@@ -71,7 +71,7 @@ $isValid = false;
 if (!$isLogin) {
     if ($codetype == 1) {
         if ($total > 0) {
-            $query = "UPDATE smscode SET is_ok = 1 WHERE mobile = '" . $mobile . "' AND `code` = '" . $code . "' AND orders <= 1; ";
+            $query = "UPDATE smscode SET is_ok = -1 WHERE mobile = '" . $mobile . "' AND `code` = '" . $code . "'";
             $mysqli->query($query);
             $isValid = true;
         }

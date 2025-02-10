@@ -266,7 +266,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                                                 echo '<td>';
                                                 if ($value["is_ok"] == "-1") {
                                                     echo '<span class="text-danger">已使用</span>';
-                                                } elseif ($value["orders"] == "1") {
+                                                } elseif ($value["is_ok"] == "1") {
                                                     echo '<span class="text-success">尚未使用</span>';
                                                 }
                                                 echo '</td>';
