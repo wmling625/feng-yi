@@ -18,7 +18,6 @@ if (!empty($profile)) {
 } else {
     $profile_json = array();
 }
-
 $member_arr = array();
 $result_arr = array();
 $bind_arr = array();
@@ -85,6 +84,8 @@ if (count($bind_arr) > 0) {
 }
 
 $uuid = gen_uuid();
+$title = !empty($title) ? $title : $member_arr[0]['account'];
+$intro = !empty($intro) ? $intro : $member_arr[0]['nickname'];
 $query = "INSERT INTO `qrcode_big`(`qrcode_big_id`, `qr_type_big_id`, `member_id`, `title`, `intro`, `contents`, `pub_date`, `last_date`, `orders`) VALUES ('" . $uuid . "','" . $qr_type_big_id . "','" . $member_arr[0]["member_id"] . "','" . $title . "','" . $intro . "','" . $contents . "', NOW(), NOW(), 1)";
 
 // var_dump($mysqli->query($query));exit;

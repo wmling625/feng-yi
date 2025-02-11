@@ -102,10 +102,8 @@ if (isset($_SESSION['admin']['qr_type_big_id'])) {
     " . $filter_sql_str . " 
     ORDER BY A.orders ASC";
 } else {
-    $query = "SELECT A.*, B.title AS 'big_title', C.qrcode_big_id AS 'qrcode_big_id' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id LEFT JOIN qrcode_big C ON A.member_id = C.member_id
- WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
+    $query = "SELECT A.*, B.qrcode_big_id AS 'qrcode_big_id', C.title AS 'big_title' FROM member A LEFT JOIN qrcode_big B ON A.member_id = B.member_id LEFT JOIN qr_type_big C ON B.qr_type_big_id = C.qr_type_big_id WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
 }
-
 
 if ($result = $mysqli->query($query)) {
     $total = mysqli_num_rows($result);
@@ -385,9 +383,11 @@ if ($result = $mysqli->query($query_big)) {
                                                     echo '<td>' . $value["nickname"] . '<br/><span class="text-sm text-muted">' . $value["account"] . '</span></td>';
                                                     echo '<td>' . $value["types_option"] . '<br/><span class="text-sm text-muted">' . $value["city"] . $value["region"] . '</span></td>';
                                                     echo '<td>';
-                                                    foreach ($type_arr as $key => $type) {
-                                                        echo (!empty($type['typeTitle'])) ? $type['typeTitle'] . ',' : '<i class="fa-solid fa-x"></i>';
-                                                    }
+                                                    // foreach ($type_arr as $key => $type) {
+                                                    //     echo (!empty($type['typeTitle'])) ? $type['typeTitle'] . ',' : '<i class="fa-solid fa-x"></i>';
+                                                    // }
+                                                    echo (!empty($value["big_title"])) ? $value["big_title"] : '<i class="fa-solid fa-x"></i>';
+
                                                     echo '</td>';
                                                     echo '<td>';
                                                     echo (!empty($value["qr_type_big_id"])) ? '<i class="fa-solid fa-check text-success"></i> ' . $value["big_title"] : '<i class="fa-solid fa-x"></i>';
