@@ -90,7 +90,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
 
     <div class="wrapper">
         <?php
-        echo "<input type='hidden' name='del_sql' value='" . aes_encrypt("DELETE FROM `smscode` WHERE find_in_set(mobile, '?1') >0") . "'/>";
+        echo "<input type='hidden' name='del_sql' value='" . aes_encrypt("DELETE FROM `smscode` WHERE find_in_set(smscode_id, '?1') >0") . "'/>";
         ?>
         <!-- Preloader -->
         <!-- <div class="preloader flex-column justify-content-center align-items-center">
