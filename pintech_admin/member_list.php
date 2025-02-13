@@ -102,8 +102,9 @@ if (isset($_SESSION['admin']['qr_type_big_id'])) {
     " . $filter_sql_str . " 
     ORDER BY A.orders ASC";
 } else {
-    $query = "SELECT A.*, B.qrcode_big_id AS 'qrcode_big_id', C.title AS 'big_title' FROM member A LEFT JOIN qrcode_big B ON A.member_id = B.member_id LEFT JOIN qr_type_big C ON B.qr_type_big_id = C.qr_type_big_id WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
+    $query = "SELECT A.*, B.title AS 'big_title' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
 }
+
 
 if ($result = $mysqli->query($query)) {
     $total = mysqli_num_rows($result);
@@ -359,21 +360,19 @@ if ($result = $mysqli->query($query_big)) {
                                             } else {
 
                                                 foreach ($result_arr as $key => $value) {
-                                                    $query = "SELECT *, qr_type_big.title AS typeTitle FROM `qrcode_big` LEFT JOIN `qr_type_big` ON qrcode_big.qr_type_big_id = qr_type_big.qr_type_big_id WHERE `member_id` = '" . $value['member_id'] . "'";
+                                                    $query = "SELECT qr_type_big.title AS typeTitle FROM `qrcode_big` LEFT JOIN `qr_type_big` ON qrcode_big.qr_type_big_id = qr_type_big.qr_type_big_id WHERE `member_id` = '" . $value['member_id'] . "'";
+
                                                     $type_arr = array();
+
                                                     if ($result = $mysqli->query($query)) {
-                                                        $rows = $result->fetch_array();
-                                                        $type_arr[] = $rows;
+                                                        $type_arr = $result->fetch_all(MYSQLI_ASSOC); // ✅ Fetch all rows at once
                                                         mysqli_free_result($result);
                                                     }
 
-                                                    if (isset($type_arr[0]['typeTitle'])) {
-                                                        $typeTitle = $type_arr[0]['typeTitle'];
-                                                    }
                                                     echo '<tr>';
                                                     echo '<td>';
                                                     echo '<div class="icheck-primary d-inline">';
-                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '" name="box_list" qrcodebig="' . $value['qrcode_big_id'] . '">';
+                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '">';
                                                     echo '<label for="' . $value['member_id'] . '">';
                                                     echo '</label>';
                                                     echo '</div>';
@@ -383,10 +382,20 @@ if ($result = $mysqli->query($query_big)) {
                                                     echo '<td>' . $value["nickname"] . '<br/><span class="text-sm text-muted">' . $value["account"] . '</span></td>';
                                                     echo '<td>' . $value["types_option"] . '<br/><span class="text-sm text-muted">' . $value["city"] . $value["region"] . '</span></td>';
                                                     echo '<td>';
-                                                    // foreach ($type_arr as $key => $type) {
-                                                    //     echo (!empty($type['typeTitle'])) ? $type['typeTitle'] . ',' : '<i class="fa-solid fa-x"></i>';
-                                                    // }
-                                                    echo (!empty($value["big_title"])) ? $value["big_title"] : '<i class="fa-solid fa-x"></i>';
+
+                                                    $totalItems = count($type_arr); // Count total elements
+                                                    $currentIndex = 0; // Track current position
+                                                    foreach ($type_arr as $key => $type) {
+                                                        $currentIndex++; // Increment counter
+
+                                                        echo (!empty($type['typeTitle'])) ? $type['typeTitle'] : '<i class="fa-solid fa-x"></i>';
+
+                                                        // Add a comma only if it's not the last item
+                                                        if ($currentIndex < $totalItems) {
+                                                            echo ', ';
+                                                        }
+                                                    }
+                                                    // echo (!empty($value["big_title"])) ? $value["big_title"] : '<i class="fa-solid fa-x"></i>';
 
                                                     echo '</td>';
                                                     echo '<td>';
