@@ -56,19 +56,55 @@ if ($model == "toOwner") {
     }
 
     // $contents = "📢 親愛的家屬 ：有人留言給您，來去瞧瞧！👀\n";
-    $contents = "一碼通關心您\n";
-    $contents .= $receive_name . " 您好\n";
-    $contents .= "有人掃描您的會員通知二維碼\n";
-    // $contents .= "請盡速協尋您的家屬\n";
-    $contents .= "\n";
-    $contents .= "↓點撃查看二維碼詳情↓\n";
-    $contents .= "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("comment.php?history_id=" . $history_id) . "\n";
+    // $contents = "一碼通關心您\n";
+    // $contents .= $receive_name . " 您好\n";
+    // $contents .= "有人掃描您的會員通知二維碼\n";
+    // // $contents .= "請盡速協尋您的家屬\n";
+    // $contents .= "\n";
+    // $contents .= "↓點撃查看二維碼詳情↓\n";
+    // $contents .= "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("comment.php?history_id=" . $history_id) . "\n";
 
-    if ($lat !== "" && $lng !== "") {
-        $contents .= "\n";
-        $contents .= "↓定位如下↓\n";
-        $contents .= "https://www.google.com/maps/search/?api=1&query=" . $lat . "," . $lng;
-    }
+    // if ($lat !== "" && $lng !== "") {
+    //     $contents .= "\n";
+    //     $contents .= "↓定位如下↓\n";
+    //     $contents .= "https://www.google.com/maps/search/?api=1&query=" . $lat . "," . $lng;
+    // }
+
+    $contens = [
+        "type" => "flex",
+        "source" => json_encode([
+            "type" => "flex",
+            "altText" => "$receive_name 您好\n 有人掃描您的會員通知二維碼",
+            "contents" => [
+                "type" => "bubble",
+                "body" => [
+                    "type" => "box",
+                    "layout" => "vertical",
+                    "contents" => [
+                        [
+                            "type" => "text",
+                            "text" => "點擊查看訊息",
+                            "weight" => "bold",
+                            "size" => "lg"
+                        ],
+                        [
+                            "type" => "button",
+                            "style" => "primary",
+                            "action" => [
+                                "type" => "uri",
+                                "label" => "查看詳情",
+                                "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("comment.php?history_id=" . $history_id) . "\n"
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ])
+    ];
+    $msg[0] = [
+        "type" => "flex",
+        "source" => $contents["source"] // 保持 JSON 字串格式
+    ];
 
     //    $contents .= "https://findit.linebot.tw/comment.php?history_id=" . $history_id;
 
@@ -87,15 +123,16 @@ if ($model == "toOwner") {
     $contents .= $reply_name . " 已回覆您的留言↓\n"; //的家屬
     $contents .= "\n";
     $contents .= "回覆：「" . $contents1 . "」";
+    $msg[0] = array("type" => "text", "source" => $contents);
 } elseif ($model == "toAll") {
     $contents = br2nl(htmlspecialchars_decode($contents1));
     // if ($file1 != "") {
     //     $video_url = "https://" . $domain . "/uploads/others/" . $file1;
     //     $contents .= "\n $video_url";
     // }
+    $msg[0] = array("type" => "text", "source" => $contents);
 }
 
-$msg[0] = array("type" => "text", "source" => $contents);
 
 
 //可推播文字
@@ -112,19 +149,17 @@ if ($model == "toAll") {
         if ($file1 != "") {
             $file_loc1 = $upload_dir . $file1;
             if (file_exists($file_loc1)) {
-                $msg[2] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1, 'preview' => "https://" . $domain . "/assets/img/play.jpg" );
+                $msg[2] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1, 'preview' => "https://" . $domain . "/assets/img/play.jpg");
             }
         }
     } else {
         if ($file1 != "") {
             $file_loc1 = $upload_dir . $file1;
             if (file_exists($file_loc1)) {
-                $msg[1] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1, 'preview' => "https://" . $domain . "/assets/img/play.jpg" );
+                $msg[1] = array("type" => "video", "source" => "https://" . $domain . "/uploads/others/" . $file1, 'preview' => "https://" . $domain . "/assets/img/play.jpg");
             }
         }
     }
-
-   
 }
 
 
