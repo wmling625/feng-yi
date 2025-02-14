@@ -1430,9 +1430,9 @@ function line_notify($channelAccessToken, $users = array(), $msg = array())
 			} else if ($value0["type"] == "video") {
 				array_push($messages, ['type' => 'video', 'originalContentUrl' => $value0["source"], 'previewImageUrl' => $value0["preview"]]);
 			} else if ($value0["type"] == "template") {  // 新增支援 template
-				array_push($messages, $value0);
+				array_push($messages, json_decode($value0['source']));
 			} else if ($value0["type"] == "flex") {  // 新增支援 flex message
-				array_push($messages, $value0);
+				array_push($messages, json_decode($value0['source']));
 			}
 		}
 
