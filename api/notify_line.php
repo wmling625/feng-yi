@@ -69,8 +69,7 @@ if ($model == "toOwner") {
     //     $contents .= "↓定位如下↓\n";
     //     $contents .= "https://www.google.com/maps/search/?api=1&query=" . $lat . "," . $lng;
     // }
-
-    $contens = [
+    $contensArray = [
         "type" => "template",
         "source" => json_encode([
             "altText" => "$receive_name 您好\n有人掃描您的會員通知二維碼",
@@ -89,7 +88,7 @@ if ($model == "toOwner") {
     ];
     $msg[0] = [
         "type" => "template",
-        "source" => $contents["source"] // 保持 JSON 字串格式
+        "source" => $contensArray["source"] // 保持 JSON 字串格式
     ];
 
     //    $contents .= "https://findit.linebot.tw/comment.php?history_id=" . $history_id;
