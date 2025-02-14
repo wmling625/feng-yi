@@ -71,38 +71,24 @@ if ($model == "toOwner") {
     // }
 
     $contens = [
-        "type" => "flex",
+        "type" => "template",
         "source" => json_encode([
-            "type" => "flex",
-            "altText" => "$receive_name 您好\n 有人掃描您的會員通知二維碼",
-            "contents" => [
-                "type" => "bubble",
-                "body" => [
-                    "type" => "box",
-                    "layout" => "vertical",
-                    "contents" => [
-                        [
-                            "type" => "text",
-                            "text" => "點擊查看訊息",
-                            "weight" => "bold",
-                            "size" => "lg"
-                        ],
-                        [
-                            "type" => "button",
-                            "style" => "primary",
-                            "action" => [
-                                "type" => "uri",
-                                "label" => "查看詳情",
-                                "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("comment.php?history_id=" . $history_id) . "\n"
-                            ]
-                        ]
+            "altText" => "$receive_name 您好\n有人掃描您的會員通知二維碼",
+            "template" => [
+                "type" => "buttons",
+                "text" => "點擊下方按鈕查看詳細資訊",
+                "actions" => [
+                    [
+                        "type" => "uri",
+                        "label" => "查看二維碼詳情",
+                        "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("comment.php?history_id=" . $history_id) . "\n"
                     ]
                 ]
             ]
         ])
     ];
     $msg[0] = [
-        "type" => "flex",
+        "type" => "template",
         "source" => $contents["source"] // 保持 JSON 字串格式
     ];
 
