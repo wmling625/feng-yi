@@ -69,9 +69,10 @@ if ($model == "toOwner") {
     //     $contents .= "↓定位如下↓\n";
     //     $contents .= "https://www.google.com/maps/search/?api=1&query=" . $lat . "," . $lng;
     // }
-    $contensArray = [
+    $contentsArray = [
         "type" => "template",
         "source" => json_encode([
+            "type" => "template",  // <-- This must be inside, it's required for LINE API
             "altText" => "$receive_name 您好\n有人掃描您的會員通知二維碼",
             "template" => [
                 "type" => "buttons",
@@ -80,15 +81,16 @@ if ($model == "toOwner") {
                     [
                         "type" => "uri",
                         "label" => "查看二維碼詳情",
-                        "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("comment.php?history_id=" . $history_id) . "\n"
+                        "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("comment.php?history_id=" . $history_id)
                     ]
                 ]
             ]
         ])
     ];
+    
     $msg[0] = [
         "type" => "template",
-        "source" => $contensArray["source"] // 保持 JSON 字串格式
+        "source" => $contentsArray["source"]  // Keep JSON string format
     ];
 
     //    $contents .= "https://findit.linebot.tw/comment.php?history_id=" . $history_id;
