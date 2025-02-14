@@ -72,21 +72,36 @@ if ($model == "toOwner") {
     $contentsArray = [
         "type" => "template",
         "source" => json_encode([
-            "type" => "template",  // <-- This must be inside, it's required for LINE API
-            "altText" => "$receive_name 您好\n有人掃描您的會員通知二維碼",
+            "type" => "template",
+            "altText" => "有人掃描您的會員通知二維碼",
             "template" => [
                 "type" => "buttons",
-                "text" => "點擊下方按鈕查看詳細資訊",
+                "text" => "$receive_name 您好\n有人掃描您的會員通知二維碼",
                 "actions" => [
                     [
                         "type" => "uri",
-                        "label" => "查看二維碼詳情",
+                        "label" => "點擊查看留言資訊",
                         "uri" => "https://liff.line.me/" . $liff_full . "?end_point=" . aes_encrypt("comment.php?history_id=" . $history_id)
                     ]
                 ]
             ]
         ])
     ];
+    
+    // ✅ If location data exists, add another button
+    if ($lat !== "" && $lng !== "") {
+        // Decode JSON, modify, then encode back
+        $decodedSource = json_decode($contentsArray["source"], true);
+    
+        $decodedSource["template"]["actions"][] = [
+            "type" => "uri",
+            "label" => "查看定位",
+            "uri" => "https://www.google.com/maps/search/?api=1&query=" . $lat . "," . $lng
+        ];
+    
+        // Re-encode JSON after modification
+        $contentsArray["source"] = json_encode($decodedSource);
+    }
     
     $msg[0] = [
         "type" => "template",
