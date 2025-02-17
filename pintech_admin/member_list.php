@@ -280,7 +280,7 @@ if ($result = $mysqli->query($query_big)) {
                                                 <?php echo gen_options($search_items, $items) ?>
                                             </select>
                                         </div>
-                                        <?php if (!isset($_SESSION['admin']['qr_type_big_id'])) { ?>
+                                        <?php if (!empty($_SESSION['admin']['qr_type_big_id'])) { ?>
                                             <div class="col-md-3 col-sm-6 mt-2">
                                                 <select data-title="單位管理權限" name="qr_type_big_id" class="form-control" defaults="<?php echo isset($result_big_arr[0]["qr_type_big_id"]) ? $result_big_arr[0]["qr_type_big_id"] : ""; ?>">
                                                     <option value="">請選擇可管理的單位</option>

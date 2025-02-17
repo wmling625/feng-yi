@@ -45,10 +45,9 @@ if ($codetype == 1) {
 
         mysqli_free_result($result);
     }
-
-    $form = json_encode($communities, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
+$form = json_encode($communities, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
 
 // if (!token_validation($value, $token)) {
