@@ -102,8 +102,7 @@ if (isset($_SESSION['admin']['qr_type_big_id'])) {
     " . $filter_sql_str . " 
     ORDER BY A.orders ASC";
 } else {
-    $query = "SELECT A.*, B.title AS 'big_title', C.qrcode_big_id AS 'qrcode_big_id' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id LEFT JOIN qrcode_big C ON A.member_id = C.member_id
- WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
+    $query = "SELECT A.*, B.title AS 'big_title' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A." . $date_type . " DESC";
 }
 
 
@@ -121,7 +120,6 @@ if ($result = $mysqli->query($query)) {
         mysqli_free_result($result);
     }
 }
-
 $page = new Page($total, $showrow, $curpage, $url, 2);
 
 
@@ -244,13 +242,12 @@ if ($result = $mysqli->query($query_big)) {
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="根據搜尋結果匯出（至多2000筆）" name="excel_button">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="會員列表" name="excel_button">
                                             匯出Excel
                                         </button> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-bs-toggle="tooltip" title="推播給該單位條碼會員" id="lineNotify">
                                             推播訊息
                                         </button>
-                                        <!--                                    <a href="member_mang.php?model=add" type="button"-->
-                                        <!--                                       class="btn btn-sm btn-success">新增</a>-->
+                                        <!-- <a href="member_mang.php?model=add" type="button" class="btn btn-sm btn-success">新增</a> -->
                                         <button type="button" class="btn btn-sm btn-danger" name="box_del">批次刪除</button>
                                         <!--<button type="button" class="btn btn-sm btn-outline-secondary"
                                             data-bs-toggle="tooltip" title="會員列表" name="excel_button">
@@ -338,7 +335,7 @@ if ($result = $mysqli->query($query_big)) {
                                                     <span class="text-sm text-muted font-weight-normal">會員手機</span>
                                                 </th>
                                                 <th width="10%">會員性別<br />
-                                                    <span class="text-sm text-muted font-weight-normal">活動區域</span>
+                                                    <span class="text-sm text-muted font-weight-normal">社區</span>
                                                 </th>
                                                 <th width="10%">所屬單位</th>
                                                 <th width="10%">擁有單位管理權限</th>
@@ -361,21 +358,19 @@ if ($result = $mysqli->query($query_big)) {
                                             } else {
 
                                                 foreach ($result_arr as $key => $value) {
-                                                    $query = "SELECT *, qr_type_big.title AS typeTitle FROM `qrcode_big` LEFT JOIN `qr_type_big` ON qrcode_big.qr_type_big_id = qr_type_big.qr_type_big_id WHERE `member_id` = '" . $value['member_id'] . "'";
-                                                    $type_arr = array();
-                                                    if ($result = $mysqli->query($query)) {
-                                                        $rows = $result->fetch_array();
-                                                        $type_arr[] = $rows;
-                                                        mysqli_free_result($result);
-                                                    }
+                                                    $forms = json_decode($value['form']);
+                                                    $query = "SELECT qr_type_big.title AS typeTitle FROM `qrcode_big` LEFT JOIN `qr_type_big` ON qrcode_big.qr_type_big_id = qr_type_big.qr_type_big_id WHERE `member_id` = '" . $value['member_id'] . "'";
 
-                                                    if (isset($type_arr[0]['typeTitle'])) {
-                                                        $typeTitle = $type_arr[0]['typeTitle'];
+                                                    $type_arr = array();
+
+                                                    if ($result = $mysqli->query($query)) {
+                                                        $type_arr = $result->fetch_all(MYSQLI_ASSOC); // ✅ Fetch all rows at once
+                                                        mysqli_free_result($result);
                                                     }
                                                     echo '<tr>';
                                                     echo '<td>';
                                                     echo '<div class="icheck-primary d-inline">';
-                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '" name="box_list" qrcodebig="' . $value['qrcode_big_id'] . '">';
+                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '">';
                                                     echo '<label for="' . $value['member_id'] . '">';
                                                     echo '</label>';
                                                     echo '</div>';
@@ -383,10 +378,28 @@ if ($result = $mysqli->query($query_big)) {
 
                                                     echo '<td>' . $value["title"] . '</td>';
                                                     echo '<td>' . $value["nickname"] . '<br/><span class="text-sm text-muted">' . $value["account"] . '</span></td>';
-                                                    echo '<td>' . $value["types_option"] . '<br/><span class="text-sm text-muted">' . $value["city"] . $value["region"] . '</span></td>';
+                                                    echo '<td>' . $value["types_option"] . '<br/><span class="text-sm text-muted">';
+                                                    if (isset($forms)) {
+                                                        foreach ($forms as $f) {
+                                                            // Skip empty names
+                                                            if ($f->name != '') {
+                                                                echo $f->label . ' : ' .  $f->name;
+                                                            }
+                                                        }
+                                                    }
+                                                    echo '</span></td>';
                                                     echo '<td>';
+                                                    $totalItems = count($type_arr); // Count total elements
+                                                    $currentIndex = 0; // Track current position
                                                     foreach ($type_arr as $key => $type) {
-                                                        echo (!empty($type['typeTitle'])) ? $type['typeTitle'] . ',' : '<i class="fa-solid fa-x"></i>';
+                                                        $currentIndex++; // Increment counter
+
+                                                        echo (!empty($type['typeTitle'])) ? $type['typeTitle'] : '<i class="fa-solid fa-x"></i>';
+
+                                                        // Add a comma only if it's not the last item
+                                                        if ($currentIndex < $totalItems) {
+                                                            echo ', ';
+                                                        }
                                                     }
                                                     echo '</td>';
                                                     echo '<td>';

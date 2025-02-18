@@ -1086,15 +1086,15 @@ $(function () {
                 $(this).addClass("is-invalid");
               }
 
-              if (location.pathname.indexOf("member_mang.php") >= 0) {
-                if (
-                  $(this).attr("name") === "account" &&
-                  !ValidateID($(this).val())
-                ) {
-                  sum_arr.push("身分證字號格式錯誤");
-                  $(this).addClass("is-invalid");
-                }
-              }
+              // if (location.pathname.indexOf("member_mang.php") >= 0) {
+              //   if (
+              //     $(this).attr("name") === "account" &&
+              //     !ValidateID($(this).val())
+              //   ) {
+              //     sum_arr.push("身分證字號格式錯誤");
+              //     $(this).addClass("is-invalid");
+              //   }
+              // }
 
               if (
                 location.pathname.indexOf("qrcode_mang.php") >= 0 &&

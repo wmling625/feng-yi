@@ -16,8 +16,20 @@ $err_msg = array();
 @$qr_type_big_id = params_security($_POST["qr_type_big_id"]);
 @$types = params_security($_GET["types"]);
 
+$communities = [];
 
-if (empty($nickname) || empty($types_option)) {
+if (!empty($_POST['form']['label']) && !empty($_POST['form']['name'])) {
+    foreach ($_POST['form']['label'] as $index => $label) {
+        $communities[] = [
+            'label' => params_security($label),
+            'name' => params_security($_POST['form']['name'][$index])
+        ];
+    }
+}
+$form = json_encode($communities, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+
+if (empty($nickname) || empty($types_option) || empty($account)) {
     array_push($err_msg, "必填欄位未填寫，請檢查");
 }
 
@@ -40,11 +52,10 @@ if (count($err_msg)) {
             mysqli_free_result($result);
         }
 
-        $query = "INSERT INTO `member`(`member_id`, `qr_type_big_id`,`account`, `nickname`, `types_option`, `city`, `region`, `pub_date`, `last_date`, `orders`) VALUES (uuid(),'" . $qr_type_big_id . "','" . $account . "','" . $nickname . "','" . $types_option . "','" . $city . "','" . $region . "', NOW(), NOW(),1)";
+        $query = "INSERT INTO `member`(`member_id`, `account`, `user_id`, `title`, `nickname`, `types_option`, `form`, `pub_date`, `last_date`, `orders`) VALUES (uuid(),'" . $account . "','" . $userId . "','" . $title . "','" . $nickname . "','" . $types_option . "','" . $mysqli->real_escape_string($form) . "', NOW(), NOW(), 1) ON DUPLICATE KEY UPDATE `user_id` = '" . $userId . "', `title` = '" . $title . "', `nickname` = '" . $nickname . "', `types_option` = '" . $types_option . "', `city` = '" . $city . "', `region` = '" . $region . "', `last_date` = NOW(), `orders` = 1";
     } else if ($model == "update") {
         // 可以對照insert欄位, 略過pub_update..等
-        $query = "update member set qr_type_big_id = '" . $qr_type_big_id . "',nickname = '" . $nickname . "',types_option = '" . $types_option . "',city = '" . $city . "',region = '" . $region . "',last_date = NOW() ";
-
+        $query = "update member set qr_type_big_id = '" . $qr_type_big_id . "',account = '" . $account . "',nickname = '" . $nickname . "',types_option = '" . $types_option . "',form = '" . $mysqli->real_escape_string($form) . "',last_date = NOW() ";
         $query .= "where member_id = '" . $member_id . "';";
     }
 
