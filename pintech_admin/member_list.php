@@ -360,8 +360,7 @@ if ($result = $mysqli->query($query_big)) {
                                             } else {
 
                                                 foreach ($result_arr as $key => $value) {
-                                                    $query = "SELECT qr_type_big.title AS typeTitle FROM `qrcode_big` LEFT JOIN `qr_type_big` ON qrcode_big.qr_type_big_id = qr_type_big.qr_type_big_id WHERE `member_id` = '" . $value['member_id'] . "'";
-
+                                                    $query = "SELECT qr_type_big.title AS typeTitle, qrcode_big.qrcode_big_id AS bigId FROM `qrcode_big` LEFT JOIN `qr_type_big` ON qrcode_big.qr_type_big_id = qr_type_big.qr_type_big_id WHERE `member_id` = '" . $value['member_id'] . "'";
                                                     $type_arr = array();
 
                                                     if ($result = $mysqli->query($query)) {
@@ -372,7 +371,7 @@ if ($result = $mysqli->query($query_big)) {
                                                     echo '<tr>';
                                                     echo '<td>';
                                                     echo '<div class="icheck-primary d-inline">';
-                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '" name="box_list" qrcodebig="' . $value['qrcode_big_id'] . '">';
+                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '" name="box_list" qrcodebig="' . $type_arr[0]['bigId'] . '">';
                                                     echo '<label for="' . $value['member_id'] . '">';
                                                     echo '</label>';
                                                     echo '</div>';
