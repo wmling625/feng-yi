@@ -243,7 +243,7 @@ if ($result = $mysqli->query($query_big)) {
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="根據搜尋結果匯出（至多2000筆）" name="excel_button">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="根據搜尋結果匯出" name="excel_button">
                                             匯出Excel
                                         </button> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-bs-toggle="tooltip" title="推播給該單位條碼會員" id="lineNotify">
                                             推播訊息
