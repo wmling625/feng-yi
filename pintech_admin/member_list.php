@@ -372,7 +372,7 @@ if ($result = $mysqli->query($query_big)) {
                                                     echo '<tr>';
                                                     echo '<td>';
                                                     echo '<div class="icheck-primary d-inline">';
-                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '">';
+                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '" name="box_list" qrcodebig="' . $value['qrcode_big_id'] . '">';
                                                     echo '<label for="' . $value['member_id'] . '">';
                                                     echo '</label>';
                                                     echo '</div>';
