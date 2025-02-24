@@ -154,7 +154,7 @@ if ($result = $mysqli->query($query_big)) {
         echo "<input type='hidden' name='del_sql' value='" . aes_encrypt("DELETE FROM member WHERE find_in_set(member_id, '?1') >0") . "'/>";
         echo "<input type='hidden' name='orders_sql' value='" . aes_encrypt("UPDATE member SET orders = '?1' WHERE find_in_set(member_id, '?2') >0") . "'/>";
         echo "<input type='hidden' name='excel_sql' value='" . aes_encrypt("SELECT A.*, B.title AS 'big_title', C.qrcode_big_id AS 'qrcode_big_id' FROM member A LEFT JOIN qr_type_big B ON A.qr_type_big_id = B.qr_type_big_id LEFT JOIN qrcode_big C ON A.member_id = C.member_id
-        WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A.pub_date DESC LIMIT 0,2000") . "' sp='sp_excel_member.php' />";
+        WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A.pub_date DESC") . "' sp='sp_excel_member.php' />";
         ?>
         <!-- Preloader -->
         <!-- <div class="preloader flex-column justify-content-center align-items-center">
