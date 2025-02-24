@@ -144,7 +144,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
         echo "<input type='hidden' name='zip_sql' value='" . aes_encrypt("SELECT A.file0 FROM qrcode_big AS A 
             LEFT JOIN qr_type_big AS B ON A.qr_type_big_id = B.qr_type_big_id 
             LEFT JOIN member AS C ON A.member_id = C.member_id 
-            WHERE " . $filter_sql_str . " ORDER BY A.is_send ASC, A.orders ASC, A.pub_date DESC LIMIT 0,2000") . "' sp='sp_zip_qrcode.php' />";
+            WHERE " . $filter_sql_str . " ORDER BY A.is_send ASC, A.orders ASC, A.pub_date DESC") . "' sp='sp_zip_qrcode.php' />";
         echo "<input type='hidden' name='send_sql' value='" . aes_encrypt("UPDATE qrcode_big SET member_id = '?1', is_send = 1, last_date = NOW() WHERE find_in_set(qrcode_big_id, '?2') >0 AND member_id = ''") . "'/>";
         ?>
         <!-- Preloader -->
@@ -234,7 +234,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="根據搜尋結果匯出（至多2000筆）" name="excel_button">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="根據搜尋結果匯出" name="excel_button">
                                             匯出Excel
                                         </button>
                                         <button type="button" class="btn btn-sm btn-danger" name="box_del">批次刪除</button>
