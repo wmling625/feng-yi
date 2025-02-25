@@ -140,7 +140,7 @@ $page = new Page($total, $showrow, $curpage, $url, 2);
         echo "<input type='hidden' name='del_sql' value='" . aes_encrypt("DELETE FROM qrcode_big WHERE find_in_set(qrcode_big_id, '?1') >0") . "'/>";
         echo "<input type='hidden' name='orders_sql' value='" . aes_encrypt("UPDATE qrcode_big SET orders = '?1', last_date = NOW() WHERE find_in_set(qrcode_big_id, '?2') >0") . "'/>";
         echo "<input type='hidden' name='orders_cancel_sql' value='" . aes_encrypt("UPDATE qrcode_big SET orders = '?1', title='', introd = '', contents = '', last_date = NOW() WHERE find_in_set(qrcode_big_id, '?2') >0") . "'/>";
-        echo "<input type='hidden' name='excel_sql' value='" . aes_encrypt("SELECT A.qrcode_big_id, A.pub_date AS 'bind_date', B.*, C.*, A.orders FROM qrcode_big AS A INNER JOIN member AS B ON A.member_id = B.member_id INNER JOIN qr_type_big AS C ON A.qr_type_big_id = C.qr_type_big_id WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A.pub_date DESC LIMIT 0,2000") . "' sp='sp_excel_qrcode_big.php' />";
+        echo "<input type='hidden' name='excel_sql' value='" . aes_encrypt("SELECT A.qrcode_big_id, A.pub_date AS 'bind_date', B.*, C.*, A.orders FROM qrcode_big AS A INNER JOIN member AS B ON A.member_id = B.member_id INNER JOIN qr_type_big AS C ON A.qr_type_big_id = C.qr_type_big_id WHERE " . $filter_sql_str . " ORDER BY A.orders ASC, A.pub_date DESC") . "' sp='sp_excel_qrcode_big.php' />";
         echo "<input type='hidden' name='zip_sql' value='" . aes_encrypt("SELECT A.file0 FROM qrcode_big AS A 
             LEFT JOIN qr_type_big AS B ON A.qr_type_big_id = B.qr_type_big_id 
             LEFT JOIN member AS C ON A.member_id = C.member_id 

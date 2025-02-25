@@ -560,6 +560,39 @@ $(function () {
       });
     }
 
+    $("button#qr_type_bind").click(function (event) {
+      var selectedValue = $("select[name='qr_type_big_bind']").val(); // Get selected value
+
+      if (selectedValue === "") {
+        alert("請選擇一個綁定單位！");
+        return;
+      }
+
+      // Disable button and show spinner
+      $(this).prop("disabled", true);
+      $(this).append(
+        ' <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>'
+      );
+
+      // Fetch encrypted SQL command and related attributes
+      var cmd = $("[name=bind_sql]").val(); // The encrypted command
+      var sp = $("[name=bind_sql]").attr("sp"); // The target PHP file
+      var temp = gettoken_value(); // Function to get token and value
+      var value = temp.value;
+      var token = temp.token;
+
+      document.location.href =
+        sp +
+        "?cmd=" +
+        cmd +
+        "&qr_type_big_id=" +
+        selectedValue +
+        "&value=" +
+        value +
+        "&token=" +
+        token;
+    });
+
     if (location.pathname.indexOf("qrcode_list") >= 0) {
       // 列表儲存排序
       $("button[name=save_qr]").click(function (event) {

@@ -370,10 +370,15 @@ if ($result = $mysqli->query($query_big)) {
 
                                                     echo '<tr>';
                                                     echo '<td>';
-                                                    echo '<div class="icheck-primary d-inline">';
-                                                    echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '" name="box_list" qrcodebig="' . $type_arr[0]['bigId'] . '">';
-                                                    echo '<label for="' . $value['member_id'] . '">';
-                                                    echo '</label>';
+                                                    echo '<div class="icheck-primary d-inline text-center">';
+                                                    if($type_arr) {
+                                                        echo '<input type="checkbox" id="' . $value['member_id'] . '" name="box_list" value="' . $value['member_id'] . '" name="box_list" qrcodebig="' . $type_arr[0]['bigId'] . '">';
+                                                        echo '<label for="' . $value['member_id'] . '">';
+                                                        echo '</label>';
+                                                    } else {
+                                                        echo '<a href="member_mang.php?model=update&member_id=' . $value["member_id"] . '" class="mx-1 btn btn-sm btn-outline-primary">前往綁定</a>';
+                                                    }
+
                                                     echo '</div>';
                                                     echo '</td>';
 
